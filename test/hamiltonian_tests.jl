@@ -2,6 +2,9 @@ using LinearAlgebra
 using ModelingToolkit
 using Symbolics
 
+using Test
+using EulerLagrange
+
 @testset "Test Hamiltonian" begin
 
     t̄, q̄, p̄ = hamiltonian_variables(2)
@@ -17,6 +20,6 @@ using Symbolics
 
     H = p ⋅ p / 2 + q ⋅ q / 2
 
-    # ham_sys = HamiltonianSystem(t, q, p, H)
+    ham_sys = HamiltonianSystem(t, q, p, H)
     
 end
