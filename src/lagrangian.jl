@@ -27,15 +27,16 @@ struct LagrangianSystem
 
         RuntimeGeneratedFunctions.init(@__MODULE__)
 
-        @variables X[eachindex(x)]
-        @variables V[eachindex(v)]
-        @variables P[eachindex(v)]
-        @variables F[eachindex(x)]
+        @variables X[axes(x, 1)]
+        @variables V[axes(v, 1)]
+        @variables P[axes(v, 1)]
+        @variables F[axes(x, 1)]
 
         Dt = Differential(t)
-        Dx = Differential.(x)
-        Dv = Differential.(v)
+        Dx = collect(Differential.(x))
+        Dv = collect(Differential.(v))
         Dz = vcat(Dx,Dv)
+        ẋ  = collect(Dt.(x))
 
         EL = [expand_derivatives(Dx[i](L) - Dt(Dv[i](L))) for i in eachindex(Dx,Dv)]
         f  = [expand_derivatives(dx(L)) for dx in Dx]
@@ -51,7 +52,7 @@ struct LagrangianSystem
         Σ  = simplify.(inv(Ω))
         
         for eq in (EL, f, g, ϑ, ω, Ω, M, N, σ, Σ)
-            substitute_ẋ_with_v!(eq, Dt.(x), v)
+            substitute_ẋ_with_v!(eq, ẋ, v)
             substitute_lagrangian_variables!(eq, x, v, X, V)
         end
 
@@ -97,7 +98,9 @@ end
 
 function lagrangian_variables(dimension::Int)
     t = parameter(:t)
-    x = @variables (x(t))[1:dimension]
-    v = @variables (v(t))[1:dimension]
+    
+    @variables (x(t))[1:dimension]
+    @variables (v(t))[1:dimension]
+
     return (t,x,v)
 end
