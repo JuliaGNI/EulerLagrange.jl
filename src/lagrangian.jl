@@ -64,15 +64,15 @@ struct LagrangianSystem
         code_a  = build_function(a,  t, X, V)[2]
         code_f  = build_function(f,  t, X, V)[2]
         code_g  = build_function(g,  t, X, V)[2]
-        code_p  = build_function(ϑ,  t, X)[1]
-        code_ϑ  = build_function(ϑ,  t, X)[2]
-        code_ω  = build_function(ω,  t, X)[2]
-        code_Ω  = build_function(Ω,  t, X)[2]
-        code_ϕ  = build_function(ϕ,  t, X, P)[2]
+        code_p  = build_function(ϑ,  t, X, V)[1]
+        code_ϑ  = build_function(ϑ,  t, X, V)[2]
+        code_ω  = build_function(ω,  t, X, V)[2]
+        code_Ω  = build_function(Ω,  t, X, V)[2]
+        code_ϕ  = build_function(ϕ,  t, X, V, P)[2]
         code_ψ  = build_function(ψ,  t, X, V, P, F)[2]
         code_L  = build_function(L,  t, X, V)
         code_M  = build_function(M,  t, X, V)[2]
-        code_P  = build_function(Σ,  t, X)[2]
+        code_P  = build_function(Σ,  t, X, V)[2]
 
         eqs = (
             EL = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_EL)),
