@@ -1,3 +1,5 @@
+using EulerLagrange
+using GeometricEquations
 using LinearAlgebra
 using ModelingToolkit
 using Symbolics
@@ -11,8 +13,8 @@ using Symbolics
     @variables (v(t))[1:2]
 
     @test isequal(t, lvars[1])
-    @test all([isequal(x[i], lvars[2][i]) for i in eachindex(x)])
-    @test all([isequal(v[i], lvars[3][i]) for i in eachindex(v)])
+    @test all([isequal(x[i], lvars[2][i]) for i in eachindex(x, lvars[2])])
+    @test all([isequal(v[i], lvars[3][i]) for i in eachindex(v, lvars[3])])
 
 
     # Particle in square potential
