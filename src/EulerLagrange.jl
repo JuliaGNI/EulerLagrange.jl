@@ -12,7 +12,7 @@ module EulerLagrange
 
     include("symbolics.jl")
 
-
+    export HamiltonianSystem
     export hamiltonian_variables
 
     include("hamiltonian.jl")
