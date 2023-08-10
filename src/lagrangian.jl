@@ -27,15 +27,16 @@ struct LagrangianSystem
 
         RuntimeGeneratedFunctions.init(@__MODULE__)
 
-        @variables X[eachindex(x)]
-        @variables V[eachindex(v)]
-        @variables P[eachindex(v)]
-        @variables F[eachindex(x)]
+        @variables X[axes(x, 1)]
+        @variables V[axes(v, 1)]
+        @variables P[axes(v, 1)]
+        @variables F[axes(x, 1)]
 
         Dt = Differential(t)
-        Dx = Differential.(x)
-        Dv = Differential.(v)
+        Dx = collect(Differential.(x))
+        Dv = collect(Differential.(v))
         Dz = vcat(Dx,Dv)
+        ẋ  = collect(Dt.(x))
 
         EL = [expand_derivatives(Dx[i](L) - Dt(Dv[i](L))) for i in eachindex(Dx,Dv)]
         f  = [expand_derivatives(dx(L)) for dx in Dx]
@@ -51,7 +52,7 @@ struct LagrangianSystem
         Σ  = simplify.(inv(Ω))
         
         for eq in (EL, f, g, ϑ, ω, Ω, M, N, σ, Σ)
-            substitute_ẋ_with_v!(eq, Dt.(x), v)
+            substitute_ẋ_with_v!(eq, ẋ, v)
             substitute_lagrangian_variables!(eq, x, v, X, V)
         end
 
@@ -64,15 +65,15 @@ struct LagrangianSystem
         code_a  = build_function(a,  t, X, V)[2]
         code_f  = build_function(f,  t, X, V)[2]
         code_g  = build_function(g,  t, X, V)[2]
-        code_p  = build_function(ϑ,  t, X)[1]
-        code_ϑ  = build_function(ϑ,  t, X)[2]
-        code_ω  = build_function(ω,  t, X)[2]
-        code_Ω  = build_function(Ω,  t, X)[2]
-        code_ϕ  = build_function(ϕ,  t, X, P)[2]
+        code_p  = build_function(ϑ,  t, X, V)[1]
+        code_ϑ  = build_function(ϑ,  t, X, V)[2]
+        code_ω  = build_function(ω,  t, X, V)[2]
+        code_Ω  = build_function(Ω,  t, X, V)[2]
+        code_ϕ  = build_function(ϕ,  t, X, V, P)[2]
         code_ψ  = build_function(ψ,  t, X, V, P, F)[2]
         code_L  = build_function(L,  t, X, V)
         code_M  = build_function(M,  t, X, V)[2]
-        code_P  = build_function(Σ,  t, X)[2]
+        code_P  = build_function(Σ,  t, X, V)[2]
 
         eqs = (
             EL = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_EL)),
@@ -97,7 +98,9 @@ end
 
 function lagrangian_variables(dimension::Int)
     t = parameter(:t)
-    x = @variables (x(t))[1:dimension]
-    v = @variables (v(t))[1:dimension]
+    
+    @variables (x(t))[1:dimension]
+    @variables (v(t))[1:dimension]
+
     return (t,x,v)
 end

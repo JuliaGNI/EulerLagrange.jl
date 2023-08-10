@@ -3,7 +3,7 @@ module EulerLagrange
     # using Parameters
     using RuntimeGeneratedFunctions
     using Symbolics
-    using Symbolics: Sym
+    using Symbolics: FnType, Sym
 
 
     include("symbolics.jl")
