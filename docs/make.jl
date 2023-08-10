@@ -17,5 +17,7 @@ makedocs(;
 )
 
 deploydocs(;
-    repo="github.com/JuliaGNI/EulerLagrange.jl",
+    repo   = "github.com/JuliaGNI/EulerLagrange.jl",
+    devurl = "latest",
+    devbranch = "main",
 )
