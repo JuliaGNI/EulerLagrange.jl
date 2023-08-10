@@ -104,3 +104,31 @@ function lagrangian_variables(dimension::Int)
 
     return (t,x,v)
 end
+
+function equation_wrappers(lsys::LagrangianSystem)
+    (
+        ϑ = (ϑ,t,x,v,params)   -> lsys.eqs[:ϑ](ϑ,t,x,v),
+        f = (f,t,x,v,params)   -> lsys.eqs[:f](f,t,x,v),
+        g = (f̄,t,x,v,λ,params) -> lsys.eqs[:f̄](f̄,t,x,λ),
+        ω = (ω,t,x,v,params)   -> lsys.eqs[:ω](ω,t,x,v),
+        l = (t,x,v,params)     -> lsys.eqs[:L](t,x,v),
+        v̄ = (v,t,x,p,params)   -> lsys.eqs[:ẋ](v,t,x),
+        f̄ = (f,t,x,v,params)   -> lsys.eqs[:f](f,t,x,v)
+    )
+end
+
+
+function LODE(lsys::LagrangianSystem)
+    eqs = equation_wrappers(lsys)
+    LODE(eqs.ϑ, eqs.f, eqs.g, eqs.ω, eqs.l; v̄ = eqs.v̄, f̄ = eqs.f̄)
+end
+
+function LODEProblem(lsys::LagrangianSystem, tspan::Tuple, tstep::Real, ics::NamedTuple)
+    eqs = equation_wrappers(lsys)
+    LODEProblem(eqs.ϑ, eqs.f, eqs.g, eqs.ω, eqs.l, tspan, tstep, ics; v̄ = eqs.v̄, f̄ = eqs.f̄)
+end
+
+function LODEProblem(lsys::LagrangianSystem, tspan::Tuple, tstep::Real, q₀::State, p₀::State, λ₀::State = zero(q₀);)
+    ics = (q = q₀, p = p₀, λ = λ₀)
+    LODEProblem(lsys, tspan, tstep, ics)
+end
