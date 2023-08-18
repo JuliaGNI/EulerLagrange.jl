@@ -1,11 +1,13 @@
 
-function substitute_hamiltonian_variables(equ, q, p, Q, P)
+function substitute_hamiltonian_variables(equ, q, p)
+    @variables Q[axes(q,1)]
+    @variables P[axes(p,1)]
     substitute(equ, [z=>Z for (z,Z) in zip([q..., p...], [Q..., P...])])
 end
 
-function substitute_hamiltonian_variables!(eqs, q, p, Q, P)
+function substitute_hamiltonian_variables!(eqs, q, p)
     for i in eachindex(eqs)
-        eqs[i] = substitute_hamiltonian_variables(eqs[i], q, p, Q, P)
+        eqs[i] = substitute_hamiltonian_variables(eqs[i], q, p)
     end
 end
 
@@ -36,10 +38,10 @@ struct HamiltonianSystem
         f   = [expand_derivatives(-dq(H)) for dq in Dq]
 
         for eq in (EHq, EHp, v, f)
-            substitute_hamiltonian_variables!(eq, q, p, Q, P)
+            substitute_hamiltonian_variables!(eq, q, p)
         end
 
-        H  = substitute_hamiltonian_variables(H, q, p, Q, P)
+        H  = substitute_hamiltonian_variables(H, q, p)
         EH = vcat(EHq, EHp)
         ż  = vcat(v, f)
 
