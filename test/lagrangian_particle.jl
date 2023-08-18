@@ -12,7 +12,28 @@ p₀ = zero(v₀)
 params = nothing
 
 t, x, v = lagrangian_variables(2)
-lag_sys = LagrangianSystem(L(t, x, v, params), t, x, v)
+sym_lag = L(t, x, v, params)
+lag_sys = LagrangianSystem(sym_lag, t, x, v)
+
+@test isequal(lagrangian(lag_sys), EulerLagrange.substitute_lagrangian_variables(sym_lag, x, v))
+@test isequal(variables(lag_sys), (t, x, v))
+@test isequal(EulerLagrange.parameters(lag_sys), NamedTuple())
+@test isequal(EulerLagrange.equations(lag_sys), (
+    L = equation(lag_sys, :L),
+    EL= equation(lag_sys, :EL),
+    a = equation(lag_sys, :a),
+    ϑ = equation(lag_sys, :ϑ),
+    f = equation(lag_sys, :f),
+    g = equation(lag_sys, :g),
+    ω = equation(lag_sys, :ω),
+    Ω = equation(lag_sys, :Ω),
+    ϕ = equation(lag_sys, :ϕ),
+    ψ = equation(lag_sys, :ψ),
+    v̄ = equation(lag_sys, :v̄),
+    f̄ = equation(lag_sys, :f̄),
+    M = equation(lag_sys, :M),
+    P = equation(lag_sys, :P),
+))
 
 p̃(p, t, q, q̇, params) = p .= q̇
 f̃(f, t, q, q̇, params) = f .= -q
