@@ -68,19 +68,19 @@ struct LagrangianSystem
         ϕ = P .- ϑ
         ψ = F .- g
 
-        code_EL = build_function(EL, t, X, V)[2]
-        code_a  = build_function(a,  t, X, V)[2]
-        code_f  = build_function(f,  t, X, V)[2]
-        code_g  = build_function(g,  t, X, V)[2]
-        code_p  = build_function(ϑ,  t, X, V)[1]
-        code_ϑ  = build_function(ϑ,  t, X, V)[2]
-        code_ω  = build_function(ω,  t, X, V)[2]
-        code_Ω  = build_function(Ω,  t, X, V)[2]
-        code_ϕ  = build_function(ϕ,  t, X, V, P)[2]
-        code_ψ  = build_function(ψ,  t, X, V, P, F)[2]
-        code_L  = build_function(L,  t, X, V)
-        code_M  = build_function(M,  t, X, V)[2]
-        code_P  = build_function(Σ,  t, X, V)[2]
+        code_EL = substitute_parameters(build_function(EL, t, X, V, params...)[2], params)
+        code_a  = substitute_parameters(build_function(a,  t, X, V, params...)[2], params)
+        code_f  = substitute_parameters(build_function(f,  t, X, V, params...)[2], params)
+        code_g  = substitute_parameters(build_function(g,  t, X, V, params...)[2], params)
+        code_p  = substitute_parameters(build_function(ϑ,  t, X, V, params...)[1], params)
+        code_ϑ  = substitute_parameters(build_function(ϑ,  t, X, V, params...)[2], params)
+        code_ω  = substitute_parameters(build_function(ω,  t, X, V, params...)[2], params)
+        code_Ω  = substitute_parameters(build_function(Ω,  t, X, V, params...)[2], params)
+        code_ϕ  = substitute_parameters(build_function(ϕ,  t, X, V, P, params...)[2], params)
+        code_ψ  = substitute_parameters(build_function(ψ,  t, X, V, P, F, params...)[2], params)
+        code_L  = substitute_parameters(build_function(L,  t, X, V, params...), params)
+        code_M  = substitute_parameters(build_function(M,  t, X, V, params...)[2], params)
+        code_P  = substitute_parameters(build_function(Σ,  t, X, V, params...)[2], params)
 
         eqs = (
             EL = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_EL)),
@@ -98,7 +98,24 @@ struct LagrangianSystem
             P  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_P)),
         )
 
-        new(L, t, x, v, params, eqs)
+        param_eqs = length(params) > 0 ? eqs : (
+            L = (t,x,v,params)     -> eqs.L(t,x,v),
+            EL= (e,t,x,v,params)   -> eqs.EL(e,t,x,v),
+            a = (a,t,x,v,params)   -> eqs.a(a,t,x,v),
+            ϑ = (ϑ,t,x,v,params)   -> eqs.ϑ(ϑ,t,x,v),
+            f = (f,t,x,v,params)   -> eqs.f(f,t,x,v),
+            g = (f̄,t,x,v,λ,params) -> eqs.f̄(f̄,t,x,λ),
+            ω = (ω,t,x,v,params)   -> eqs.ω(ω,t,x,v),
+            Ω = (Ω,t,x,v,params)   -> eqs.Ω(Ω,t,x,v),
+            ϕ = (ϕ,t,x,v,params)   -> eqs.ϕ(ϕ,t,x,v),
+            ψ = (ψ,t,x,v,params)   -> eqs.ψ(ψ,t,x,v),
+            v̄ = (v,t,x,p,params)   -> eqs.ẋ(v,t,x,p),
+            f̄ = (f,t,x,v,params)   -> eqs.f(f,t,x,v),
+            M = (M,t,x,v,params)   -> eqs.M(M,t,x,v),
+            P = (P,t,x,v,params)   -> eqs.P(P,t,x,v),
+        )
+
+        new(L, t, x, v, params, param_eqs)
     end
 end
 
@@ -118,27 +135,15 @@ function lagrangian_variables(dimension::Int)
     return (t,x,v)
 end
 
-function equation_wrappers(lsys::LagrangianSystem)
-    (
-        ϑ = (ϑ,t,x,v,params)   -> equation(lsys, :ϑ)(ϑ,t,x,v),
-        f = (f,t,x,v,params)   -> equation(lsys, :f)(f,t,x,v),
-        g = (f̄,t,x,v,λ,params) -> equation(lsys, :f̄)(f̄,t,x,λ),
-        ω = (ω,t,x,v,params)   -> equation(lsys, :ω)(ω,t,x,v),
-        l = (t,x,v,params)     -> equation(lsys, :L)(t,x,v),
-        v̄ = (v,t,x,p,params)   -> equation(lsys, :ẋ)(v,t,x),
-        f̄ = (f,t,x,v,params)   -> equation(lsys, :f)(f,t,x,v)
-    )
-end
-
 
 function LODE(lsys::LagrangianSystem)
-    eqs = equation_wrappers(lsys)
-    LODE(eqs.ϑ, eqs.f, eqs.g, eqs.ω, eqs.l; v̄ = eqs.v̄, f̄ = eqs.f̄)
+    eqs = equations(lsys)
+    LODE(eqs.ϑ, eqs.f, eqs.g, eqs.ω, eqs.L; v̄ = eqs.v̄, f̄ = eqs.f̄)
 end
 
 function LODEProblem(lsys::LagrangianSystem, tspan::Tuple, tstep::Real, ics::NamedTuple)
-    eqs = equation_wrappers(lsys)
-    LODEProblem(eqs.ϑ, eqs.f, eqs.g, eqs.ω, eqs.l, tspan, tstep, ics; v̄ = eqs.v̄, f̄ = eqs.f̄)
+    eqs = equations(lsys)
+    LODEProblem(eqs.ϑ, eqs.f, eqs.g, eqs.ω, eqs.L, tspan, tstep, ics; v̄ = eqs.v̄, f̄ = eqs.f̄)
 end
 
 function LODEProblem(lsys::LagrangianSystem, tspan::Tuple, tstep::Real, q₀::State, p₀::State, λ₀::State = zero(q₀);)
