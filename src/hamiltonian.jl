@@ -76,7 +76,7 @@ struct HamiltonianSystem
 end
 
 hamiltonian(hsys::HamiltonianSystem) = hsys.H
-variables(hsys::HamiltonianSystem) = (hsys.t, hsys.x, hsys.v)
+variables(hsys::HamiltonianSystem) = (hsys.t, hsys.q, hsys.p)
 parameters(hsys::HamiltonianSystem) = hsys.parameters
 equations(hsys::HamiltonianSystem) = hsys.equations
 equation(hsys::HamiltonianSystem, name::Symbol) = equations(hsys)[name]
