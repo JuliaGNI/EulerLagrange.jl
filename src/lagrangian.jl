@@ -148,7 +148,7 @@ function LODEProblem(lsys::LagrangianSystem, tspan::Tuple, tstep::Real, ics::Nam
     LODEProblem(eqs.ϑ, eqs.f, eqs.g, eqs.ω, eqs.L, tspan, tstep, ics; v̄ = eqs.v̄, f̄ = eqs.f̄)
 end
 
-function LODEProblem(lsys::LagrangianSystem, tspan::Tuple, tstep::Real, q₀::State, p₀::State, λ₀::State = zero(q₀);)
+function LODEProblem(lsys::LagrangianSystem, tspan::Tuple, tstep::Real, q₀::State, p₀::State, λ₀::State = zero(q₀))
     ics = (q = q₀, p = p₀, λ = λ₀)
     LODEProblem(lsys, tspan, tstep, ics)
 end

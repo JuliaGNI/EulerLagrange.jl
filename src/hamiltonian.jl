@@ -90,3 +90,19 @@ function hamiltonian_variables(dimension::Int)
     @variables (p(t))[1:dimension]
     return (t,q,p)
 end
+
+
+function HODE(lsys::HamiltonianSystem)
+    eqs = equations(lsys)
+    HODE(eqs.v, eqs.f, eqs.H)
+end
+
+function HODEProblem(lsys::HamiltonianSystem, tspan::Tuple, tstep::Real, ics::NamedTuple)
+    eqs = equations(lsys)
+    HODEProblem(eqs.v, eqs.f, eqs.H, tspan, tstep, ics)
+end
+
+function HODEProblem(lsys::HamiltonianSystem, tspan::Tuple, tstep::Real, q₀::State, p₀::State)
+    ics = (q = q₀, p = p₀)
+    HODEProblem(lsys, tspan, tstep, ics)
+end

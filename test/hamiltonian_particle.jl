@@ -50,3 +50,16 @@ ż̃(ż₂, t₀, q₀, p₀, params)
 @test v₁ == v₂
 @test f₁ == f₂
 @test ż₁ == ż₂
+
+
+ntime = 1000
+tstep = 0.01
+tspan = (0.0, ntime * tstep)
+ics   = (q = q₀, p = p₀)
+
+hode = HODE(ham_sys)
+
+hprob1 = HODEProblem(ham_sys, tspan, tstep, ics)
+hprob2 = HODEProblem(ham_sys, tspan, tstep, q₀, p₀)
+
+@test hode == equation(hprob1) == equation(hprob2)
