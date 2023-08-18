@@ -1,13 +1,21 @@
 
+function substitute_ẋ_with_v(equ, ẋ, v)
+    substitute(equ, [ẋᵢ=>vᵢ for (ẋᵢ,vᵢ) in zip(ẋ,v)])
+end
+
 function substitute_ẋ_with_v!(eqs, ẋ, v)
     for i in eachindex(eqs)
-        eqs[i] = substitute(eqs[i], [ẋᵢ=>vᵢ for (ẋᵢ,vᵢ) in zip(ẋ,v)])
+        eqs[i] = substitute_ẋ_with_v(eqs[i], ẋ, v)
     end
+end
+
+function substitute_lagrangian_variables(equ, x, v, X, V)
+    substitute(equ, [z=>Z for (z,Z) in zip([x..., v...], [X..., V...])])
 end
 
 function substitute_lagrangian_variables!(eqs, x, v, X, V)
     for i in eachindex(eqs)
-        eqs[i] = substitute(eqs[i], [z=>Z for (z,Z) in zip([x..., v...], [X..., V...])])
+        eqs[i] = substitute_lagrangian_variables(eqs[i], x, v, X, V)
     end
 end
 
@@ -55,7 +63,7 @@ struct LagrangianSystem
             substitute_lagrangian_variables!(eq, x, v, X, V)
         end
 
-        L = substitute(L, [z=>Z for (z,Z) in zip([x..., v...], [X..., V...])])
+        L = substitute_lagrangian_variables(L, x, v, X, V)
         a = inv(M) * (f - N * V)
         ϕ = P .- ϑ
         ψ = F .- g
