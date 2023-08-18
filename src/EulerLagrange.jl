@@ -1,7 +1,6 @@
 module EulerLagrange
 
-    using GeometricBase: State
-    # using Parameters
+    using GeometricBase: NullParameters, State
     using RuntimeGeneratedFunctions
     using Symbolics
     using Symbolics: FnType, Sym
@@ -13,6 +12,8 @@ module EulerLagrange
 
     export equation, equations
 
+
+    export symbolize
 
     include("symbolics.jl")
 
