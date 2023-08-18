@@ -1,10 +1,10 @@
 using EulerLagrange
+using EulerLagrange: equations
+using GeometricEquations
 using LinearAlgebra
 using ModelingToolkit
-using Symbolics
-
 using Test
-using EulerLagrange
+
 
 @testset "Test Hamiltonian" begin
 
@@ -18,23 +18,36 @@ using EulerLagrange
     @test all([isequal(q[i], hvars[2][i]) for i in eachindex(q, hvars[2])])
     @test all([isequal(p[i], hvars[3][i]) for i in eachindex(p, hvars[3])])
 
-    H = p ⋅ p / 2 + q ⋅ q / 2
 
-    ham_sys = HamiltonianSystem(t, q, p, H)
+    H(t, q, p) = p ⋅ p / 2 + q ⋅ q / 2
 
+    ham_sys = HamiltonianSystem(H(t, q, p), t, q, p)
 
-    H̃(t,q,p) = (p ⋅ p)/2 + (q ⋅ q)/2
-    f̃(t,q,p) = -q
-    ṽ(t,q,p) = p
-    ż̃(t,q,p) = [-p...,q...]
+    ṽ(v, t, q, p) = v .= p
+    f̃(f, t, q, p) = f .= -q
+    ż̃(ż, t, q, p) = ż .= [p..., -q...]
 
-    t̃, q̃, p̃ = (1, [0.5, 0.4], [0.8, 0.9])
+    t₀, q₀, p₀ = (0.0, [1.0, 1.0], [0.5, 2.0])
+    z₀ = [q₀..., p₀...]
+
+    v₁, v₂ = zero(q₀), zero(q₀)
+    f₁, f₂ = zero(p₀), zero(p₀)
+    ż₁, ż₂ = zero(z₀), zero(z₀)
         
-    eqs = ham_sys.eqs
+    eqs = equations(ham_sys)
 
-    @test eqs.H(t̃, q̃, p̃) == H̃(t̃, q̃, p̃)
-    @test eqs.f(t̃, q̃, p̃) == f̃(t̃, q̃, p̃)
-    @test eqs.v(t̃, q̃, p̃) == ṽ(t̃, q̃, p̃)
-    @test eqs.ż(t̃, q̃, p̃) == ż̃(t̃, q̃, p̃)
+    eqs.v(v₁, t₀, q₀, p₀)
+    eqs.f(f₁, t₀, q₀, p₀)
+    eqs.ż(ż₁, t₀, q₀, p₀)
+
+    ṽ(v₂, t₀, q₀, p₀)
+    f̃(f₂, t₀, q₀, p₀)
+    ż̃(ż₂, t₀, q₀, p₀)
+        
+
+    @test eqs.H(t₀, q₀, p₀) == H(t₀, q₀, p₀)
+    @test v₁ == v₂
+    @test f₁ == f₂
+    @test ż₁ == ż₂
 
 end

@@ -1,3 +1,4 @@
+using EulerLagrange
 using Test
 
 include("hamiltonian_tests.jl")

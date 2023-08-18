@@ -13,15 +13,14 @@ end
 
 
 struct LagrangianSystem
+    L
     t
     x
     v
-    L
-    # parameters
-    # functions
-    eqs
+    parameters
+    equations
 
-    function LagrangianSystem(t, x, v, L)
+    function LagrangianSystem(L, t, x, v, params = NamedTuple())
 
         @assert eachindex(x) == eachindex(v)
 
@@ -91,9 +90,15 @@ struct LagrangianSystem
             P  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_P)),
         )
 
-        new(t, x, v, L, eqs)
+        new(L, t, x, v, params, eqs)
     end
 end
+
+lagrangian(lsys::LagrangianSystem) = lsys.L
+variables(lsys::LagrangianSystem) = (lsys.t, lsys.x, lsys.v)
+parameters(lsys::LagrangianSystem) = lsys.parameters
+equations(lsys::LagrangianSystem) = lsys.equations
+equation(lsys::LagrangianSystem, name::Symbol) = equations(lsys)[name]
 
 
 function lagrangian_variables(dimension::Int)
@@ -107,13 +112,13 @@ end
 
 function equation_wrappers(lsys::LagrangianSystem)
     (
-        ϑ = (ϑ,t,x,v,params)   -> lsys.eqs[:ϑ](ϑ,t,x,v),
-        f = (f,t,x,v,params)   -> lsys.eqs[:f](f,t,x,v),
-        g = (f̄,t,x,v,λ,params) -> lsys.eqs[:f̄](f̄,t,x,λ),
-        ω = (ω,t,x,v,params)   -> lsys.eqs[:ω](ω,t,x,v),
-        l = (t,x,v,params)     -> lsys.eqs[:L](t,x,v),
-        v̄ = (v,t,x,p,params)   -> lsys.eqs[:ẋ](v,t,x),
-        f̄ = (f,t,x,v,params)   -> lsys.eqs[:f](f,t,x,v)
+        ϑ = (ϑ,t,x,v,params)   -> equation(lsys, :ϑ)(ϑ,t,x,v),
+        f = (f,t,x,v,params)   -> equation(lsys, :f)(f,t,x,v),
+        g = (f̄,t,x,v,λ,params) -> equation(lsys, :f̄)(f̄,t,x,λ),
+        ω = (ω,t,x,v,params)   -> equation(lsys, :ω)(ω,t,x,v),
+        l = (t,x,v,params)     -> equation(lsys, :L)(t,x,v),
+        v̄ = (v,t,x,p,params)   -> equation(lsys, :ẋ)(v,t,x),
+        f̄ = (f,t,x,v,params)   -> equation(lsys, :f)(f,t,x,v)
     )
 end
 

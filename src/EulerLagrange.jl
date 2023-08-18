@@ -6,11 +6,16 @@ module EulerLagrange
     using Symbolics
     using Symbolics: FnType, Sym
 
+    import GeometricBase: equation, equations
     import GeometricEquations: HODE, HODEProblem
     import GeometricEquations: LODE, LODEProblem
 
 
+    export equation, equations
+
+
     include("symbolics.jl")
+
 
     export HamiltonianSystem
     export hamiltonian_variables
@@ -22,6 +27,5 @@ module EulerLagrange
     export lagrangian_variables
 
     include("lagrangian.jl")
-
     
 end
