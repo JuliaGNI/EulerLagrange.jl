@@ -20,9 +20,10 @@ This package generates code for the Euler-Lagrange equations as well as Hamilton
 Using EulerLagrange.jl is very simple and typically consists of three to four steps:
 
 1) Obtain symbolic variables for a Lagrangian or Hamiltonian system of a given dimension.
-2) Build the Lagrangian or Hamiltonian using those variables.
-3) Construct a `LagrangianSystem` or `HamiltonianSystem`.
-4) Generate a `LODEProblem` or `HODEProblem` that can then be solved with GeometricIntegrators.jl
+2) Obtain a symbolic representation of the parameters of the system if it has any.
+3) Build the Lagrangian or Hamiltonian using those symbolic variables and parameters.
+4) Construct a `LagrangianSystem` or `HamiltonianSystem`.
+5) Generate a `LODEProblem` or `HODEProblem` that can then be solved with GeometricIntegrators.jl
 
 In the following we showcase this procedure for a particle in a square potential.
 
@@ -43,7 +44,7 @@ L = v ⋅ v / 2 - x ⋅ x / 2
 
 This Lagrangian together with the symbolic variables is then used to construct a `LagrangianSystem`:
 ```julia
-lag_sys = LagrangianSystem(t, x, v, L)
+lag_sys = LagrangianSystem(L, t, x, v)
 ```
 
 The constructor computes the Euler-Lagrange equations and generates the corresponding Julia code.
