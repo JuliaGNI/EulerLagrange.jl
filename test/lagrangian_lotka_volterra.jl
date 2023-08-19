@@ -46,7 +46,7 @@ p₀ = zero(v₀)
 p₁, p₂ = zero(p₀), zero(p₀)
 ṗ₁, ṗ₂ = zero(p₀), zero(p₀)
     
-eqs = EulerLagrange.equations(lag_sys)
+eqs = functions(lag_sys)
 
 eqs.ϑ(p₁, t₀, q₀, v₀, params)
 eqs.f(ṗ₁, t₀, q₀, v₀, params)

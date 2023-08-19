@@ -20,7 +20,7 @@ f̃(f, t, q, p, params) = f .= - params.k .* q
 v₁, v₂ = zero(q₀), zero(q₀)
 f₁, f₂ = zero(p₀), zero(p₀)
     
-eqs = EulerLagrange.equations(ham_sys)
+eqs = functions(ham_sys)
 
 eqs.v(v₁, t₀, q₀, p₀, params)
 eqs.f(f₁, t₀, q₀, p₀, params)

@@ -18,6 +18,7 @@ struct HamiltonianSystem
     p
     parameters
     equations
+    functions
 
     function HamiltonianSystem(H, t, q, p, params = NamedTuple())
 
@@ -45,43 +46,57 @@ struct HamiltonianSystem
         EH = vcat(EHq, EHp)
         ż  = vcat(v, f)
 
-        code_EH  = substitute_parameters(build_function(EH, t, Q, P, params...)[2],  params)
-        code_EHq = substitute_parameters(build_function(EHq, t, Q, P, params...)[2], params)
-        code_EHp = substitute_parameters(build_function(EHp, t, Q, P, params...)[2], params)
-        code_H   = substitute_parameters(build_function(H, t, Q, P, params...),      params)
-        code_v   = substitute_parameters(build_function(v, t, Q, P, params...)[2],   params)
-        code_f   = substitute_parameters(build_function(f, t, Q, P, params...)[2],   params)
-        code_ż   = substitute_parameters(build_function(ż, t, Q, P, params...)[2],   params)
-
-        eqs = (
-            EH  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_EH)),
-            EHq = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_EHq)),
-            EHp = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_EHp)),
-            H   = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_H)),
-            v   = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_v)),
-            f   = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_f)),
-            ż   = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_ż))
+        equs = (
+            H = H,
+            EH = EH,
+            EHq = EHq,
+            EHp = EHp,
+            v = v,
+            f = f,
+            ż = ż,
         )
 
-        param_eqs = length(params) > 0 ? eqs : (
-            EH  = (EH, t,q,p,params) -> eqs.EH(EH,t,q,p),
-            EHq = (EHq,t,q,p,params) -> eqs.EHq(EHq,t,q,p),
-            EHp = (EHp,t,q,p,params) -> eqs.EHp(EHp,t,q,p),
-            H = (t,q,p,params)       -> eqs.H(t,q,p),
-            v = (v,t,q,p,params)     -> eqs.v(v,t,q,p),
-            f = (f,t,q,p,params)     -> eqs.f(f,t,q,p),
-            ż = (ż,t,q,p,params)     -> eqs.ż(ż,t,q,p),
+        code = (
+            H   = substitute_parameters(build_function(equs.H, t, Q, P, params...),      params),
+            EH  = substitute_parameters(build_function(equs.EH, t, Q, P, params...)[2],  params),
+            EHq = substitute_parameters(build_function(equs.EHq, t, Q, P, params...)[2], params),
+            EHp = substitute_parameters(build_function(equs.EHp, t, Q, P, params...)[2], params),
+            v   = substitute_parameters(build_function(equs.v, t, Q, P, params...)[2],   params),
+            f   = substitute_parameters(build_function(equs.f, t, Q, P, params...)[2],   params),
+            ż   = substitute_parameters(build_function(equs.ż, t, Q, P, params...)[2],   params),
         )
 
-        new(H, t, q, p, params, param_eqs)
+        funcs = NamedTuple{keys(code)}(Tuple(@RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(c)) for c in code))
+
+        # funcs = (
+        #     H   = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_H)),
+        #     EH  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_EH)),
+        #     EHq = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_EHq)),
+        #     EHp = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_EHp)),
+        #     v   = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_v)),
+        #     f   = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_f)),
+        #     ż   = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_ż))
+        # )
+
+        funcs_param = length(params) > 0 ? funcs : (
+            H = (t,q,p,params)       -> funcs.H(t,q,p),
+            EH  = (EH, t,q,p,params) -> funcs.EH(EH,t,q,p),
+            EHq = (EHq,t,q,p,params) -> funcs.EHq(EHq,t,q,p),
+            EHp = (EHp,t,q,p,params) -> funcs.EHp(EHp,t,q,p),
+            v = (v,t,q,p,params)     -> funcs.v(v,t,q,p),
+            f = (f,t,q,p,params)     -> funcs.f(f,t,q,p),
+            ż = (ż,t,q,p,params)     -> funcs.ż(ż,t,q,p),
+        )
+
+        new(H, t, q, p, params, equs, funcs_param)
     end
 end
 
 hamiltonian(hsys::HamiltonianSystem) = hsys.H
-variables(hsys::HamiltonianSystem) = (hsys.t, hsys.q, hsys.p)
 parameters(hsys::HamiltonianSystem) = hsys.parameters
-equations(hsys::HamiltonianSystem) = hsys.equations
-equation(hsys::HamiltonianSystem, name::Symbol) = equations(hsys)[name]
+variables(hsys::HamiltonianSystem) = (hsys.t, hsys.q, hsys.p)
+equations(lsys::HamiltonianSystem) = lsys.equations
+functions(lsys::HamiltonianSystem) = lsys.functions
 
 
 function hamiltonian_variables(dimension::Int)
@@ -93,12 +108,12 @@ end
 
 
 function HODE(lsys::HamiltonianSystem)
-    eqs = equations(lsys)
+    eqs = functions(lsys)
     HODE(eqs.v, eqs.f, eqs.H)
 end
 
 function HODEProblem(lsys::HamiltonianSystem, tspan::Tuple, tstep::Real, ics::NamedTuple)
-    eqs = equations(lsys)
+    eqs = functions(lsys)
     HODEProblem(eqs.v, eqs.f, eqs.H, tspan, tstep, ics)
 end
 

@@ -18,22 +18,15 @@ lag_sys = LagrangianSystem(sym_lag, t, x, v)
 @test isequal(lagrangian(lag_sys), EulerLagrange.substitute_lagrangian_variables(sym_lag, x, v))
 @test isequal(variables(lag_sys), (t, x, v))
 @test isequal(EulerLagrange.parameters(lag_sys), NamedTuple())
-@test isequal(EulerLagrange.equations(lag_sys), (
-    L = equation(lag_sys, :L),
-    EL= equation(lag_sys, :EL),
-    a = equation(lag_sys, :a),
-    ϑ = equation(lag_sys, :ϑ),
-    f = equation(lag_sys, :f),
-    g = equation(lag_sys, :g),
-    ω = equation(lag_sys, :ω),
-    Ω = equation(lag_sys, :Ω),
-    ϕ = equation(lag_sys, :ϕ),
-    ψ = equation(lag_sys, :ψ),
-    v̄ = equation(lag_sys, :v̄),
-    f̄ = equation(lag_sys, :f̄),
-    M = equation(lag_sys, :M),
-    P = equation(lag_sys, :P),
-))
+
+for k in (:L, :EL, :a, :ϑ, :θ, :f, :g, :ω, :Ω, :ϕ, :ψ, :M, :Σ)
+    @test k ∈ keys(EulerLagrange.equations(lag_sys))
+end
+
+for k in (:L, :EL, :a, :ϑ, :θ, :f, :g, :ω, :Ω, :ϕ, :ψ, :v̄, :f̄, :M, :P)
+    @test k ∈ keys(EulerLagrange.functions(lag_sys))
+end
+
 
 p̃(p, t, q, q̇, params) = p .= q̇
 f̃(f, t, q, q̇, params) = f .= -q
@@ -41,7 +34,7 @@ f̃(f, t, q, q̇, params) = f .= -q
 p₁, p₂ = zero(p₀), zero(p₀)
 f₁, f₂ = zero(p₀), zero(p₀)
     
-eqs = EulerLagrange.equations(lag_sys)
+eqs = functions(lag_sys)
 
 eqs.ϑ(p₁, t₀, q₀, v₀, params)
 eqs.f(f₁, t₀, q₀, v₀, params)

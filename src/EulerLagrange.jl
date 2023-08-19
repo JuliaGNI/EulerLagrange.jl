@@ -5,12 +5,12 @@ module EulerLagrange
     using Symbolics
     using Symbolics: FnType, Sym
 
-    import GeometricBase: equation, equations, parameters
+    import GeometricBase: equations, functions, parameters
     import GeometricEquations: HODE, HODEProblem
     import GeometricEquations: LODE, LODEProblem
 
 
-    export equation, equations, parameters, variables
+    export equations, functions, parameters, variables
 
 
     export symbolize

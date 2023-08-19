@@ -29,6 +29,7 @@ struct LagrangianSystem
     v
     parameters
     equations
+    functions
 
     function LagrangianSystem(L, t, x, v, params = NamedTuple())
 
@@ -70,62 +71,84 @@ struct LagrangianSystem
         ϕ = P .- ϑ
         ψ = F .- g
 
-        code_EL = substitute_parameters(build_function(EL, t, X, V, params...)[2], params)
-        code_a  = substitute_parameters(build_function(a,  t, X, V, params...)[2], params)
-        code_f  = substitute_parameters(build_function(f,  t, X, V, params...)[2], params)
-        code_g  = substitute_parameters(build_function(g,  t, X, V, params...)[2], params)
-        code_p  = substitute_parameters(build_function(ϑ,  t, X, V, params...)[1], params)
-        code_ϑ  = substitute_parameters(build_function(ϑ,  t, X, V, params...)[2], params)
-        code_ω  = substitute_parameters(build_function(ω,  t, X, V, params...)[2], params)
-        code_Ω  = substitute_parameters(build_function(Ω,  t, X, V, params...)[2], params)
-        code_ϕ  = substitute_parameters(build_function(ϕ,  t, X, V, P, params...)[2], params)
-        code_ψ  = substitute_parameters(build_function(ψ,  t, X, V, P, F, params...)[2], params)
-        code_L  = substitute_parameters(build_function(L,  t, X, V, params...), params)
-        code_M  = substitute_parameters(build_function(M,  t, X, V, params...)[2], params)
-        code_P  = substitute_parameters(build_function(Σ,  t, X, V, params...)[2], params)
-
-        eqs = (
-            EL = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_EL)),
-            a  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_a)),
-            f  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_f)),
-            g  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_g)),
-            p  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_p)),
-            ϑ  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_ϑ)),
-            ω  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_ω)),
-            Ω  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_Ω)),
-            ϕ  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_ϕ)),
-            ψ  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_ψ)),
-            L  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_L)),
-            M  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_M)),
-            P  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_P)),
+        equs = (
+            L = L,
+            EL = EL,
+            a = a,
+            f = f,
+            g = g,
+            ϑ = ϑ,
+            θ = θ,
+            ω = ω,
+            Ω = Ω,
+            ϕ = ϕ,
+            ψ = ψ,
+            M = M,
+            N = N,
+            Σ = Σ,
         )
 
-        param_eqs = length(params) > 0 ? eqs : (
-            L = (t,x,v,params)     -> eqs.L(t,x,v),
-            EL= (e,t,x,v,params)   -> eqs.EL(e,t,x,v),
-            a = (a,t,x,v,params)   -> eqs.a(a,t,x,v),
-            ϑ = (ϑ,t,x,v,params)   -> eqs.ϑ(ϑ,t,x,v),
-            f = (f,t,x,v,params)   -> eqs.f(f,t,x,v),
-            g = (f̄,t,x,v,λ,params) -> eqs.f̄(f̄,t,x,λ),
-            ω = (ω,t,x,v,params)   -> eqs.ω(ω,t,x,v),
-            Ω = (Ω,t,x,v,params)   -> eqs.Ω(Ω,t,x,v),
-            ϕ = (ϕ,t,x,v,params)   -> eqs.ϕ(ϕ,t,x,v),
-            ψ = (ψ,t,x,v,params)   -> eqs.ψ(ψ,t,x,v),
-            v̄ = (v,t,x,p,params)   -> eqs.ẋ(v,t,x,p),
-            f̄ = (f,t,x,v,params)   -> eqs.f(f,t,x,v),
-            M = (M,t,x,v,params)   -> eqs.M(M,t,x,v),
-            P = (P,t,x,v,params)   -> eqs.P(P,t,x,v),
+        code = (
+            L  = substitute_parameters(build_function(equs.L,  t, X, V, params...), params),
+            EL = substitute_parameters(build_function(equs.EL, t, X, V, params...)[2], params),
+            a  = substitute_parameters(build_function(equs.a,  t, X, V, params...)[2], params),
+            f  = substitute_parameters(build_function(equs.f,  t, X, V, params...)[2], params),
+            g  = substitute_parameters(build_function(equs.g,  t, X, V, params...)[2], params),
+            p  = substitute_parameters(build_function(equs.ϑ,  t, X, V, params...)[1], params),
+            ϑ  = substitute_parameters(build_function(equs.ϑ,  t, X, V, params...)[2], params),
+            θ  = substitute_parameters(build_function(equs.θ,  t, X, V, params...)[2], params),
+            ω  = substitute_parameters(build_function(equs.ω,  t, X, V, params...)[2], params),
+            Ω  = substitute_parameters(build_function(equs.Ω,  t, X, V, params...)[2], params),
+            ϕ  = substitute_parameters(build_function(equs.ϕ,  t, X, V, P, params...)[2], params),
+            ψ  = substitute_parameters(build_function(equs.ψ,  t, X, V, P, F, params...)[2], params),
+            M  = substitute_parameters(build_function(equs.M,  t, X, V, params...)[2], params),
+            P  = substitute_parameters(build_function(equs.Σ,  t, X, V, params...)[2], params),
         )
 
-        new(L, t, x, v, params, param_eqs)
+        funcs = NamedTuple{keys(code)}(Tuple(@RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(c)) for c in code))
+        # (
+        #     EL = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code.EL)),
+        #     a  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code.a)),
+        #     f  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code.f)),
+        #     g  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code.g)),
+        #     p  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code.p)),
+        #     ϑ  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code.ϑ)),
+        #     ω  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code.ω)),
+        #     Ω  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code.Ω)),
+        #     ϕ  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code.ϕ)),
+        #     ψ  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code.ψ)),
+        #     L  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code.L)),
+        #     M  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code.M)),
+        #     P  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code.P)),
+        # )
+
+        funcs_param = length(params) > 0 ? funcs : (
+            L = (t,x,v,params)     -> funcs.L(t,x,v),
+            EL= (e,t,x,v,params)   -> funcs.EL(e,t,x,v),
+            a = (a,t,x,v,params)   -> funcs.a(a,t,x,v),
+            ϑ = (ϑ,t,x,v,params)   -> funcs.ϑ(ϑ,t,x,v),
+            θ = (θ,t,x,v,params)   -> funcs.θ(θ,t,x,v),
+            f = (f,t,x,v,params)   -> funcs.f(f,t,x,v),
+            g = (f̄,t,x,v,λ,params) -> funcs.f̄(f̄,t,x,λ),
+            ω = (ω,t,x,v,params)   -> funcs.ω(ω,t,x,v),
+            Ω = (Ω,t,x,v,params)   -> funcs.Ω(Ω,t,x,v),
+            ϕ = (ϕ,t,x,v,params)   -> funcs.ϕ(ϕ,t,x,v),
+            ψ = (ψ,t,x,v,params)   -> funcs.ψ(ψ,t,x,v),
+            v̄ = (v,t,x,p,params)   -> funcs.ẋ(v,t,x,p),
+            f̄ = (f,t,x,v,params)   -> funcs.f(f,t,x,v),
+            M = (M,t,x,v,params)   -> funcs.M(M,t,x,v),
+            P = (P,t,x,v,params)   -> funcs.P(P,t,x,v),
+        )
+
+        new(L, t, x, v, params, equs, funcs_param)
     end
 end
 
 lagrangian(lsys::LagrangianSystem) = lsys.L
-variables(lsys::LagrangianSystem) = (lsys.t, lsys.x, lsys.v)
 parameters(lsys::LagrangianSystem) = lsys.parameters
+variables(lsys::LagrangianSystem) = (lsys.t, lsys.x, lsys.v)
 equations(lsys::LagrangianSystem) = lsys.equations
-equation(lsys::LagrangianSystem, name::Symbol) = equations(lsys)[name]
+functions(lsys::LagrangianSystem) = lsys.functions
 
 
 function lagrangian_variables(dimension::Int)
@@ -139,12 +162,12 @@ end
 
 
 function LODE(lsys::LagrangianSystem)
-    eqs = equations(lsys)
+    eqs = functions(lsys)
     LODE(eqs.ϑ, eqs.f, eqs.g, eqs.ω, eqs.L; v̄ = eqs.v̄, f̄ = eqs.f̄)
 end
 
 function LODEProblem(lsys::LagrangianSystem, tspan::Tuple, tstep::Real, ics::NamedTuple)
-    eqs = equations(lsys)
+    eqs = functions(lsys)
     LODEProblem(eqs.ϑ, eqs.f, eqs.g, eqs.ω, eqs.L, tspan, tstep, ics; v̄ = eqs.v̄, f̄ = eqs.f̄)
 end
 
