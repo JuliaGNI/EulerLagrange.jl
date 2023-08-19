@@ -150,6 +150,16 @@ variables(lsys::LagrangianSystem) = (lsys.t, lsys.x, lsys.v)
 equations(lsys::LagrangianSystem) = lsys.equations
 functions(lsys::LagrangianSystem) = lsys.functions
 
+function Base.show(io::IO, lsys::LagrangianSystem)
+    print(io, "\nLagrangian system with\n")
+    print(io, "\nL = ")
+    print(io, lagrangian(lsys))
+    print(io, "\n\nand equations of motion\n\n")
+    for eq in equations(lsys).EL
+        print(io, eq)
+        print(io, "\n")
+    end
+end
 
 function lagrangian_variables(dimension::Int)
     t = parameter(:t)

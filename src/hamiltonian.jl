@@ -84,6 +84,16 @@ variables(hsys::HamiltonianSystem) = (hsys.t, hsys.q, hsys.p)
 equations(lsys::HamiltonianSystem) = lsys.equations
 functions(lsys::HamiltonianSystem) = lsys.functions
 
+function Base.show(io::IO, hsys::HamiltonianSystem)
+    print(io, "\nHamiltonian system with\n")
+    print(io, "\nH = ")
+    print(io, hamiltonian(hsys))
+    print(io, "\n\nand equations of motion\n\n")
+    for eq in equations(hsys).EH
+        print(io, eq)
+        print(io, "\n")
+    end
+end
 
 function hamiltonian_variables(dimension::Int)
     t = parameter(:t)
