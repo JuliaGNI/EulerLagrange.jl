@@ -15,11 +15,11 @@ t, x, v = lagrangian_variables(2)
 sym_lag = L(t, x, v, params)
 lag_sys = LagrangianSystem(sym_lag, t, x, v)
 
-@test isequal(lagrangian(lag_sys), EulerLagrange.substitute_lagrangian_variables(sym_lag, x, v))
+@test isequal(lagrangian(lag_sys), sym_lag)
 @test isequal(variables(lag_sys), (t, x, v))
 @test isequal(EulerLagrange.parameters(lag_sys), NamedTuple())
 
-for k in (:L, :EL, :a, :ϑ, :θ, :f, :g, :ω, :Ω, :ϕ, :ψ, :M, :Σ)
+for k in (:L, :EL, :ϑ, :θ, :f, :g, :ω, :Ω, :ϕ, :ψ, :M, :N)
     @test k ∈ keys(EulerLagrange.equations(lag_sys))
 end
 

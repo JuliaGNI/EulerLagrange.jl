@@ -2,13 +2,15 @@
 function substitute_hamiltonian_variables(equ, q, p)
     @variables Q[axes(q,1)]
     @variables P[axes(p,1)]
-    substitute(equ, [z=>Z for (z,Z) in zip([q..., p...], [Q..., P...])])
+    substitute(equ, [zᵢ=>Zᵢ for (zᵢ,Zᵢ) in zip([q..., p...], [Q..., P...])])
 end
 
-function substitute_hamiltonian_variables!(eqs, q, p)
-    for i in eachindex(eqs)
-        eqs[i] = substitute_hamiltonian_variables(eqs[i], q, p)
-    end
+function substitute_hamiltonian_variables(equs::Union{AbstractArray, ArrayLike}, q, p)
+    [substitute_hamiltonian_variables(eq, q, p) for eq in equs]
+end
+
+function substitute_hamiltonian_variables(equs::NamedTuple, q, p)
+    NamedTuple{keys(equs)}(Tuple(substitute_hamiltonian_variables(eq, q, p) for eq in equs))
 end
 
 struct HamiltonianSystem
@@ -24,8 +26,6 @@ struct HamiltonianSystem
 
         @assert eachindex(q) == eachindex(p)
 
-        RuntimeGeneratedFunctions.init(@__MODULE__)
-
         @variables Q[axes(q,1)]
         @variables P[axes(p,1)]
 
@@ -35,16 +35,10 @@ struct HamiltonianSystem
 
         EHq = [expand_derivatives(Dt(q[i]) - Dp[i](H)) for i in eachindex(Dp,q)]
         EHp = [expand_derivatives(Dt(p[i]) + Dq[i](H)) for i in eachindex(Dq,p)]
+        EH  = vcat(EHq, EHp)
         v   = [expand_derivatives( dp(H)) for dp in Dp]
         f   = [expand_derivatives(-dq(H)) for dq in Dq]
-
-        for eq in (EHq, EHp, v, f)
-            substitute_hamiltonian_variables!(eq, q, p)
-        end
-
-        H  = substitute_hamiltonian_variables(H, q, p)
-        EH = vcat(EHq, EHp)
-        ż  = vcat(v, f)
+        ż   = vcat(v, f)
 
         equs = (
             H = H,
@@ -56,27 +50,19 @@ struct HamiltonianSystem
             ż = ż,
         )
 
+        equs_subs = substitute_hamiltonian_variables(equs, q, p)
+
         code = (
-            H   = substitute_parameters(build_function(equs.H, t, Q, P, params...),      params),
-            EH  = substitute_parameters(build_function(equs.EH, t, Q, P, params...)[2],  params),
-            EHq = substitute_parameters(build_function(equs.EHq, t, Q, P, params...)[2], params),
-            EHp = substitute_parameters(build_function(equs.EHp, t, Q, P, params...)[2], params),
-            v   = substitute_parameters(build_function(equs.v, t, Q, P, params...)[2],   params),
-            f   = substitute_parameters(build_function(equs.f, t, Q, P, params...)[2],   params),
-            ż   = substitute_parameters(build_function(equs.ż, t, Q, P, params...)[2],   params),
+            H   = substitute_parameters(build_function(equs_subs.H, t, Q, P, params...),      params),
+            EH  = substitute_parameters(build_function(equs_subs.EH, t, Q, P, params...)[2],  params),
+            EHq = substitute_parameters(build_function(equs_subs.EHq, t, Q, P, params...)[2], params),
+            EHp = substitute_parameters(build_function(equs_subs.EHp, t, Q, P, params...)[2], params),
+            v   = substitute_parameters(build_function(equs_subs.v, t, Q, P, params...)[2],   params),
+            f   = substitute_parameters(build_function(equs_subs.f, t, Q, P, params...)[2],   params),
+            ż   = substitute_parameters(build_function(equs_subs.ż, t, Q, P, params...)[2],   params),
         )
 
-        funcs = NamedTuple{keys(code)}(Tuple(@RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(c)) for c in code))
-
-        # funcs = (
-        #     H   = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_H)),
-        #     EH  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_EH)),
-        #     EHq = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_EHq)),
-        #     EHp = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_EHp)),
-        #     v   = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_v)),
-        #     f   = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_f)),
-        #     ż   = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code_ż))
-        # )
+        funcs = generate_code(code)
 
         funcs_param = length(params) > 0 ? funcs : (
             H = (t,q,p,params)       -> funcs.H(t,q,p),

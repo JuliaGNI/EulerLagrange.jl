@@ -1,24 +1,39 @@
 
+function substitute_v_with_ẋ(equ, v, ẋ)
+    for i in eachindex(ẋ,v)
+        equ = substitute(equ, v[i] => ẋ[i])
+    end
+    return equ
+end
+
+function substitute_v_with_ẋ(equs::Union{AbstractArray, ArrayLike}, v, ẋ)
+    [substitute_v_with_ẋ(eq, v, ẋ) for eq in equs]
+end
+
+function substitute_v_with_ẋ(equs::NamedTuple, v, ẋ)
+    NamedTuple{keys(equs)}(Tuple(substitute_v_with_ẋ(eq, v, ẋ) for eq in equs))
+end
+
 function substitute_ẋ_with_v(equ, ẋ, v)
     substitute(equ, [ẋᵢ=>vᵢ for (ẋᵢ,vᵢ) in zip(ẋ,v)])
 end
 
-function substitute_ẋ_with_v!(eqs, ẋ, v)
-    for i in eachindex(eqs)
-        eqs[i] = substitute_ẋ_with_v(eqs[i], ẋ, v)
-    end
+function substitute_ẋ_with_v(equs::Union{AbstractArray, ArrayLike}, ẋ, v)
+    [substitute_ẋ_with_v(eq, ẋ, v) for eq in equs]
 end
 
 function substitute_lagrangian_variables(equ, x, v)
     @variables X[axes(x, 1)]
     @variables V[axes(v, 1)]
-    substitute(equ, [z=>Z for (z,Z) in zip([x..., v...], [X..., V...])])
+    substitute(equ, [zᵢ=>Zᵢ for (zᵢ,Zᵢ) in zip([x..., v...], [X..., V...])])
 end
 
-function substitute_lagrangian_variables!(eqs, x, v)
-    for i in eachindex(eqs)
-        eqs[i] = substitute_lagrangian_variables(eqs[i], x, v)
-    end
+function substitute_lagrangian_variables(equs::Union{AbstractArray, ArrayLike}, x, v)
+    [substitute_lagrangian_variables(eq, x, v) for eq in equs]
+end
+
+function substitute_lagrangian_variables(equs::NamedTuple, x, ẋ, v)
+    NamedTuple{keys(equs)}(Tuple(substitute_lagrangian_variables(substitute_ẋ_with_v(eq, ẋ, v), x, v) for eq in equs))
 end
 
 
@@ -35,8 +50,9 @@ struct LagrangianSystem
 
         @assert eachindex(x) == eachindex(v)
 
-        RuntimeGeneratedFunctions.init(@__MODULE__)
-
+        @variables (p(t))[axes(x, 1)]
+        @variables (f(t))[axes(x, 1)]
+    
         @variables X[axes(x, 1)]
         @variables V[axes(v, 1)]
         @variables P[axes(v, 1)]
@@ -47,80 +63,64 @@ struct LagrangianSystem
         Dv = collect(Differential.(v))
         Dz = vcat(Dx,Dv)
         ẋ  = collect(Dt.(x))
+        ṗ  = collect(Dt.(p))
 
         EL = [expand_derivatives(Dx[i](L) - Dt(Dv[i](L))) for i in eachindex(Dx,Dv)]
         f  = [expand_derivatives(dx(L)) for dx in Dx]
         g  = [expand_derivatives(Dt(dv(L))) for dv in Dv]
         ϑ  = [expand_derivatives(dv(L)) for dv in Dv]
-        θ  = vcat(ϑ, zero(ϑ))
-        ω  = [expand_derivatives(simplify(Dz[i](θ[j]) - Dz[j](θ[i]))) for i in eachindex(Dz,θ), j in eachindex(Dz,θ)]
+        θ  = [expand_derivatives(dz(L)) for dz in Dz]
         Ω  = [expand_derivatives(simplify(Dx[i](ϑ[j]) - Dx[j](ϑ[i]))) for i in eachindex(Dx,ϑ), j in eachindex(Dx,ϑ)]
+        ω  = [expand_derivatives(simplify(Dz[i](θ[j]) - Dz[j](θ[i]))) for i in eachindex(Dz,θ), j in eachindex(Dz,θ)]
         M  = [expand_derivatives(simplify(Dv[i](ϑ[j]))) for i in eachindex(Dv), j in eachindex(ϑ)]
         N  = [expand_derivatives(simplify(Dx[i](ϑ[j]))) for i in eachindex(Dv), j in eachindex(ϑ)]
-
-        σ  = simplify.(inv(ω))
-        Σ  = simplify.(inv(Ω))
-        
-        for eq in (EL, f, g, ϑ, ω, Ω, M, N, σ, Σ)
-            substitute_ẋ_with_v!(eq, ẋ, v)
-            substitute_lagrangian_variables!(eq, x, v)
-        end
-
-        L = substitute_lagrangian_variables(L, x, v)
-        a = inv(M) * (f - N * V)
-        ϕ = P .- ϑ
-        ψ = F .- g
 
         equs = (
             L = L,
             EL = EL,
-            a = a,
             f = f,
             g = g,
             ϑ = ϑ,
             θ = θ,
-            ω = ω,
             Ω = Ω,
-            ϕ = ϕ,
-            ψ = ψ,
+            ω = ω,
             M = M,
             N = N,
-            Σ = Σ,
         )
+
+        equs_subs = substitute_lagrangian_variables(equs, x, ẋ, v)
+        equs_subs = merge(equs_subs, (
+            a = inv(equs_subs.M) * (equs_subs.f - equs_subs.N * V),
+            ϕ = P .- equs_subs.ϑ,
+            ψ = F .- equs_subs.g,
+            σ = simplify.(inv(equs_subs.ω)),
+            Σ = simplify.(inv(equs_subs.Ω)),
+        ))
+
+        equs = substitute_v_with_ẋ(equs, v, ẋ)
+        equs = merge(equs, (
+            ϕ = p .- equs.ϑ,
+            ψ = ṗ .- equs.g,
+        ))
 
         code = (
-            L  = substitute_parameters(build_function(equs.L,  t, X, V, params...), params),
-            EL = substitute_parameters(build_function(equs.EL, t, X, V, params...)[2], params),
-            a  = substitute_parameters(build_function(equs.a,  t, X, V, params...)[2], params),
-            f  = substitute_parameters(build_function(equs.f,  t, X, V, params...)[2], params),
-            g  = substitute_parameters(build_function(equs.g,  t, X, V, params...)[2], params),
-            p  = substitute_parameters(build_function(equs.ϑ,  t, X, V, params...)[1], params),
-            ϑ  = substitute_parameters(build_function(equs.ϑ,  t, X, V, params...)[2], params),
-            θ  = substitute_parameters(build_function(equs.θ,  t, X, V, params...)[2], params),
-            ω  = substitute_parameters(build_function(equs.ω,  t, X, V, params...)[2], params),
-            Ω  = substitute_parameters(build_function(equs.Ω,  t, X, V, params...)[2], params),
-            ϕ  = substitute_parameters(build_function(equs.ϕ,  t, X, V, P, params...)[2], params),
-            ψ  = substitute_parameters(build_function(equs.ψ,  t, X, V, P, F, params...)[2], params),
-            M  = substitute_parameters(build_function(equs.M,  t, X, V, params...)[2], params),
-            P  = substitute_parameters(build_function(equs.Σ,  t, X, V, params...)[2], params),
+            L  = substitute_parameters(build_function(equs_subs.L,  t, X, V, params...), params),
+            EL = substitute_parameters(build_function(equs_subs.EL, t, X, V, params...)[2], params),
+            a  = substitute_parameters(build_function(equs_subs.a,  t, X, V, params...)[2], params),
+            f  = substitute_parameters(build_function(equs_subs.f,  t, X, V, params...)[2], params),
+            g  = substitute_parameters(build_function(equs_subs.g,  t, X, V, params...)[2], params),
+            p  = substitute_parameters(build_function(equs_subs.ϑ,  t, X, V, params...)[1], params),
+            ϑ  = substitute_parameters(build_function(equs_subs.ϑ,  t, X, V, params...)[2], params),
+            θ  = substitute_parameters(build_function(equs_subs.θ,  t, X, V, params...)[2], params),
+            ω  = substitute_parameters(build_function(equs_subs.ω,  t, X, V, params...)[2], params),
+            Ω  = substitute_parameters(build_function(equs_subs.Ω,  t, X, V, params...)[2], params),
+            ϕ  = substitute_parameters(build_function(equs_subs.ϕ,  t, X, V, P, params...)[2], params),
+            ψ  = substitute_parameters(build_function(equs_subs.ψ,  t, X, V, P, F, params...)[2], params),
+            M  = substitute_parameters(build_function(equs_subs.M,  t, X, V, params...)[2], params),
+            P  = substitute_parameters(build_function(equs_subs.Σ,  t, X, V, params...)[2], params),
         )
 
-        funcs = NamedTuple{keys(code)}(Tuple(@RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(c)) for c in code))
-        # (
-        #     EL = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code.EL)),
-        #     a  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code.a)),
-        #     f  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code.f)),
-        #     g  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code.g)),
-        #     p  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code.p)),
-        #     ϑ  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code.ϑ)),
-        #     ω  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code.ω)),
-        #     Ω  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code.Ω)),
-        #     ϕ  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code.ϕ)),
-        #     ψ  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code.ψ)),
-        #     L  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code.L)),
-        #     M  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code.M)),
-        #     P  = @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code.P)),
-        # )
+        funcs = generate_code(code)
 
         funcs_param = length(params) > 0 ? funcs : (
             L = (t,x,v,params)     -> funcs.L(t,x,v),

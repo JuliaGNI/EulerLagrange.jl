@@ -3,11 +3,13 @@ module EulerLagrange
     using GeometricBase: NullParameters, State
     using RuntimeGeneratedFunctions
     using Symbolics
-    using Symbolics: FnType, Sym
+    using Symbolics: ArrayLike, FnType, Sym
 
     import GeometricBase: equations, functions, parameters
     import GeometricEquations: HODE, HODEProblem
     import GeometricEquations: LODE, LODEProblem
+
+    RuntimeGeneratedFunctions.init(@__MODULE__)
 
 
     export equations, functions, parameters, variables

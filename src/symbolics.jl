@@ -38,3 +38,12 @@ end
 function symbolize(::Union{Nothing,NullParameters})
     NamedTuple{}()
 end
+
+
+function generate_code(code)
+    @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code))
+end
+
+function generate_code(code::NamedTuple)
+    NamedTuple{keys(code)}(Tuple(generate_code(c) for c in code))
+end

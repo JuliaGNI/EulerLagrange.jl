@@ -15,7 +15,7 @@ t, q, p = hamiltonian_variables(2)
 sym_ham = H(t, q, p, params)
 ham_sys = HamiltonianSystem(sym_ham, t, q, p)
 
-@test isequal(hamiltonian(ham_sys), EulerLagrange.substitute_hamiltonian_variables(sym_ham, q, p))
+@test isequal(hamiltonian(ham_sys), sym_ham)
 @test isequal(variables(ham_sys), (t, q, p))
 @test isequal(EulerLagrange.parameters(ham_sys), NamedTuple())
 
