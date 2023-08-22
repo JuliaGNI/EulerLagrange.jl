@@ -81,8 +81,8 @@ end
 hamiltonian(hsys::HamiltonianSystem) = hsys.H
 parameters(hsys::HamiltonianSystem) = hsys.parameters
 variables(hsys::HamiltonianSystem) = (hsys.t, hsys.q, hsys.p)
-equations(lsys::HamiltonianSystem) = lsys.equations
-functions(lsys::HamiltonianSystem) = lsys.functions
+equations(hsys::HamiltonianSystem) = hsys.equations
+functions(hsys::HamiltonianSystem) = hsys.functions
 
 function Base.show(io::IO, hsys::HamiltonianSystem)
     print(io, "\nHamiltonian system with\n")
@@ -101,7 +101,6 @@ function hamiltonian_variables(dimension::Int)
     @variables (p(t))[1:dimension]
     return (t,q,p)
 end
-
 
 function HODE(lsys::HamiltonianSystem)
     eqs = functions(lsys)
