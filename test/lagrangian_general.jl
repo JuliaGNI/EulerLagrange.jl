@@ -1,10 +1,10 @@
 using EulerLagrange
-using ModelingToolkit
+using Symbolics
 using Test
 
 lvars = lagrangian_variables(2)
 
-@parameters t
+@variables t
 @variables (x(t))[1:2]
 @variables (v(t))[1:2]
 

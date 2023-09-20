@@ -1,6 +1,6 @@
 using EulerLagrange
 using EulerLagrange: NullParameters
-using ModelingToolkit
+using Symbolics
 using Test
 
 
@@ -9,7 +9,7 @@ sparams = symbolize(params)
 
 @test isequal(sparams, symbolize(sparams))
 
-@parameters params_a, params_b[1:2], params_c[1:2]
+@variables params_a, params_b[1:2], params_c[1:2]
 
 @test isequal(params_a, symbolize(params_a, :params_a))
 @test isequal(params_b, symbolize(params_b, :params_b))

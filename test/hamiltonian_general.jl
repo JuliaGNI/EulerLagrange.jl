@@ -1,10 +1,10 @@
 using EulerLagrange
-using ModelingToolkit
+using Symbolics
 using Test
 
 hvars = hamiltonian_variables(2)
 
-@parameters t
+@variables t
 @variables (q(t))[1:2]
 @variables (p(t))[1:2]
 
