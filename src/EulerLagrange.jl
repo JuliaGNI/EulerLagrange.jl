@@ -1,6 +1,6 @@
 module EulerLagrange
 
-    using GeometricBase: NullParameters, State
+    using GeometricBase: NullParameters, StateVariable
     using RuntimeGeneratedFunctions
     using Symbolics
     using Symbolics: ArrayLike, FnType, Sym
