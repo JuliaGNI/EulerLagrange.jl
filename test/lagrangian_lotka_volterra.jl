@@ -1,7 +1,6 @@
 using EulerLagrange
 using GeometricEquations
 using LinearAlgebra
-using ModelingToolkit
 using Test
 
 
