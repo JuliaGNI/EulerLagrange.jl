@@ -113,7 +113,7 @@ function HODEProblem(lsys::HamiltonianSystem, tspan::Tuple, tstep::Real, ics::Na
     HODEProblem(eqs.v, eqs.f, eqs.H, tspan, tstep, ics)
 end
 
-function HODEProblem(lsys::HamiltonianSystem, tspan::Tuple, tstep::Real, q₀::State, p₀::State)
+function HODEProblem(lsys::HamiltonianSystem, tspan::Tuple, tstep::Real, q₀::StateVariable, p₀::StateVariable)
     ics = (q = q₀, p = p₀)
     HODEProblem(lsys, tspan, tstep, ics)
 end
