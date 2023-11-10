@@ -6,19 +6,7 @@ using Test
 
 H(t, x, v, params) = params.a₁ * x[1] + params.a₂ * x[2] + params.b₁ * log(x[1]) + params.b₂ * log(x[2])
 L(t, x, v, params) = log(x[2]) / x[1] / 2 * v[1] - log(x[1]) / x[2] / 2 * v[2] - H(t,x,v,params)
-
-t₀, q₀ = 0.0, [2.0, 1.0]
-
-params = (
-    a₁ = -1.0,
-    a₂ = -1.0,
-    b₁ = 1.0,
-    b₂ = 2.0,
-)
-
-t, x, v = lagrangian_variables(2)
-sparams = symbolize(params)
-lag_sys = LagrangianSystem(L(t,x,v,sparams), t, x, v, sparams)
+ϑ(t, x, v, params) = [log(x[2]) / x[1] / 2, - log(x[1]) / x[2] / 2]
 
 dHd₁(t, q, params) = params.a₁ + params.b₁ / q[1]
 dHd₂(t, q, params) = params.a₂ + params.b₂ / q[2]
@@ -42,6 +30,21 @@ end
 t₀, q₀, v₀ = (0.0, [1.0, 1.0], [0.5, 2.0])
 p₀ = zero(v₀)
 
+params = (
+    a₁ = -1.0,
+    a₂ = -1.0,
+    b₁ = 1.0,
+    b₂ = 2.0,
+)
+
+t, x, v = lagrangian_variables(2)
+sparams = symbolize(params)
+
+
+# LagrangianSystem
+
+lag_sys = LagrangianSystem(L(t,x,v,sparams), t, x, v, sparams)
+
 p₁, p₂ = zero(p₀), zero(p₀)
 ṗ₁, ṗ₂ = zero(p₀), zero(p₀)
     
@@ -54,5 +57,25 @@ p̃(p₂, t₀, q₀, v₀, params)
 f̃(ṗ₂, t₀, q₀, v₀, params)
 
 @test eqs.L(t₀, q₀, v₀, params) == L(t₀, q₀, v₀, params)
+@test p₁ == p₂
+@test ṗ₁ == ṗ₂
+
+
+# DegenerateLagrangianSystem
+
+deg_lag_sys = DegenerateLagrangianSystem(ϑ(t,x,v,sparams), H(t,x,v,sparams), t, x, v, sparams)
+
+p₁, p₂ = zero(p₀), zero(p₀)
+ṗ₁, ṗ₂ = zero(p₀), zero(p₀)
+    
+deg_eqs = functions(deg_lag_sys)
+
+deg_eqs.ϑ(p₁, t₀, q₀, v₀, params)
+deg_eqs.f(ṗ₁, t₀, q₀, v₀, params)
+
+p̃(p₂, t₀, q₀, v₀, params)
+f̃(ṗ₂, t₀, q₀, v₀, params)
+
+@test deg_eqs.L(t₀, q₀, v₀, params) == L(t₀, q₀, v₀, params)
 @test p₁ == p₂
 @test ṗ₁ == ṗ₂

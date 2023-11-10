@@ -1,6 +1,7 @@
 module EulerLagrange
 
     using GeometricBase: NullParameters, StateVariable
+    using LinearAlgebra
     using RuntimeGeneratedFunctions
     using Symbolics
     using Symbolics: ArrayLike, FnType, Sym
@@ -26,9 +27,11 @@ module EulerLagrange
     include("hamiltonian.jl")
 
 
-    export LagrangianSystem
+    export LagrangianSystem, DegenerateLagrangianSystem
     export lagrangian, lagrangian_variables
 
+    include("lagrangian_common.jl")
     include("lagrangian.jl")
+    include("lagrangian_degenerate.jl")
     
 end
