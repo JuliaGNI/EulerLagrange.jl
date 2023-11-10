@@ -103,17 +103,17 @@ function hamiltonian_variables(dimension::Int)
 end
 
 
-function HODE(lsys::HamiltonianSystem)
+function HODE(lsys::HamiltonianSystem; kwargs...)
     eqs = functions(lsys)
-    HODE(eqs.v, eqs.f, eqs.H)
+    HODE(eqs.v, eqs.f, eqs.H; kwargs...)
 end
 
-function HODEProblem(lsys::HamiltonianSystem, tspan::Tuple, tstep::Real, ics::NamedTuple)
+function HODEProblem(lsys::HamiltonianSystem, tspan::Tuple, tstep::Real, ics::NamedTuple; kwargs...)
     eqs = functions(lsys)
-    HODEProblem(eqs.v, eqs.f, eqs.H, tspan, tstep, ics)
+    HODEProblem(eqs.v, eqs.f, eqs.H, tspan, tstep, ics; kwargs...)
 end
 
-function HODEProblem(lsys::HamiltonianSystem, tspan::Tuple, tstep::Real, q₀::StateVariable, p₀::StateVariable)
+function HODEProblem(lsys::HamiltonianSystem, tspan::Tuple, tstep::Real, q₀::StateVariable, p₀::StateVariable; kwargs...)
     ics = (q = q₀, p = p₀)
-    HODEProblem(lsys, tspan, tstep, ics)
+    HODEProblem(lsys, tspan, tstep, ics; kwargs...)
 end

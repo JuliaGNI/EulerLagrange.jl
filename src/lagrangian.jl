@@ -171,17 +171,17 @@ function lagrangian_variables(dimension::Int)
 end
 
 
-function LODE(lsys::LagrangianSystem)
+function LODE(lsys::LagrangianSystem; kwargs...)
     eqs = functions(lsys)
-    LODE(eqs.ϑ, eqs.f, eqs.g, eqs.ω, eqs.L; v̄ = eqs.v̄, f̄ = eqs.f̄)
+    LODE(eqs.ϑ, eqs.f, eqs.g, eqs.ω, eqs.L; f̄ = eqs.f̄, kwargs...)
 end
 
-function LODEProblem(lsys::LagrangianSystem, tspan::Tuple, tstep::Real, ics::NamedTuple)
+function LODEProblem(lsys::LagrangianSystem, tspan::Tuple, tstep::Real, ics::NamedTuple; kwargs...)
     eqs = functions(lsys)
-    LODEProblem(eqs.ϑ, eqs.f, eqs.g, eqs.ω, eqs.L, tspan, tstep, ics; v̄ = eqs.v̄, f̄ = eqs.f̄)
+    LODEProblem(eqs.ϑ, eqs.f, eqs.g, eqs.ω, eqs.L, tspan, tstep, ics; f̄ = eqs.f̄, kwargs...)
 end
 
-function LODEProblem(lsys::LagrangianSystem, tspan::Tuple, tstep::Real, q₀::StateVariable, p₀::StateVariable, λ₀::StateVariable = zero(q₀))
+function LODEProblem(lsys::LagrangianSystem, tspan::Tuple, tstep::Real, q₀::StateVariable, p₀::StateVariable, λ₀::StateVariable = zero(q₀); kwargs...)
     ics = (q = q₀, p = p₀, λ = λ₀)
-    LODEProblem(lsys, tspan, tstep, ics)
+    LODEProblem(lsys, tspan, tstep, ics; kwargs...)
 end
