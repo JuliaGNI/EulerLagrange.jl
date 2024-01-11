@@ -41,7 +41,7 @@ end
 
 
 function generate_code(code)
-    @RuntimeGeneratedFunction(Symbolics.inject_registered_module_functions(code))
+    @RuntimeGeneratedFunction(code)
 end
 
 function generate_code(code::NamedTuple)
