@@ -27,7 +27,7 @@ function f̃(f, t, q, q̇, params)
     f[2] = f₂(t,q,q̇) - dHd₂(t, q, params)
 end
 
-t₀, q₀, v₀ = (0.0, [1.0, 1.0], [0.5, 2.0])
+t₀, q₀, v₀ = (0.0, [2.0, 1.0], [0.5, 2.0])
 p₀ = zero(v₀)
 
 params = (
@@ -35,6 +35,13 @@ params = (
     a₂ = -1.0,
     b₁ = 1.0,
     b₂ = 2.0,
+)
+
+params_alt = (
+    a₁ = -1.0,
+    a₂ = -1.0,
+    b₁ = 2.0,
+    b₂ = 1.0,
 )
 
 t, x, v = lagrangian_variables(2)
@@ -57,8 +64,11 @@ p̃(p₂, t₀, q₀, v₀, params)
 f̃(ṗ₂, t₀, q₀, v₀, params)
 
 @test eqs.L(t₀, q₀, v₀, params) == L(t₀, q₀, v₀, params)
-@test p₁ == p₂
-@test ṗ₁ == ṗ₂
+@test p₁ ≈ p₂  atol=2eps()
+@test ṗ₁ ≈ ṗ₂  atol=2eps()
+
+
+@test eqs.L(t₀, q₀, v₀, params_alt) != L(t₀, q₀, v₀, params)
 
 
 # DegenerateLagrangianSystem
@@ -77,5 +87,7 @@ p̃(p₂, t₀, q₀, v₀, params)
 f̃(ṗ₂, t₀, q₀, v₀, params)
 
 @test deg_eqs.L(t₀, q₀, v₀, params) == L(t₀, q₀, v₀, params)
-@test p₁ == p₂
-@test ṗ₁ == ṗ₂
+@test p₁ ≈ p₂  atol=2eps()
+@test ṗ₁ ≈ ṗ₂  atol=2eps()
+
+@test deg_eqs.L(t₀, q₀, v₀, params_alt) != L(t₀, q₀, v₀, params)

@@ -86,12 +86,12 @@ struct DegenerateLagrangianSystem
             EL= (e,t,x,v,params)   -> funcs.EL(e,t,x,v),
             ϑ = (ϑ,t,x,v,params)   -> funcs.ϑ(ϑ,t,x,v),
             f = (f,t,x,v,params)   -> funcs.f(f,t,x,v),
-            g = (f̄,t,x,v,λ,params) -> funcs.f̄(f̄,t,x,λ),
+            g = (g,t,x,v,λ,params) -> funcs.f̄(g,t,x,v,λ),
             ω = (ω,t,x,v,params)   -> funcs.ω(ω,t,x,v),
             ϕ = (ϕ,t,x,v,params)   -> funcs.ϕ(ϕ,t,x,v),
             ψ = (ψ,t,x,v,params)   -> funcs.ψ(ψ,t,x,v),
             v̄ = (v,t,x,p,params)   -> funcs.ẋ(v,t,x,p),
-            f̄ = (f,t,x,v,params)   -> funcs.f(f,t,x,v),
+            f̄ = (f̄,t,x,v,params)   -> funcs.f(f̄,t,x,v),
             P = (P,t,x,v,params)   -> funcs.P(P,t,x,v),
         )
 
