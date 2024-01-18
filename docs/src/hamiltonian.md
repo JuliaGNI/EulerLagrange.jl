@@ -18,7 +18,7 @@ Before any use, we need to load `EulerLagrange`:
 using EulerLagrange
 ```
 
-Next, we generate symbolic variables for a one-dimensional system:
+Next, we generate symbolic variables for a one-dimensional Hamiltonian system:
 ```@example ham
 t, q, p = hamiltonian_variables(1)
 ```

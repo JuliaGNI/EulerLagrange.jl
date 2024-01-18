@@ -1,12 +1,8 @@
-```@meta
-CurrentModule = EulerLagrange
-```
-
 # Lagrangian Systems
 
 The Euler-Lagrange equations, that is the dynamical equations of a Lagrangian system, are given in terms of the Lagrangian ``L(x,v)`` by
 ```math
-\frac{d}{dt} \frac{\partial L}{\partial v} - \frac{\partial L}{\partial x} .
+\frac{d}{dt} \frac{\partial L}{\partial v} - \frac{\partial L}{\partial x} = 0 .
 ```
 For regular (i.e. non-degenerate) Lagrangians, this is a set of second-order ordinary differential equations.
 In many numerical applications, it is advantageous to solve the implicit form of these equations, given by
