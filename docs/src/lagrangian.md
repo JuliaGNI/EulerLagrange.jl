@@ -71,51 +71,38 @@ save("particle_vi.svg", fig); nothing # hide
 ![](particle_vi.svg)
 
 
-```@setup lag_params
-using CairoMakie
-using EulerLagrange
-using LinearAlgebra
-using GeometricIntegrators
-
-t, x, v = lagrangian_variables(2)
-
-tspan = (0.0, 10.0)
-tstep = 0.01
-
-q₀ = [1.0, 1.0]
-p₀ = [0.5, 2.0]
-```
+## Parameters
 
 We can also include parametric dependencies in the Lagrangian.
 Consider, for example, a parameter `α` that determines the strength of the potential.
 
 The easiest way, to account for parameters, is to create a named tuple with typical values for each parameters, e.g.,
-```@example lag_params
+```@example lag
 params = (α = 5.0,)
 ```
 
 In the next step, we use the function `symbolize` to generate a symbolic version of the parameters:
-```@example lag_params
+```@example lag
 sparams = symbolize(params)
 ```
 
 Now we modify the Lagrangian to account for the parameter:
-```@example lag_params
+```@example lag
 L = v ⋅ v / 2 - sparams.α * (x ⋅ x) / 2
 ```
 
 From here on, everything follows along the same lines as before, the only difference being that we also need to pass the symbolic parameters `sparams` to the `LagrangianSystem` constructor:
-```@example lag_params
-lag_sys = EulerLagrange.LagrangianSystem(L, t, x, v, sparams)
+```@example lag
+lag_sys = LagrangianSystem(L, t, x, v, sparams)
 ```
 
 Analogously, we need to pass actual parameter values `params` to the `LODEProblem` constructor via the `parameters` keyword argument:
-```@example lag_params
+```@example lag
 lprob = LODEProblem(lag_sys, tspan, tstep, q₀, p₀; parameters = params)
 ```
 
 This problem can again be integrated using GeometricIntegrators:
-```@example lag_params
+```@example lag
 sol = integrate(lprob, Gauss(1))
 
 fig = lines(parent(sol.q[:,1]), parent(sol.q[:,2]);
