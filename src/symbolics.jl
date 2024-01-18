@@ -21,7 +21,16 @@ function substitute_parameters(code, params)
         # convert code string back to expression
         return Meta.parse(code_str)
     else
-        return code
+        # convert code expression to string
+        code_str = string(code)
+        # extract function header
+        func_str = code_str[first(findfirst("function (", code_str)):last(findfirst(")", code_str))]
+        # append params argument to function header
+        func_str_params = replace(func_str, ")" => ", params)")
+        # replace function header in code
+        code_str = replace(code_str, func_str => func_str_params)
+        # convert code string back to expression
+        return Meta.parse(code_str)
     end
 end
 

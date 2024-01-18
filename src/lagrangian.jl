@@ -87,25 +87,7 @@ struct LagrangianSystem
 
         funcs = generate_code(code)
 
-        funcs_param = length(params) > 0 ? funcs : (
-            L = (t,x,v,params)     -> funcs.L(t,x,v),
-            EL= (e,t,x,v,params)   -> funcs.EL(e,t,x,v),
-            a = (a,t,x,v,params)   -> funcs.a(a,t,x,v),
-            ϑ = (ϑ,t,x,v,params)   -> funcs.ϑ(ϑ,t,x,v),
-            θ = (θ,t,x,v,params)   -> funcs.θ(θ,t,x,v),
-            f = (f,t,x,v,params)   -> funcs.f(f,t,x,v),
-            g = (g,t,x,v,λ,params) -> funcs.f̄(g,t,x,v,λ),
-            ω = (ω,t,x,v,params)   -> funcs.ω(ω,t,x,v),
-            Ω = (Ω,t,x,v,params)   -> funcs.Ω(Ω,t,x,v),
-            ϕ = (ϕ,t,x,v,params)   -> funcs.ϕ(ϕ,t,x,v),
-            ψ = (ψ,t,x,v,params)   -> funcs.ψ(ψ,t,x,v),
-            v̄ = (v,t,x,p,params)   -> funcs.ẋ(v,t,x,p),
-            f̄ = (f̄,t,x,v,params)   -> funcs.f(f̄,t,x,v),
-            M = (M,t,x,v,params)   -> funcs.M(M,t,x,v),
-            P = (P,t,x,v,params)   -> funcs.P(P,t,x,v),
-        )
-
-        new(L, t, x, v, params, equs, funcs_param)
+        new(L, t, x, v, params, equs, funcs)
     end
 end
 

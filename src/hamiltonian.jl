@@ -64,17 +64,7 @@ struct HamiltonianSystem
 
         funcs = generate_code(code)
 
-        funcs_param = length(params) > 0 ? funcs : (
-            H = (t,q,p,params)       -> funcs.H(t,q,p),
-            EH  = (EH, t,q,p,params) -> funcs.EH(EH,t,q,p),
-            EHq = (EHq,t,q,p,params) -> funcs.EHq(EHq,t,q,p),
-            EHp = (EHp,t,q,p,params) -> funcs.EHp(EHp,t,q,p),
-            v = (v,t,q,p,params)     -> funcs.v(v,t,q,p),
-            f = (f,t,q,p,params)     -> funcs.f(f,t,q,p),
-            ż = (ż,t,q,p,params)     -> funcs.ż(ż,t,q,p),
-        )
-
-        new(H, t, q, p, params, equs, funcs_param)
+        new(H, t, q, p, params, equs, funcs)
     end
 end
 
