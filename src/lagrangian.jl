@@ -21,6 +21,7 @@ struct LagrangianSystem
         @variables V[axes(v, 1)]
         @variables P[axes(v, 1)]
         @variables F[axes(x, 1)]
+        @variables Λ[axes(v, 1)]
 
         Dt = Differential(t)
         Dx = collect(Differential.(x))
@@ -72,7 +73,7 @@ struct LagrangianSystem
             EL = substitute_parameters(build_function(equs_subs.EL, t, X, V, params...)[2], params),
             a  = substitute_parameters(build_function(equs_subs.a,  t, X, V, params...)[2], params),
             f  = substitute_parameters(build_function(equs_subs.f,  t, X, V, params...)[2], params),
-            g  = substitute_parameters(build_function(equs_subs.g,  t, X, V, params...)[2], params),
+            g  = substitute_parameters(build_function(equs_subs.g,  t, X, Λ, V, params...)[2], params),
             p  = substitute_parameters(build_function(equs_subs.ϑ,  t, X, V, params...)[1], params),
             ϑ  = substitute_parameters(build_function(equs_subs.ϑ,  t, X, V, params...)[2], params),
             θ  = substitute_parameters(build_function(equs_subs.θ,  t, X, V, params...)[2], params),
@@ -128,12 +129,12 @@ end
 
 function LODE(lsys::LagrangianSystem; kwargs...)
     eqs = functions(lsys)
-    LODE(eqs.ϑ, eqs.f, eqs.g, eqs.ω, eqs.L; f̄ = eqs.f̄, kwargs...)
+    LODE(eqs.ϑ, eqs.f, eqs.g, eqs.ω, eqs.L; f̄ = eqs.f, kwargs...)
 end
 
 function LODEProblem(lsys::LagrangianSystem, tspan::Tuple, tstep::Real, ics::NamedTuple; kwargs...)
     eqs = functions(lsys)
-    LODEProblem(eqs.ϑ, eqs.f, eqs.g, eqs.ω, eqs.L, tspan, tstep, ics; f̄ = eqs.f̄, kwargs...)
+    LODEProblem(eqs.ϑ, eqs.f, eqs.g, eqs.ω, eqs.L, tspan, tstep, ics; f̄ = eqs.f, kwargs...)
 end
 
 function LODEProblem(lsys::LagrangianSystem, tspan::Tuple, tstep::Real, q₀::StateVariable, p₀::StateVariable, λ₀::StateVariable = zero(q₀); kwargs...)

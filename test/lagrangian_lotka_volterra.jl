@@ -44,6 +44,9 @@ params_alt = (
     b₂ = 1.0,
 )
 
+
+# Symbolic variables and parameters
+
 t, x, v = lagrangian_variables(2)
 sparams = symbolize(params)
 

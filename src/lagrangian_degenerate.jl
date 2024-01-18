@@ -21,6 +21,7 @@ struct DegenerateLagrangianSystem
         @variables V[axes(v, 1)]
         @variables P[axes(v, 1)]
         @variables F[axes(x, 1)]
+        @variables Λ[axes(v, 1)]
 
         Dt = Differential(t)
         Dx = collect(Differential.(x))
@@ -70,7 +71,7 @@ struct DegenerateLagrangianSystem
             ∇H = substitute_parameters(build_function(equs_subs.∇H, t, X, V, params...)[2], params),
             ẋ  = substitute_parameters(build_function(equs_subs.ẋ,  t, X, V, params...)[2], params),
             f  = substitute_parameters(build_function(equs_subs.f,  t, X, V, params...)[2], params),
-            g  = substitute_parameters(build_function(equs_subs.g,  t, X, V, params...)[2], params),
+            g  = substitute_parameters(build_function(equs_subs.g,  t, X, Λ, V, params...)[2], params),
             p  = substitute_parameters(build_function(equs_subs.ϑ,  t, X, V, params...)[1], params),
             ϑ  = substitute_parameters(build_function(equs_subs.ϑ,  t, X, V, params...)[2], params),
             ω  = substitute_parameters(build_function(equs_subs.ω,  t, X, V, params...)[2], params),

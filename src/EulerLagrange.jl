@@ -13,6 +13,9 @@ module EulerLagrange
     RuntimeGeneratedFunctions.init(@__MODULE__)
 
 
+    export HODE, HODEProblem
+    export LODE, LODEProblem
+
     export equations, functions, parameters, variables
 
 
