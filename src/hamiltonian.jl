@@ -13,6 +13,9 @@ function substitute_hamiltonian_variables(equs::NamedTuple, q, p)
     NamedTuple{keys(equs)}(Tuple(substitute_hamiltonian_variables(eq, q, p) for eq in equs))
 end
 
+"""
+    HamiltonianSystem
+"""
 struct HamiltonianSystem
     H
     t

@@ -4,15 +4,19 @@ using Documenter
 makedocs(;
     modules=[EulerLagrange],
     authors="Michael Kraus",
-    repo="https://github.com/JuliaGNI/EulerLagrange.jl/blob/{commit}{path}#L{line}",
     sitename="EulerLagrange.jl",
     format=Documenter.HTML(;
-        prettyurls=get(ENV, "CI", "false") == "true",
-        canonical="https://JuliaGNI.github.io/EulerLagrange.jl",
-        assets=String[],
+        prettyurls = get(ENV, "CI", nothing) == "true",
+        canonical = "https://JuliaGNI.github.io/EulerLagrange.jl",
+        assets = String[],
     ),
     pages=[
         "Home" => "index.md",
+        "Hamiltonian Systems" => "hamiltonian.md",
+        "Lagrangian Systems" => "lagrangian.md",
+        "Degenerate Lagrangian Systems" => "degenerate_lagrangian.md",
+        "Caveats" => "caveats.md",
+        "Library" => "library.md",
     ],
 )
 

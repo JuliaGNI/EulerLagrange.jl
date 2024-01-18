@@ -1,3 +1,5 @@
 [deps]
+CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 EulerLagrange = "e4b6a126-98cc-486b-a68d-c3e5d57f8cc9"
+GeometricIntegrators = "dcce2d33-59f6-5b8d-9047-0defad88ae06"
