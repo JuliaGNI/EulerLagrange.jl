@@ -48,7 +48,7 @@ The constructor computes the Euler-Lagrange equations and generates the correspo
 In the last step, we can now construct a `LODEProblem` from the `LagrangianSystem` and some appropriate initial conditions, a time span to integrate over and a time step:
 ```@example lag
 tspan = (0.0, 10.0)
-tstep = 0.1
+tstep = 0.01
 
 q₀ = [1.0, 1.0]
 p₀ = [0.5, 2.0]
@@ -62,7 +62,7 @@ using GeometricIntegrators
 sol = integrate(lprob, Gauss(1))
 
 using CairoMakie
-fig = lines(sol.q[:,1], sol.q[:,2];
+fig = lines(parent(sol.q[:,1]), parent(sol.q[:,2]);
     axis = (; xlabel = "x₁", ylabel = "x₂", title = "Particle moving in a square potential"),
     figure = (; size = (800,600), fontsize = 22))
 save("particle_vi.svg", fig); nothing # hide
@@ -80,7 +80,7 @@ using GeometricIntegrators
 t, x, v = lagrangian_variables(2)
 
 tspan = (0.0, 10.0)
-tstep = 0.1
+tstep = 0.01
 
 q₀ = [1.0, 1.0]
 p₀ = [0.5, 2.0]
@@ -118,7 +118,7 @@ This problem can again be integrated using GeometricIntegrators:
 ```@example lag_params
 sol = integrate(lprob, Gauss(1))
 
-fig = lines(sol.q[:,1], sol.q[:,2];
+fig = lines(parent(sol.q[:,1]), parent(sol.q[:,2]);
     axis = (; xlabel = "x₁", ylabel = "x₂", title = "Particle moving in a square potential"),
     figure = (; size = (800,600), fontsize = 22))
 save("particle_vi_param.svg", fig); nothing # hide
