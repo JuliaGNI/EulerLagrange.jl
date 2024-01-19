@@ -104,14 +104,14 @@ function Base.show(io::IO, lsys::DegenerateLagrangianSystem)
 end
 
 
-function LODE(lsys::DegenerateLagrangianSystem; kwargs...)
+function LODE(lsys::DegenerateLagrangianSystem; v̄ = functions(lsys).ẋ, f̄ = functions(lsys).f, kwargs...)
     eqs = functions(lsys)
-    LODE(eqs.ϑ, eqs.f, eqs.g, eqs.ω, eqs.L; v̄ = eqs.ẋ, f̄ = eqs.f, kwargs...)
+    LODE(eqs.ϑ, eqs.f, eqs.g, eqs.ω, eqs.L; v̄ = v̄, f̄ = f̄, kwargs...)
 end
 
-function LODEProblem(lsys::DegenerateLagrangianSystem, tspan::Tuple, tstep::Real, ics::NamedTuple; kwargs...)
+function LODEProblem(lsys::DegenerateLagrangianSystem, tspan::Tuple, tstep::Real, ics::NamedTuple; v̄ = functions(lsys).ẋ, f̄ = functions(lsys).f, kwargs...)
     eqs = functions(lsys)
-    LODEProblem(eqs.ϑ, eqs.f, eqs.g, eqs.ω, eqs.L, tspan, tstep, ics; v̄ = eqs.ẋ, f̄ = eqs.f, kwargs...)
+    LODEProblem(eqs.ϑ, eqs.f, eqs.g, eqs.ω, eqs.L, tspan, tstep, ics; v̄ = v̄, f̄ = f̄, kwargs...)
 end
 
 function LODEProblem(lsys::DegenerateLagrangianSystem, tspan::Tuple, tstep::Real, q₀::StateVariable, p₀::StateVariable, λ₀::StateVariable = zero(q₀); kwargs...)
