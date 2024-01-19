@@ -5,7 +5,7 @@ parameter(name::Symbol) = Num(Sym{Real}(name))
 function substitute_parameters(code, params)
     if length(params) > 0
         # generate string of parameter arguments as they appear in generated code
-        paramstr = string(Tuple(string(k) * ", " for k in keys(params))...)
+        paramstr = string(Tuple(string(k) * "ₚ, " for k in keys(params))...)
         # remove trailing comma
         paramstr = paramstr[begin:prevind(paramstr, first((findlast(",", paramstr))))]
         # convert code expression to string
@@ -18,7 +18,7 @@ function substitute_parameters(code, params)
         code_str = replace(code_str, func_str => func_str_params)
         # replace all params with named tuple entries
         for k in keys(params)
-            code_str = replace(code_str, "$(k)" => "params.$(k)")
+            code_str = replace(code_str, "$(k)ₚ" => "params.$(k)")
         end
         # convert code string back to expression
         return Meta.parse(code_str)
@@ -51,7 +51,7 @@ function symbolize(p::Union{Symbolics.Num, Symbolics.Arr{Symbolics.Num}}, name)
 end
 
 function symbolize(params::NamedTuple)
-    NamedTuple{keys(params)}(Tuple(symbolize(v, Symbol("$(k)")) for (k,v) in pairs(params)))
+    NamedTuple{keys(params)}(Tuple(symbolize(v, Symbol("$(k)ₚ")) for (k,v) in pairs(params)))
 end
 
 function symbolize(::Union{Nothing,NullParameters})

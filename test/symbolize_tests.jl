@@ -9,15 +9,15 @@ sparams = symbolize(params)
 
 @test isequal(sparams, symbolize(sparams))
 
-@variables a, b[1:2], c[1:2]
+@variables aₚ, bₚ[1:2], cₚ[1:2]
 
-@test isequal(a, symbolize(a, :a))
-@test isequal(b, symbolize(b, :b))
-@test isequal(c, symbolize(c, :c))
+@test isequal(aₚ, symbolize(aₚ, :aₚ))
+@test isequal(bₚ, symbolize(bₚ, :bₚ))
+@test isequal(cₚ, symbolize(cₚ, :cₚ))
 
-@test isequal(sparams.a, a)
-@test isequal(sparams.b, b)
-@test isequal(sparams.c, c)
+@test isequal(sparams.a, aₚ)
+@test isequal(sparams.b, bₚ)
+@test isequal(sparams.c, cₚ)
 
 @test symbolize(nothing) == NamedTuple()
 @test symbolize(NullParameters()) == NamedTuple()
