@@ -110,3 +110,9 @@ function HODEProblem(lsys::HamiltonianSystem, tspan::Tuple, tstep::Real, q₀::S
     ics = (q = q₀, p = p₀)
     HODEProblem(lsys, tspan, tstep, ics; kwargs...)
 end
+
+function HODEProblem(lsys::HamiltonianSystem, tspan::Tuple, tstep::Real, q₀::AbstractArray, p₀::AbstractArray; kwargs...)
+    _q₀ = StateVariable(q₀)
+    _p₀ = StateVariable(p₀)
+    HODEProblem(lsys, tspan, tstep, _q₀, _p₀; kwargs...)
+end

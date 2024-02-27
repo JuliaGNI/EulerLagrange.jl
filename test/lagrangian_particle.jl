@@ -17,7 +17,7 @@ f₁, f₂ = zero(p₀), zero(p₀)
 ntime = 1000
 tstep = 0.01
 tspan = (0.0, ntime * tstep)
-ics   = (q = q₀, p = p₀, λ = zero(q₀))
+ics   = (q = StateVariable(q₀), p = StateVariable(p₀), λ = AlgebraicVariable(zero(q₀)))
 
 
 # Test without parameters
