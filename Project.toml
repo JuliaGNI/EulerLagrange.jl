@@ -11,7 +11,7 @@ RuntimeGeneratedFunctions = "7e49a35a-f44a-4d26-94aa-eba1b4ca6b47"
 Symbolics = "0c5d862f-8b57-4792-8d23-62f2024744c7"
 
 [compat]
-GeometricBase = "0.9"
+GeometricBase = "0.9, 0.10"
 GeometricEquations = "0.12, 0.13, 0.14, 0.15, 0.16"
 RuntimeGeneratedFunctions = "0.5"
 Symbolics = "5"
