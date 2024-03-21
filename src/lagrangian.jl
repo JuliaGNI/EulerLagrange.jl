@@ -10,6 +10,7 @@ struct LagrangianSystem
     equations
     functions
 
+    # function LagrangianSystem(L, t, x, v, params = NamedTuple(); dosimplify = true)
     function LagrangianSystem(L, t, x, v, params = NamedTuple())
 
         @assert eachindex(x) == eachindex(v)
@@ -53,13 +54,15 @@ struct LagrangianSystem
             N = N,
         )
 
+        # _simplify(expr, dosimplify) = dosimplify ? simplify.(expr) : expr
+
         equs_subs = substitute_lagrangian_variables(equs, x, ẋ, v)
         equs_subs = merge(equs_subs, (
             a = inv(equs_subs.M) * (equs_subs.f - equs_subs.N * V),
             ϕ = P .- equs_subs.ϑ,
             ψ = F .- equs_subs.g,
-            σ = simplify.(inv(equs_subs.ω)),
-            Σ = simplify.(inv(equs_subs.Ω)),
+            # σ = _simplify(inv(equs_subs.ω), dosimplify),
+            # Σ = _simplify(inv(equs_subs.Ω), dosimplify),
         ))
 
         equs = substitute_v_with_ẋ(equs, v, ẋ)
