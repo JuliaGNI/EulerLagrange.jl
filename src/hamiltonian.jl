@@ -56,13 +56,13 @@ struct HamiltonianSystem
         equs_subs = substitute_hamiltonian_variables(equs, q, p)
 
         code = (
-            H   = substitute_parameters(build_function(equs_subs.H, t, Q, P, params...),      params),
-            EH  = substitute_parameters(build_function(equs_subs.EH, t, Q, P, params...)[2],  params),
-            EHq = substitute_parameters(build_function(equs_subs.EHq, t, Q, P, params...)[2], params),
-            EHp = substitute_parameters(build_function(equs_subs.EHp, t, Q, P, params...)[2], params),
-            v   = substitute_parameters(build_function(equs_subs.v, t, Q, P, params...)[2],   params),
-            f   = substitute_parameters(build_function(equs_subs.f, t, Q, P, params...)[2],   params),
-            ż   = substitute_parameters(build_function(equs_subs.ż, t, Q, P, params...)[2],   params),
+            H   = substitute_parameters(build_function(equs_subs.H, t, Q, P, params...; nanmath = false),      params),
+            EH  = substitute_parameters(build_function(equs_subs.EH, t, Q, P, params...; nanmath = false)[2],  params),
+            EHq = substitute_parameters(build_function(equs_subs.EHq, t, Q, P, params...; nanmath = false)[2], params),
+            EHp = substitute_parameters(build_function(equs_subs.EHp, t, Q, P, params...; nanmath = false)[2], params),
+            v   = substitute_parameters(build_function(equs_subs.v, t, Q, P, params...; nanmath = false)[2],   params),
+            f   = substitute_parameters(build_function(equs_subs.f, t, Q, P, params...; nanmath = false)[2],   params),
+            ż   = substitute_parameters(build_function(equs_subs.ż, t, Q, P, params...; nanmath = false)[2],   params),
         )
 
         funcs = generate_code(code)

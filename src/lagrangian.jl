@@ -69,20 +69,20 @@ struct LagrangianSystem
         ))
 
         code = (
-            L  = substitute_parameters(build_function(equs_subs.L,  t, X, V, params...), params),
-            EL = substitute_parameters(build_function(equs_subs.EL, t, X, V, params...)[2], params),
-            a  = substitute_parameters(build_function(equs_subs.a,  t, X, V, params...)[2], params),
-            f  = substitute_parameters(build_function(equs_subs.f,  t, X, V, params...)[2], params),
-            g  = substitute_parameters(build_function(equs_subs.g,  t, X, Λ, V, params...)[2], params),
-            p  = substitute_parameters(build_function(equs_subs.ϑ,  t, X, V, params...)[1], params),
-            ϑ  = substitute_parameters(build_function(equs_subs.ϑ,  t, X, V, params...)[2], params),
-            θ  = substitute_parameters(build_function(equs_subs.θ,  t, X, V, params...)[2], params),
-            ω  = substitute_parameters(build_function(equs_subs.ω,  t, X, V, params...)[2], params),
-            Ω  = substitute_parameters(build_function(equs_subs.Ω,  t, X, V, params...)[2], params),
-            ϕ  = substitute_parameters(build_function(equs_subs.ϕ,  t, X, V, P, params...)[2], params),
-            ψ  = substitute_parameters(build_function(equs_subs.ψ,  t, X, V, P, F, params...)[2], params),
-            M  = substitute_parameters(build_function(equs_subs.M,  t, X, V, params...)[2], params),
-            P  = substitute_parameters(build_function(equs_subs.Σ,  t, X, V, params...)[2], params),
+            L  = substitute_parameters(build_function(equs_subs.L,  t, X, V, params...; nanmath = false), params),
+            EL = substitute_parameters(build_function(equs_subs.EL, t, X, V, params...; nanmath = false)[2], params),
+            a  = substitute_parameters(build_function(equs_subs.a,  t, X, V, params...; nanmath = false)[2], params),
+            f  = substitute_parameters(build_function(equs_subs.f,  t, X, V, params...; nanmath = false)[2], params),
+            g  = substitute_parameters(build_function(equs_subs.g,  t, X, Λ, V, params...; nanmath = false)[2], params),
+            p  = substitute_parameters(build_function(equs_subs.ϑ,  t, X, V, params...; nanmath = false)[1], params),
+            ϑ  = substitute_parameters(build_function(equs_subs.ϑ,  t, X, V, params...; nanmath = false)[2], params),
+            θ  = substitute_parameters(build_function(equs_subs.θ,  t, X, V, params...; nanmath = false)[2], params),
+            ω  = substitute_parameters(build_function(equs_subs.ω,  t, X, V, params...; nanmath = false)[2], params),
+            Ω  = substitute_parameters(build_function(equs_subs.Ω,  t, X, V, params...; nanmath = false)[2], params),
+            ϕ  = substitute_parameters(build_function(equs_subs.ϕ,  t, X, V, P, params...; nanmath = false)[2], params),
+            ψ  = substitute_parameters(build_function(equs_subs.ψ,  t, X, V, P, F, params...; nanmath = false)[2], params),
+            M  = substitute_parameters(build_function(equs_subs.M,  t, X, V, params...; nanmath = false)[2], params),
+            # P  = substitute_parameters(build_function(equs_subs.Σ,  t, X, V, params...; nanmath = false)[2], params),
         )
 
         funcs = generate_code(code)
