@@ -10,8 +10,7 @@ struct LagrangianSystem
     equations
     functions
 
-    # function LagrangianSystem(L, t, x, v, params = NamedTuple(); dosimplify = true)
-    function LagrangianSystem(L, t, x, v, params = NamedTuple())
+    function LagrangianSystem(L, t, x, v, params = NamedTuple(); dosimplify = true)
 
         @assert eachindex(x) == eachindex(v)
 
@@ -36,10 +35,23 @@ struct LagrangianSystem
         g  = [expand_derivatives(Dt(dv(L))) for dv in Dv]
         ϑ  = [expand_derivatives(dv(L)) for dv in Dv]
         θ  = [expand_derivatives(dz(L)) for dz in Dz]
-        Ω  = [expand_derivatives(simplify(Dx[i](ϑ[j]) - Dx[j](ϑ[i]))) for i in eachindex(Dx,ϑ), j in eachindex(Dx,ϑ)]
-        ω  = [expand_derivatives(simplify(Dz[i](θ[j]) - Dz[j](θ[i]))) for i in eachindex(Dz,θ), j in eachindex(Dz,θ)]
-        M  = [expand_derivatives(simplify(Dv[i](ϑ[j]))) for i in eachindex(Dv), j in eachindex(ϑ)]
-        N  = [expand_derivatives(simplify(Dx[i](ϑ[j]))) for i in eachindex(Dv), j in eachindex(ϑ)]
+
+        Ω  = [Dx[i](ϑ[j]) - Dx[j](ϑ[i]) for i in eachindex(Dx,ϑ), j in eachindex(Dx,ϑ)]
+        ω  = [Dz[i](θ[j]) - Dz[j](θ[i]) for i in eachindex(Dz,θ), j in eachindex(Dz,θ)]
+        M  = [Dv[i](ϑ[j]) for i in eachindex(Dv), j in eachindex(ϑ)]
+        N  = [Dx[i](ϑ[j]) for i in eachindex(Dv), j in eachindex(ϑ)]
+
+        if dosimplify
+            Ω = simplify.(Ω)
+            ω = simplify.(ω)
+            M = simplify.(M)
+            N = simplify.(N)
+        end
+
+        Ω = expand_derivatives.(Ω)
+        ω = expand_derivatives.(ω)
+        M = expand_derivatives.(M)
+        N = expand_derivatives.(N)
 
         equs = (
             L = L,
