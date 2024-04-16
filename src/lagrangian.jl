@@ -70,7 +70,7 @@ struct LagrangianSystem
 
         equs_subs = substitute_lagrangian_variables(equs, x, ẋ, v)
         equs_subs = merge(equs_subs, (
-            a = inv(equs_subs.M) * (equs_subs.f - equs_subs.N * V),
+            # a = inv(equs_subs.M) * (equs_subs.f - equs_subs.N * V),
             ϕ = P .- equs_subs.ϑ,
             ψ = F .- equs_subs.g,
             # σ = _simplify(inv(equs_subs.ω), dosimplify),
@@ -86,7 +86,7 @@ struct LagrangianSystem
         code = (
             L  = substitute_parameters(build_function(equs_subs.L,  t, X, V, params...; nanmath = false), params),
             EL = substitute_parameters(build_function(equs_subs.EL, t, X, V, params...; nanmath = false)[2], params),
-            a  = substitute_parameters(build_function(equs_subs.a,  t, X, V, params...; nanmath = false)[2], params),
+            # a  = substitute_parameters(build_function(equs_subs.a,  t, X, V, params...; nanmath = false)[2], params),
             f  = substitute_parameters(build_function(equs_subs.f,  t, X, V, params...; nanmath = false)[2], params),
             g  = substitute_parameters(build_function(equs_subs.g,  t, X, Λ, V, params...; nanmath = false)[2], params),
             p  = substitute_parameters(build_function(equs_subs.ϑ,  t, X, V, params...; nanmath = false)[1], params),

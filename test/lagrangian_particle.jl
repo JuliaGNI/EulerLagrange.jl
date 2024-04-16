@@ -37,7 +37,7 @@ for k in (:L, :EL, :f, :g, :ϑ, :θ, :ω, :Ω, :ϕ, :ψ, :M, :N)
     @test k ∈ keys(EulerLagrange.equations(lag_sys))
 end
 
-for k in (:L, :EL, :a, :f, :g, :p, :ϑ, :θ, :ω, :Ω, :ϕ, :ψ, :M)#, :P
+for k in (:L, :EL, :f, :g, :p, :ϑ, :θ, :ω, :Ω, :ϕ, :ψ, :M)# :a, :P
     @test k ∈ keys(EulerLagrange.functions(lag_sys))
 end
 
