@@ -50,7 +50,7 @@ ż̃(ż₂, t₀, q₀, p₀, params)
 ntime = 1000
 tstep = 0.01
 tspan = (0.0, ntime * tstep)
-ics   = (q = q₀, p = p₀)
+ics   = (q = StateVariable(q₀), p = StateVariable(p₀))
 
 hode = HODE(ham_sys)
 
