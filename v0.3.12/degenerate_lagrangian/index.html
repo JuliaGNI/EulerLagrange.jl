@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Degenerate Lagrangian Systems · EulerLagrange.jl</title><meta name="title" content="Degenerate Lagrangian Systems · EulerLagrange.jl"/><meta property="og:title" content="Degenerate Lagrangian Systems · EulerLagrange.jl"/><meta property="twitter:title" content="Degenerate Lagrangian Systems · EulerLagrange.jl"/><meta name="description" content="Documentation for EulerLagrange.jl."/><meta property="og:description" content="Documentation for EulerLagrange.jl."/><meta property="twitter:description" content="Documentation for EulerLagrange.jl."/><meta property="og:url" content="https://JuliaGNI.github.io/EulerLagrange.jl/degenerate_lagrangian/"/><meta property="twitter:url" content="https://JuliaGNI.github.io/EulerLagrange.jl/degenerate_lagrangian/"/><link rel="canonical" href="https://JuliaGNI.github.io/EulerLagrange.jl/degenerate_lagrangian/"/><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../search_index.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../">EulerLagrange.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../">Home</a></li><li><a class="tocitem" href="../hamiltonian/">Hamiltonian Systems</a></li><li><a class="tocitem" href="../lagrangian/">Lagrangian Systems</a></li><li class="is-active"><a class="tocitem" href>Degenerate Lagrangian Systems</a><ul class="internal"><li><a class="tocitem" href="#Lotka-Volterra"><span>Lotka-Volterra</span></a></li></ul></li><li><a class="tocitem" href="../caveats/">Caveats</a></li><li><a class="tocitem" href="../library/">Library</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Degenerate Lagrangian Systems</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Degenerate Lagrangian Systems</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/JuliaGNI/EulerLagrange.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/JuliaGNI/EulerLagrange.jl/blob/main/docs/src/degenerate_lagrangian.md" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Degenerate-Lagrangian-Systems"><a class="docs-heading-anchor" href="#Degenerate-Lagrangian-Systems">Degenerate Lagrangian Systems</a><a id="Degenerate-Lagrangian-Systems-1"></a><a class="docs-heading-anchor-permalink" href="#Degenerate-Lagrangian-Systems" title="Permalink"></a></h1><p>A Lagrangian <span>$L(x,v)$</span> is said to be degenerate if the determinant of the Hessian with respect to the velocities vanishes, i.e.,</p><p class="math-container">\[\left\vert \frac{\partial^2 L}{\partial v^i \, \partial v^j} \right\vert = 0 .\]</p><p>The Euler-Lagrange equations,</p><p class="math-container">\[\frac{d}{dt} \frac{\partial L}{\partial v} - \frac{\partial L}{\partial x} = 0 ,\]</p><p>of such Lagrangians are a set of first-order ordinary differential equations and not second-order differential equations as for non-degenerate Lagrangians.</p><p>Of particular interest in various applications are degenerate Lagrangians of the form</p><p class="math-container">\[L(x,v) = \vartheta(x) \cdot v - H (x) .\]</p><p>Their Euler-Lagrange equations take the form</p><p class="math-container">\[\frac{d \vartheta}{dt} (x) = \nabla \vartheta(x) \cdot v - \nabla H (x) .\]</p><p>We exemplify this with the Lotka-Volterra problem in 2d.</p><h2 id="Lotka-Volterra"><a class="docs-heading-anchor" href="#Lotka-Volterra">Lotka-Volterra</a><a id="Lotka-Volterra-1"></a><a class="docs-heading-anchor-permalink" href="#Lotka-Volterra" title="Permalink"></a></h2><p>Before any use, we need to load <code>EulerLagrange</code>:</p><pre><code class="language-julia hljs">using EulerLagrange</code></pre><p>Next, we generate symbolic variables for a two-dimensional Lagrangian system:</p><pre><code class="language-julia hljs">t, x, v = lagrangian_variables(2)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">(t, (x(t))[1:2], (v(t))[1:2])</code></pre><p>We define a named tuple with typical values for the parameters, e.g.,</p><pre><code class="language-julia hljs">params = (
+    a₁ = -1.0,
+    a₂ = -1.0,
+    b₁ = 1.0,
+    b₂ = 2.0,
+)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">(a₁ = -1.0, a₂ = -1.0, b₁ = 1.0, b₂ = 2.0)</code></pre><p>We use the function <code>symbolize</code> to generate a symbolic version of the parameters:</p><pre><code class="language-julia hljs">sparams = symbolize(params)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">(a₁ = a₁ₚ, a₂ = a₂ₚ, b₁ = b₁ₚ, b₂ = b₂ₚ)</code></pre><p>Define the Hamiltonian function and the symplectic potential:</p><pre><code class="language-julia hljs">H(x, params) = params.a₁ * x[1] + params.a₂ * x[2] + params.b₁ * log(x[1]) + params.b₂ * log(x[2])
+ϑ(x, params) = [log(x[2]) / x[1] / 2, - log(x[1]) / x[2] / 2]</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">ϑ (generic function with 1 method)</code></pre><p>The Hamiltonian and the symplectic potential, evaluated on and together with the symbolic variables and parameters are used to construct a <code>DegenerateLagrangianSystem</code>:</p><pre><code class="language-julia hljs">lag_sys = DegenerateLagrangianSystem(ϑ(x,sparams), H(x,sparams), t, x, v, sparams)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">
+Degenerate Lagrangian system with
+
+L = ((1//2)*(v(t))[1]*log((x(t))[2])) / (x(t))[1] + ((-1//2)*(v(t))[2]*log((x(t))[1])) / (x(t))[2] - a₁ₚ*(x(t))[1] - a₂ₚ*(x(t))[2] - b₁ₚ*log((x(t))[1]) - b₂ₚ*log((x(t))[2])
+
+and equations of motion
+
+-a₁ₚ + (-(v(t))[2]) / (2(x(t))[1]*(x(t))[2]) + (-Differential(t)((x(t))[2])) / (2(x(t))[1]*(x(t))[2]) + ((-1//2)*(v(t))[1]*log((x(t))[2])) / ((x(t))[1]^2) + (-b₁ₚ) / (x(t))[1] + (((1//2)*log((x(t))[2])) / ((x(t))[1]^2))*Differential(t)((x(t))[1])
+-a₂ₚ + ((1//2)*(v(t))[2]*log((x(t))[1])) / ((x(t))[2]^2) + Differential(t)((x(t))[1]) / (2(x(t))[1]*(x(t))[2]) + (-b₂ₚ) / (x(t))[2] + (v(t))[1] / (2(x(t))[1]*(x(t))[2]) + (((-1//2)*log((x(t))[1])) / ((x(t))[2]^2))*Differential(t)((x(t))[2])
+</code></pre><p>The constructor computes the Euler-Lagrange equations and generates the corresponding Julia code.</p><p>In the last step, we can now construct a <code>LODEProblem</code> from the <code>LagrangianSystem</code> and some appropriate initial conditions, a time span to integrate over and a time step:</p><pre><code class="language-julia hljs">tspan = (0.0, 10.0)
+tstep = 0.01
+
+q₀ = [2.0, 1.0]
+p₀ = ϑ(q₀, params)
+
+lprob = LODEProblem(lag_sys, tspan, tstep, q₀, p₀; parameters = params)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Geometric Equation Problem for Lagrangian Ordinary Differential Equation (LODE)
+
+ with vector fields
+   ϑ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x7e3af40f, 0xf7247472, 0xe3c9590c, 0x32f9ee27, 0xa81cb7c6), Expr}(quote
+    <span class="sgr90">#= none:1 =#</span>
+    <span class="sgr90">#= none:5 =#</span>
+    begin
+        <span class="sgr90">#= none:7 =#</span>
+        <span class="sgr90">#= none:7 =#</span> @inbounds begin
+                <span class="sgr90">#= none:9 =#</span>
+                ˍ₋out[1] = (1 // 2 * log(getindex(X, 2))) / getindex(X, 1)
+                <span class="sgr90">#= none:10 =#</span>
+                ˍ₋out[2] = (-1 // 2 * log(getindex(X, 1))) / getindex(X, 2)
+                <span class="sgr90">#= none:12 =#</span>
+                nothing
+            end
+    end
+end)
+   f = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x601e816e, 0x5f412bb9, 0xa6618f59, 0xd778f2ee, 0xdee03567), Expr}(quote
+    <span class="sgr90">#= none:1 =#</span>
+    <span class="sgr90">#= none:5 =#</span>
+    begin
+        <span class="sgr90">#= none:7 =#</span>
+        <span class="sgr90">#= none:7 =#</span> @inbounds begin
+                <span class="sgr90">#= none:9 =#</span>
+                ˍ₋out[1] = ((-1 * params.a₁ + (-1 * params.b₁) / getindex(X, 1)) + ((-1 // 2 * getindex(V, 1)) * log(getindex(X, 2))) / getindex(X, 1) ^ 2) + (-1 * getindex(V, 2)) / ((2 * getindex(X, 1)) * getindex(X, 2))
+                <span class="sgr90">#= none:10 =#</span>
+                ˍ₋out[2] = ((-1 * params.a₂ + (-1 * params.b₂) / getindex(X, 2)) + ((1 // 2 * getindex(V, 2)) * log(getindex(X, 1))) / getindex(X, 2) ^ 2) + getindex(V, 1) / ((2 * getindex(X, 1)) * getindex(X, 2))
+                <span class="sgr90">#= none:12 =#</span>
+                nothing
+            end
+    end
+end)
+   g = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xf4cd6db1, 0xc8ad859a, 0x83e1263f, 0x3d20d3c7, 0x2ebbb721), Expr}(quote
+    <span class="sgr90">#= none:1 =#</span>
+    <span class="sgr90">#= none:5 =#</span>
+    begin
+        <span class="sgr90">#= none:7 =#</span>
+        <span class="sgr90">#= none:7 =#</span> @inbounds begin
+                <span class="sgr90">#= none:10 =#</span>
+                nothing
+            end
+        <span class="sgr90">#= none:12 =#</span>
+        begin
+            <span class="sgr90">#= none:14 =#</span>
+            <span class="sgr90">#= none:14 =#</span> @inbounds begin
+                    <span class="sgr90">#= none:16 =#</span>
+                    (ˍ₋out[1])[1] = (Differential(t))((1 // 2 * log(getindex(X, 2))) / getindex(X, 1))
+                    <span class="sgr90">#= none:17 =#</span>
+                    (ˍ₋out[1])[2] = (Differential(t))((-1 // 2 * log(getindex(X, 1))) / getindex(X, 2))
+                    <span class="sgr90">#= none:19 =#</span>
+                    nothing
+                end
+        end
+    end
+end)
+
+ Lagrangian: L = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xe192e52e, 0xa2be6a58, 0xed9a779a, 0x92db5d3e, 0x526e1366), Expr}(quote
+    <span class="sgr90">#= none:1 =#</span>
+    <span class="sgr90">#= none:5 =#</span>
+    ((((((1 // 2 * getindex(V, 1)) * log(getindex(X, 2))) / getindex(X, 1) + ((-1 // 2 * getindex(V, 2)) * log(getindex(X, 1))) / getindex(X, 2)) + (-1 * getindex(X, 1)) * params.a₁) + (-1 * getindex(X, 2)) * params.a₂) + (-1 * params.b₁) * log(getindex(X, 1))) + (-1 * params.b₂) * log(getindex(X, 2))
+end)
+
+ Invariants: 
+   GeometricBase.NullInvariants()
+
+ Timespan: (0.0, 10.0) 
+ Timestep: 0.01 
+
+ Initial conditions: 
+   (t = 0.0, q = [2.0, 1.0], p = [0.0, -0.34657359027997264], λ = [0.0, 0.0])
+
+ Parameters: 
+   (a₁ = -1.0, a₂ = -1.0, b₁ = 1.0, b₂ = 2.0)</code></pre><p>We can integrate this system using GeometricIntegrators:</p><pre><code class="language-julia hljs">using GeometricIntegrators
+sol = integrate(lprob, Gauss(1))
+
+using CairoMakie
+fig = lines(parent(sol.q[:,1]), parent(sol.q[:,2]);
+    axis = (; xlabel = &quot;x₁&quot;, ylabel = &quot;x₂&quot;, title = &quot;Lotka-Volterra system in 2d&quot;),
+    figure = (; size = (800,600), fontsize = 22))</code></pre><p><img src="../lotka-volterra.svg" alt/></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../lagrangian/">« Lagrangian Systems</a><a class="docs-footer-nextpage" href="../caveats/">Caveats »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.5.0 on <span class="colophon-date" title="Thursday 4 July 2024 14:56">Thursday 4 July 2024</span>. Using Julia version 1.10.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
