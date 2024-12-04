@@ -96,11 +96,11 @@ function Base.show(io::IO, lsys::DegenerateLagrangianSystem)
     print(io, "\nDegenerate Lagrangian system with\n")
     print(io, "\nL = ")
     print(io, lagrangian(lsys))
-    print(io, "\n\nand equations of motion\n\n")
-    for eq in equations(lsys).EL
-        print(io, eq)
-        print(io, "\n")
-    end
+    # print(io, "\n\nand equations of motion\n\n")
+    # for eq in equations(lsys).EL
+    #     print(io, eq)
+    #     print(io, "\n")
+    # end
 end
 
 
