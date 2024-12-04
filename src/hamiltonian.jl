@@ -25,7 +25,7 @@ struct HamiltonianSystem
     equations
     functions
 
-    function HamiltonianSystem(H, t, q, p, params = NamedTuple())
+    function HamiltonianSystem(H, t, q, p, params = NamedTuple(); dosimplify = true)
 
         @assert eachindex(q) == eachindex(p)
 
@@ -36,15 +36,17 @@ struct HamiltonianSystem
         Dq = collect(Differential.(q))
         Dp = collect(Differential.(p))
 
-        EHq = [expand_derivatives(Dt(q[i]) - Dp[i](H)) for i in eachindex(Dp,q)]
-        EHp = [expand_derivatives(Dt(p[i]) + Dq[i](H)) for i in eachindex(Dq,p)]
+        Hs = dosimplify ? simplify(H) : H
+
+        EHq = [expand_derivatives(Dt(q[i]) - Dp[i](Hs)) for i in eachindex(Dp,q)]
+        EHp = [expand_derivatives(Dt(p[i]) + Dq[i](Hs)) for i in eachindex(Dq,p)]
         EH  = vcat(EHq, EHp)
-        v   = [expand_derivatives( dp(H)) for dp in Dp]
-        f   = [expand_derivatives(-dq(H)) for dq in Dq]
+        v   = [expand_derivatives( dp(Hs)) for dp in Dp]
+        f   = [expand_derivatives(-dq(Hs)) for dq in Dq]
         ż   = vcat(v, f)
 
         equs = (
-            H = H,
+            H = Hs,
             EH = EH,
             EHq = EHq,
             EHp = EHp,
