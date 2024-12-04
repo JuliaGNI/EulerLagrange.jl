@@ -23,7 +23,7 @@ p₀ = ϑ(q₀, params)
 lprob = LODEProblem(lag_sys, tspan, tstep, q₀, p₀; parameters = params)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Geometric Equation Problem for Lagrangian Ordinary Differential Equation (LODE)
 
  with vector fields
-   ϑ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x7e3af40f, 0xf7247472, 0xe3c9590c, 0x32f9ee27, 0xa81cb7c6), Expr}(quote
+   ϑ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x2b6796c5, 0xc7038f1c, 0x05aaa4f2, 0xa7a37a31, 0xb6170ee9), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
     <span class="sgr90">#= none:5 =#</span>
     begin
@@ -38,7 +38,7 @@ lprob = LODEProblem(lag_sys, tspan, tstep, q₀, p₀; parameters = params)</cod
             end
     end
 end)
-   f = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x601e816e, 0x5f412bb9, 0xa6618f59, 0xd778f2ee, 0xdee03567), Expr}(quote
+   f = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x3b03132e, 0xf0e5be7d, 0x9bcbbbc8, 0xa776b1ae, 0x8ebc5042), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
     <span class="sgr90">#= none:5 =#</span>
     begin
@@ -53,7 +53,7 @@ end)
             end
     end
 end)
-   g = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xf4cd6db1, 0xc8ad859a, 0x83e1263f, 0x3d20d3c7, 0x2ebbb721), Expr}(quote
+   g = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x0c51dcc1, 0x1f97cbcb, 0x6ab37f69, 0x54158cf5, 0x011e04b5), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
     <span class="sgr90">#= none:5 =#</span>
     begin
@@ -77,7 +77,7 @@ end)
     end
 end)
 
- Lagrangian: L = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xe192e52e, 0xa2be6a58, 0xed9a779a, 0x92db5d3e, 0x526e1366), Expr}(quote
+ Lagrangian: L = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x8a7f90ef, 0x13e8e6ef, 0x0ee80b85, 0x2c64428a, 0xf62b7286), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
     <span class="sgr90">#= none:5 =#</span>
     ((((((1 // 2 * getindex(V, 1)) * log(getindex(X, 2))) / getindex(X, 1) + ((-1 // 2 * getindex(V, 2)) * log(getindex(X, 1))) / getindex(X, 2)) + (-1 * getindex(X, 1)) * params.a₁) + (-1 * getindex(X, 2)) * params.a₂) + (-1 * params.b₁) * log(getindex(X, 1))) + (-1 * params.b₂) * log(getindex(X, 2))
@@ -90,7 +90,7 @@ end)
  Timestep: 0.01 
 
  Initial conditions: 
-   (t = 0.0, q = [2.0, 1.0], p = [0.0, -0.34657359027997264], λ = [0.0, 0.0])
+   (t = 0.0, q = [2.0, 1.0], p = [0.0, -0.34657359027997264], v = [2.0, 1.0])
 
  Parameters: 
    (a₁ = -1.0, a₂ = -1.0, b₁ = 1.0, b₂ = 2.0)</code></pre><p>We can integrate this system using GeometricIntegrators:</p><pre><code class="language-julia hljs">using GeometricIntegrators
@@ -99,4 +99,4 @@ sol = integrate(lprob, Gauss(1))
 using CairoMakie
 fig = lines(parent(sol.q[:,1]), parent(sol.q[:,2]);
     axis = (; xlabel = &quot;x₁&quot;, ylabel = &quot;x₂&quot;, title = &quot;Lotka-Volterra system in 2d&quot;),
-    figure = (; size = (800,600), fontsize = 22))</code></pre><p><img src="../lotka-volterra.svg" alt/></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../lagrangian/">« Lagrangian Systems</a><a class="docs-footer-nextpage" href="../caveats/">Caveats »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.5.0 on <span class="colophon-date" title="Thursday 4 July 2024 14:28">Thursday 4 July 2024</span>. Using Julia version 1.10.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+    figure = (; size = (800,600), fontsize = 22))</code></pre><p><img src="../lotka-volterra.svg" alt/></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../lagrangian/">« Lagrangian Systems</a><a class="docs-footer-nextpage" href="../caveats/">Caveats »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.8.0 on <span class="colophon-date" title="Wednesday 4 December 2024 11:02">Wednesday 4 December 2024</span>. Using Julia version 1.11.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>

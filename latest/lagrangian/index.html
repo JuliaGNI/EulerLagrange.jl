@@ -5,7 +5,7 @@
 f = \frac{\partial L}{\partial x} .
 \end{align*}\]</p><p>In the following, we show how these equations can be obtained for the example of a particle in a square potential.</p><h2 id="Particle-in-a-potential"><a class="docs-heading-anchor" href="#Particle-in-a-potential">Particle in a potential</a><a id="Particle-in-a-potential-1"></a><a class="docs-heading-anchor-permalink" href="#Particle-in-a-potential" title="Permalink"></a></h2><p>Before any use, we need to load <code>EulerLagrange</code>:</p><pre><code class="language-julia hljs">using EulerLagrange</code></pre><p>Next, we generate symbolic variables for a two-dimensional system:</p><pre><code class="language-julia hljs">t, x, v = lagrangian_variables(2)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">(t, (x(t))[1:2], (v(t))[1:2])</code></pre><p>With those variables, we can construct a Lagrangian</p><pre><code class="language-julia hljs">using LinearAlgebra
 L = v ⋅ v / 2 - x ⋅ x / 2</code></pre><p class="math-container">\[ \begin{equation}
-\frac{1}{2} \left( v(t)_1^{2} + v(t)_2^{2} \right) - \frac{1}{2} \left( x(t)_1^{2} + x(t)_2^{2} \right)
+\frac{1}{2} \left( v\left( t \right)_{1}^{2} + v\left( t \right)_{2}^{2} \right) - \frac{1}{2} \left( x\left( t \right)_{1}^{2} + x\left( t \right)_{2}^{2} \right)
 \end{equation}
  \]</p><p>This Lagrangian together with the symbolic variables is then used to construct a <code>LagrangianSystem</code>:</p><pre><code class="language-julia hljs">lag_sys = LagrangianSystem(L, t, x, v)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">
 Lagrangian system with
@@ -25,7 +25,7 @@ p₀ = [0.5, 2.0]
 lprob = LODEProblem(lag_sys, tspan, tstep, q₀, p₀)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Geometric Equation Problem for Lagrangian Ordinary Differential Equation (LODE)
 
  with vector fields
-   ϑ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xfca7c8ae, 0xfa7e27aa, 0x95adf5b8, 0xff38bc48, 0xee2992dd), Expr}(quote
+   ϑ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x9074dbae, 0x9dbd5857, 0x29f62319, 0xac7fc940, 0x64f9e588), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
     <span class="sgr90">#= none:5 =#</span>
     begin
@@ -40,7 +40,7 @@ lprob = LODEProblem(lag_sys, tspan, tstep, q₀, p₀)</code></pre><pre class="d
             end
     end
 end)
-   f = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xaef78b2c, 0x6cf956c4, 0xc224cee9, 0x7427de99, 0xba543221), Expr}(quote
+   f = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xcb91fc44, 0xcf8fc5e3, 0xe0155e43, 0x302a3ab5, 0xe40c74b9), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
     <span class="sgr90">#= none:5 =#</span>
     begin
@@ -55,7 +55,7 @@ end)
             end
     end
 end)
-   g = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x5703091c, 0x9ce67ff9, 0x290d6f43, 0xe14957ba, 0xf0a2a78e), Expr}(quote
+   g = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x6f591718, 0x213c7aee, 0xa402e277, 0xe90cbccb, 0xda71f8c3), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
     <span class="sgr90">#= none:5 =#</span>
     begin
@@ -71,7 +71,7 @@ end)
     end
 end)
 
- Lagrangian: L = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x91bc2205, 0xb9d3a437, 0xaefd9ff7, 0xafa91fbc, 0x18ba0e5e), Expr}(quote
+ Lagrangian: L = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x79cf434b, 0x0601728f, 0x22d644f8, 0x940a3832, 0x772811c7), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
     <span class="sgr90">#= none:5 =#</span>
     1 // 2 * (getindex(V, 1) ^ 2 + getindex(V, 2) ^ 2) + -1 // 2 * (getindex(X, 1) ^ 2 + getindex(X, 2) ^ 2)
@@ -84,7 +84,7 @@ end)
  Timestep: 0.01 
 
  Initial conditions: 
-   (t = 0.0, q = [1.0, 1.0], p = [0.5, 2.0], λ = [0.0, 0.0])
+   (t = 0.0, q = [1.0, 1.0], p = [0.5, 2.0], v = [0.0, 0.0])
 
  Parameters: 
    GeometricBase.NullParameters()</code></pre><p>We can integrate this system using GeometricIntegrators:</p><pre><code class="language-julia hljs">using GeometricIntegrators
@@ -93,9 +93,9 @@ sol = integrate(lprob, Gauss(1))
 using CairoMakie
 fig = lines(parent(sol.q[:,1]), parent(sol.q[:,2]);
     axis = (; xlabel = &quot;x₁&quot;, ylabel = &quot;x₂&quot;, title = &quot;Particle moving in a square potential&quot;),
-    figure = (; size = (800,600), fontsize = 22))</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi"><span class="sgr33"><span class="sgr1">┌ Warning: </span></span>q₀ and q₁ in initial guess are identical!
-<span class="sgr33"><span class="sgr1">└ </span></span><span class="sgr90">@ GeometricIntegrators.Integrators ~/.julia/packages/GeometricIntegrators/Ptffa/src/initial_guess/hermite.jl:45</span></code></pre><p><img src="../particle_vi.svg" alt/></p><h2 id="Parameters"><a class="docs-heading-anchor" href="#Parameters">Parameters</a><a id="Parameters-1"></a><a class="docs-heading-anchor-permalink" href="#Parameters" title="Permalink"></a></h2><p>We can also include parametric dependencies in the Lagrangian. Consider, for example, a parameter <code>α</code> that determines the strength of the potential.</p><p>The easiest way, to account for parameters, is to create a named tuple with typical values for each parameter, e.g.,</p><pre><code class="language-julia hljs">params = (α = 5.0,)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">(α = 5.0,)</code></pre><p>In the next step, we use the function <code>symbolize</code> to generate a symbolic version of the parameters:</p><pre><code class="language-julia hljs">sparams = symbolize(params)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">(α = αₚ,)</code></pre><p>Now we modify the Lagrangian to account for the parameter:</p><pre><code class="language-julia hljs">L = v ⋅ v / 2 - sparams.α * (x ⋅ x) / 2</code></pre><p class="math-container">\[ \begin{equation}
-\frac{1}{2} \left( v(t)_1^{2} + v(t)_2^{2} \right) - \frac{1}{2} \left( x(t)_1^{2} + x(t)_2^{2} \right) \alpha_p
+    figure = (; size = (800,600), fontsize = 22))</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi"><span class="sgr33"><span class="sgr1">┌ Warning: </span></span>Hermite Extrapolation: q&#39;s history[1] and history[2] are identical!
+<span class="sgr33"><span class="sgr1">└ </span></span><span class="sgr90">@ GeometricIntegrators.Extrapolators ~/.julia/packages/GeometricIntegrators/tDDX7/src/extrapolation/hermite.jl:211</span></code></pre><p><img src="../particle_vi.svg" alt/></p><h2 id="Parameters"><a class="docs-heading-anchor" href="#Parameters">Parameters</a><a id="Parameters-1"></a><a class="docs-heading-anchor-permalink" href="#Parameters" title="Permalink"></a></h2><p>We can also include parametric dependencies in the Lagrangian. Consider, for example, a parameter <code>α</code> that determines the strength of the potential.</p><p>The easiest way, to account for parameters, is to create a named tuple with typical values for each parameter, e.g.,</p><pre><code class="language-julia hljs">params = (α = 5.0,)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">(α = 5.0,)</code></pre><p>In the next step, we use the function <code>symbolize</code> to generate a symbolic version of the parameters:</p><pre><code class="language-julia hljs">sparams = symbolize(params)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">(α = αₚ,)</code></pre><p>Now we modify the Lagrangian to account for the parameter:</p><pre><code class="language-julia hljs">L = v ⋅ v / 2 - sparams.α * (x ⋅ x) / 2</code></pre><p class="math-container">\[ \begin{equation}
+\frac{1}{2} \left( v\left( t \right)_{1}^{2} + v\left( t \right)_{2}^{2} \right) - \frac{1}{2} \left( x\left( t \right)_{1}^{2} + x\left( t \right)_{2}^{2} \right) \mathtt{\alpha{_p}}
 \end{equation}
  \]</p><p>From here on, everything follows along the same lines as before, the only difference being that we also need to pass the symbolic parameters <code>sparams</code> to the <code>LagrangianSystem</code> constructor:</p><pre><code class="language-julia hljs">lag_sys = LagrangianSystem(L, t, x, v, sparams)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">
 Lagrangian system with
@@ -109,7 +109,7 @@ and equations of motion
 </code></pre><p>Analogously, we need to pass actual parameter values <code>params</code> to the <code>LODEProblem</code> constructor via the <code>parameters</code> keyword argument:</p><pre><code class="language-julia hljs">lprob = LODEProblem(lag_sys, tspan, tstep, q₀, p₀; parameters = params)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Geometric Equation Problem for Lagrangian Ordinary Differential Equation (LODE)
 
  with vector fields
-   ϑ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xfca7c8ae, 0xfa7e27aa, 0x95adf5b8, 0xff38bc48, 0xee2992dd), Expr}(quote
+   ϑ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x9074dbae, 0x9dbd5857, 0x29f62319, 0xac7fc940, 0x64f9e588), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
     <span class="sgr90">#= none:5 =#</span>
     begin
@@ -124,7 +124,7 @@ and equations of motion
             end
     end
 end)
-   f = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x1a87a248, 0x2bc6b04e, 0x2dc18435, 0x778f853e, 0x62d0c494), Expr}(quote
+   f = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x7e9a6a94, 0xb6bea226, 0x391e4a0d, 0x03fd8e57, 0xc319b875), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
     <span class="sgr90">#= none:5 =#</span>
     begin
@@ -139,7 +139,7 @@ end)
             end
     end
 end)
-   g = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x5703091c, 0x9ce67ff9, 0x290d6f43, 0xe14957ba, 0xf0a2a78e), Expr}(quote
+   g = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x6f591718, 0x213c7aee, 0xa402e277, 0xe90cbccb, 0xda71f8c3), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
     <span class="sgr90">#= none:5 =#</span>
     begin
@@ -155,7 +155,7 @@ end)
     end
 end)
 
- Lagrangian: L = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xe0f4c210, 0x22495478, 0xbbedb468, 0xdf30cd50, 0x25997ada), Expr}(quote
+ Lagrangian: L = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xd47b589b, 0x156de4f8, 0xdb8bbeeb, 0x8817e5e0, 0x6c7ea09c), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
     <span class="sgr90">#= none:5 =#</span>
     1 // 2 * (getindex(V, 1) ^ 2 + getindex(V, 2) ^ 2) + (-1 // 2 * (getindex(X, 1) ^ 2 + getindex(X, 2) ^ 2)) * params.α
@@ -168,12 +168,12 @@ end)
  Timestep: 0.01 
 
  Initial conditions: 
-   (t = 0.0, q = [1.0, 1.0], p = [0.5, 2.0], λ = [0.0, 0.0])
+   (t = 0.0, q = [1.0, 1.0], p = [0.5, 2.0], v = [0.0, 0.0])
 
  Parameters: 
    (α = 5.0,)</code></pre><p>This problem can again be integrated using GeometricIntegrators:</p><pre><code class="language-julia hljs">sol = integrate(lprob, Gauss(1))
 
 fig = lines(parent(sol.q[:,1]), parent(sol.q[:,2]);
     axis = (; xlabel = &quot;x₁&quot;, ylabel = &quot;x₂&quot;, title = &quot;Particle moving in a square potential&quot;),
-    figure = (; size = (800,600), fontsize = 22))</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi"><span class="sgr33"><span class="sgr1">┌ Warning: </span></span>q₀ and q₁ in initial guess are identical!
-<span class="sgr33"><span class="sgr1">└ </span></span><span class="sgr90">@ GeometricIntegrators.Integrators ~/.julia/packages/GeometricIntegrators/Ptffa/src/initial_guess/hermite.jl:45</span></code></pre><p><img src="../particle_vi_param.svg" alt/></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../hamiltonian/">« Hamiltonian Systems</a><a class="docs-footer-nextpage" href="../degenerate_lagrangian/">Degenerate Lagrangian Systems »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.5.0 on <span class="colophon-date" title="Thursday 4 July 2024 14:28">Thursday 4 July 2024</span>. Using Julia version 1.10.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+    figure = (; size = (800,600), fontsize = 22))</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi"><span class="sgr33"><span class="sgr1">┌ Warning: </span></span>Hermite Extrapolation: q&#39;s history[1] and history[2] are identical!
+<span class="sgr33"><span class="sgr1">└ </span></span><span class="sgr90">@ GeometricIntegrators.Extrapolators ~/.julia/packages/GeometricIntegrators/tDDX7/src/extrapolation/hermite.jl:211</span></code></pre><p><img src="../particle_vi_param.svg" alt/></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../hamiltonian/">« Hamiltonian Systems</a><a class="docs-footer-nextpage" href="../degenerate_lagrangian/">Degenerate Lagrangian Systems »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.8.0 on <span class="colophon-date" title="Wednesday 4 December 2024 11:02">Wednesday 4 December 2024</span>. Using Julia version 1.11.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
