@@ -27,6 +27,7 @@ We exemplify this with the Lotka-Volterra problem in 2d.
 Before any use, we need to load `EulerLagrange`:
 ```@example deglag
 using EulerLagrange
+using LinearAlgebra
 ```
 
 Next, we generate symbolic variables for a two-dimensional Lagrangian system:
@@ -51,13 +52,13 @@ sparams = symbolize(params)
 
 Define the Hamiltonian function and the symplectic potential:
 ```@example deglag
-H(x, params) = params.a₁ * x[1] + params.a₂ * x[2] + params.b₁ * log(x[1]) + params.b₂ * log(x[2])
 ϑ(x, params) = [log(x[2]) / x[1] / 2, - log(x[1]) / x[2] / 2]
+H(x, params) = params.a₁ * x[1] + params.a₂ * x[2] + params.b₁ * log(x[1]) + params.b₂ * log(x[2])
 ```
 
 The Hamiltonian and the symplectic potential, evaluated on and together with the symbolic variables and parameters are used to construct a `DegenerateLagrangianSystem`:
 ```@example deglag
-lag_sys = DegenerateLagrangianSystem(ϑ(x,sparams), H(x,sparams), t, x, v, sparams)
+lag_sys = DegenerateLagrangianSystem(ϑ(x,sparams) ⋅ v, H(x,sparams), t, x, v, sparams)
 ```
 The constructor computes the Euler-Lagrange equations and generates the corresponding Julia code.
 
