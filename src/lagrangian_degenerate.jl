@@ -10,7 +10,7 @@ struct DegenerateLagrangianSystem
     equations
     functions
 
-    function DegenerateLagrangianSystem(θ, H, t, x, v, params = NamedTuple())
+    function DegenerateLagrangianSystem(K, H, t, x, v, params = NamedTuple())
 
         @assert eachindex(x) == eachindex(v)
 
@@ -27,11 +27,10 @@ struct DegenerateLagrangianSystem
         
         ẋ  = collect(Dt.(x))
 
-        K  = θ ⋅ v
         L  = K - H
         EL = [expand_derivatives(Dx[i](L) - Dt(Dv[i](L))) for i in eachindex(Dx,Dv)]
         ∇H = [expand_derivatives(dx(H)) for dx in Dx]
-        ϑ  = [expand_derivatives(dv(L)) for dv in Dv]
+        ϑ  = [expand_derivatives(dv(K)) for dv in Dv]
         f  = [expand_derivatives(dx(L)) for dx in Dx]
         u  = [u for u in ẋ]
         g  = [expand_derivatives(Dt.(ϑ))]

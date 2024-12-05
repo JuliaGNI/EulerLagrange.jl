@@ -3,9 +3,10 @@ using LinearAlgebra
 using Test
 
 
-H(t, x, v, params) = params.a₁ * x[1] + params.a₂ * x[2] + params.b₁ * log(x[1]) + params.b₂ * log(x[2])
-L(t, x, v, params) = log(x[2]) / x[1] / 2 * v[1] - log(x[1]) / x[2] / 2 * v[2] - H(t,x,v,params)
 ϑ(t, x, v, params) = [log(x[2]) / x[1] / 2, - log(x[1]) / x[2] / 2]
+H(t, x, v, params) = params.a₁ * x[1] + params.a₂ * x[2] + params.b₁ * log(x[1]) + params.b₂ * log(x[2])
+K(t, x, v, params) = ϑ(t, x, v, params) ⋅ v
+L(t, x, v, params) = K(t, x, v, params) - H(t,x,v,params)
 
 dHd₁(t, q, params) = params.a₁ + params.b₁ / q[1]
 dHd₂(t, q, params) = params.a₂ + params.b₂ / q[2]
@@ -93,7 +94,7 @@ f̃(ṗ₂, t₀, q₀, v₀, params)
 
 # DegenerateLagrangianSystem
 
-deg_lag_sys = DegenerateLagrangianSystem(ϑ(t,x,v,sparams), H(t,x,v,sparams), t, x, v, sparams)
+deg_lag_sys = DegenerateLagrangianSystem(K(t,x,v,sparams), H(t,x,v,sparams), t, x, v, sparams)
 
 q̇₁, q̇₂ = zero(q₀), zero(q₀)
 p₁, p₂ = zero(p₀), zero(p₀)
