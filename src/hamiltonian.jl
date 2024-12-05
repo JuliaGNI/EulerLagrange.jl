@@ -111,18 +111,7 @@ function HODE(lsys::HamiltonianSystem; kwargs...)
     HODE(eqs.v, eqs.f, eqs.H; kwargs...)
 end
 
-function HODEProblem(lsys::HamiltonianSystem, tspan::Tuple, tstep::Real, ics::NamedTuple; kwargs...)
+function HODEProblem(lsys::HamiltonianSystem, tspan::Tuple, tstep::Real, ics...; kwargs...)
     eqs = functions(lsys)
-    HODEProblem(eqs.v, eqs.f, eqs.H, tspan, tstep, ics; kwargs...)
-end
-
-function HODEProblem(lsys::HamiltonianSystem, tspan::Tuple, tstep::Real, q₀::StateVariable, p₀::StateVariable; kwargs...)
-    ics = (q = q₀, p = p₀)
-    HODEProblem(lsys, tspan, tstep, ics; kwargs...)
-end
-
-function HODEProblem(lsys::HamiltonianSystem, tspan::Tuple, tstep::Real, q₀::AbstractArray, p₀::AbstractArray; kwargs...)
-    _q₀ = StateVariable(q₀)
-    _p₀ = StateVariable(p₀)
-    HODEProblem(lsys, tspan, tstep, _q₀, _p₀; kwargs...)
+    HODEProblem(eqs.v, eqs.f, eqs.H, tspan, tstep, ics...; kwargs...)
 end

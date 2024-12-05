@@ -37,6 +37,7 @@ end
 
 t₀, q₀, v₀ = (0.0, [2.0, 1.0], [0.5, 2.0])
 p₀ = zero(v₀)
+λ₀ = zero(v₀)
 
 tspan = (0.0, 1.0)
 tstep = 0.1
@@ -54,6 +55,8 @@ params_alt = (
     b₁ = 2.0,
     b₂ = 1.0,
 )
+
+p̃(p₀, t₀, q₀, v₀, params)
 
 
 # Symbolic variables and parameters
@@ -117,7 +120,7 @@ f̃(ṗ₂, t₀, q₀, v₀, params)
 @test_nowarn ODEProblem(deg_lag_sys, tspan, tstep, q₀; parameters = params)
 
 @test_nowarn LODE(deg_lag_sys)
-@test_nowarn LODEProblem(deg_lag_sys, tspan, tstep, q₀, v₀; parameters = params)
+@test_nowarn LODEProblem(deg_lag_sys, tspan, tstep, q₀, p₀; parameters = params)
 
 @test_nowarn LDAE(deg_lag_sys)
-@test_nowarn LDAEProblem(deg_lag_sys, tspan, tstep, q₀, v₀; parameters = params)
+@test_nowarn LDAEProblem(deg_lag_sys, tspan, tstep, q₀, p₀, λ₀; parameters = params)

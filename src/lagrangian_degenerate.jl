@@ -74,7 +74,7 @@ struct DegenerateLagrangianSystem
 
         code = (
             L  = substitute_parameters(build_function(equs_subs.L,  t, X, V, params...; nanmath = false), params),
-            H  = substitute_parameters(build_function(equs_subs.H,  t, X, V, params...; nanmath = false), params),
+            H  = substitute_parameters(build_function(equs_subs.H,  t, X, params...; nanmath = false), params),
             EL = substitute_parameters(build_function(equs_subs.EL, t, X, V, params...; nanmath = false)[2], params),
             ∇H = substitute_parameters(build_function(equs_subs.∇H, t, X, V, params...; nanmath = false)[2], params),
             ẋ  = substitute_parameters(build_function(equs_subs.ẋ,  t, X, params...; nanmath = false)[2], params),
@@ -119,62 +119,29 @@ function ODE(lsys::DegenerateLagrangianSystem; kwargs...)
     ODE(eqs.ẋ; invariants = (h = eqs.H,), kwargs...)
 end
 
-function ODEProblem(lsys::DegenerateLagrangianSystem, tspan::Tuple, tstep::Real, ics::NamedTuple; kwargs...)
+function ODEProblem(lsys::DegenerateLagrangianSystem, tspan::Tuple, tstep::Real, ics...; kwargs...)
     eqs = functions(lsys)
-    ODEProblem(eqs.ẋ, tspan, tstep, ics; invariants = (h = eqs.H,), kwargs...)
-end
-
-function ODEProblem(lsys::DegenerateLagrangianSystem, tspan::Tuple, tstep::Real, q₀::StateVariable; kwargs...)
-    ODEProblem(lsys, tspan, tstep, (q = q₀, ); kwargs...)
-end
-
-function ODEProblem(lsys::DegenerateLagrangianSystem, tspan::Tuple, tstep::Real, q₀::AbstractArray; kwargs...)
-    ODEProblem(lsys, tspan, tstep, StateVariable(q₀); kwargs...)
+    ODEProblem(eqs.ẋ, tspan, tstep, ics...; invariants = (h = eqs.H,), kwargs...)
 end
 
 
 function LODE(lsys::DegenerateLagrangianSystem; v̄ = functions(lsys).v, f̄ = functions(lsys).f, kwargs...)
     eqs = functions(lsys)
-    LODE(eqs.ϑ, eqs.f, eqs.g, eqs.ω, eqs.L; v̄ = v̄, f̄ = f̄, invariants = (h = eqs.H,), kwargs...)
+    LODE(eqs.ϑ, eqs.f, eqs.g, eqs.ω, eqs.L; v̄ = v̄, f̄ = f̄, invariants = (h = (t,q,v,params) -> eqs.H(t,q,params),), kwargs...)
 end
 
-function LODEProblem(lsys::DegenerateLagrangianSystem, tspan::Tuple, tstep::Real, ics::NamedTuple; v̄ = functions(lsys).v, f̄ = functions(lsys).f, kwargs...)
+function LODEProblem(lsys::DegenerateLagrangianSystem, tspan::Tuple, tstep::Real, ics...; v̄ = functions(lsys).v, f̄ = functions(lsys).f, kwargs...)
     eqs = functions(lsys)
-    LODEProblem(eqs.ϑ, eqs.f, eqs.g, eqs.ω, eqs.L, tspan, tstep, ics; v̄ = v̄, f̄ = f̄, invariants = (h = eqs.H,), kwargs...)
-end
-
-function LODEProblem(lsys::DegenerateLagrangianSystem, tspan::Tuple, tstep::Real, q₀::StateVariable, p₀::StateVariable, λ₀::AlgebraicVariable; kwargs...)
-    ics = (q = q₀, p = p₀, λ = λ₀)
-    LODEProblem(lsys, tspan, tstep, ics; kwargs...)
-end
-
-function LODEProblem(lsys::DegenerateLagrangianSystem, tspan::Tuple, tstep::Real, q₀::AbstractArray, p₀::AbstractArray, λ₀::AbstractArray = zero(q₀); kwargs...)
-    _q₀ = StateVariable(q₀)
-    _p₀ = StateVariable(p₀)
-    _λ₀ = AlgebraicVariable(λ₀)
-    LODEProblem(lsys, tspan, tstep, _q₀, _p₀, _λ₀; kwargs...)
+    LODEProblem(eqs.ϑ, eqs.f, eqs.g, eqs.ω, eqs.L, tspan, tstep, ics...; v̄ = v̄, f̄ = f̄, invariants = (h = (t,q,v,params) -> eqs.H(t,q,params),), kwargs...)
 end
 
 
 function LDAE(lsys::DegenerateLagrangianSystem; v̄ = functions(lsys).v, f̄ = functions(lsys).f, kwargs...)
     eqs = functions(lsys)
-    LDAE(eqs.ϑ, eqs.f, eqs.u, eqs.g, eqs.ϕ, eqs.ū, eqs.ḡ, eqs.ψ, eqs.ω, eqs.L; v̄ = v̄, f̄ = f̄, invariants = (h = eqs.H,), kwargs...)
+    LDAE(eqs.ϑ, eqs.f, eqs.u, eqs.g, eqs.ϕ, eqs.ū, eqs.ḡ, eqs.ψ, eqs.ω, eqs.L; v̄ = v̄, f̄ = f̄, invariants = (h = (t,q,v,params) -> eqs.H(t,q,params),), kwargs...)
 end
 
-function LDAEProblem(lsys::DegenerateLagrangianSystem, tspan::Tuple, tstep::Real, ics::NamedTuple; v̄ = functions(lsys).v, f̄ = functions(lsys).f, kwargs...)
+function LDAEProblem(lsys::DegenerateLagrangianSystem, tspan::Tuple, tstep::Real, ics...; v̄ = functions(lsys).v, f̄ = functions(lsys).f, kwargs...)
     eqs = functions(lsys)
-    LDAEProblem(eqs.ϑ, eqs.f, eqs.u, eqs.g, eqs.ϕ, eqs.ū, eqs.ḡ, eqs.ψ, eqs.ω, eqs.L, tspan, tstep, ics; v̄ = v̄, f̄ = f̄, invariants = (h = eqs.H,), kwargs...)
-end
-
-function LDAEProblem(lsys::DegenerateLagrangianSystem, tspan::Tuple, tstep::Real, q₀::StateVariable, p₀::StateVariable, λ₀::AlgebraicVariable, μ₀::AlgebraicVariable; kwargs...)
-    ics = (q = q₀, p = p₀, λ = λ₀, μ = μ₀)
-    LDAEProblem(lsys, tspan, tstep, ics; kwargs...)
-end
-
-function LDAEProblem(lsys::DegenerateLagrangianSystem, tspan::Tuple, tstep::Real, q₀::AbstractArray, p₀::AbstractArray, λ₀::AbstractArray = zero(q₀), μ₀::AbstractArray = zero(λ₀); kwargs...)
-    _q₀ = StateVariable(q₀)
-    _p₀ = StateVariable(p₀)
-    _λ₀ = AlgebraicVariable(λ₀)
-    _μ₀ = AlgebraicVariable(μ₀)
-    LDAEProblem(lsys, tspan, tstep, _q₀, _p₀, _λ₀, _μ₀; kwargs...)
+    LDAEProblem(eqs.ϑ, eqs.f, eqs.u, eqs.g, eqs.ϕ, eqs.ū, eqs.ḡ, eqs.ψ, eqs.ω, eqs.L, tspan, tstep, ics...; v̄ = v̄, f̄ = f̄, invariants = (h = (t,q,v,params) -> eqs.H(t,q,params),), kwargs...)
 end
