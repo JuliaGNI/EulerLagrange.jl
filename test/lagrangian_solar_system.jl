@@ -139,7 +139,7 @@ function test_solar_system(ss)
     sparams = symbolize(params)
 
     # LagrangianSystem
-    lag_sys = LagrangianSystem(lagrangian(t, x, v, sparams, d, n), t, x, v, sparams; dosimplify = false)
+    lag_sys = LagrangianSystem(lagrangian(t, x, v, sparams, d, n), t, x, v, sparams; simplify = false)
 
     p₁, p₂ = zero(p₀), zero(p₀)
     ṗ₁, ṗ₂ = zero(p₀), zero(p₀)

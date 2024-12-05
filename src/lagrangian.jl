@@ -10,7 +10,7 @@ struct LagrangianSystem
     equations
     functions
 
-    function LagrangianSystem(L, t, x, v, params = NamedTuple(); dosimplify = true)
+    function LagrangianSystem(L, t, x, v, params = NamedTuple(); simplify = true, scalarize = true)
 
         @assert eachindex(x) == eachindex(v)
 
@@ -29,22 +29,25 @@ struct LagrangianSystem
         ẋ  = collect(Dt.(x))
         ṗ  = collect(Dt.(p))
 
-        EL = [expand_derivatives(Dx[i](L) - Dt(Dv[i](L))) for i in eachindex(Dx,Dv)]
-        f  = [expand_derivatives(dx(L)) for dx in Dx]
-        g  = [expand_derivatives(Dt(dv(L))) for dv in Dv]
-        ϑ  = [expand_derivatives(dv(L)) for dv in Dv]
-        θ  = [expand_derivatives(dz(L)) for dz in Dz]
+        Ls = scalarize ? Symbolics.scalarize(L) : L
+        Ls = simplify ? Symbolics.simplify(Ls) : Ls
+
+        f  = [expand_derivatives(dx(Ls)) for dx in Dx]
+        g  = [expand_derivatives(Dt(dv(Ls))) for dv in Dv]
+        ϑ  = [expand_derivatives(dv(Ls)) for dv in Dv]
+        θ  = [expand_derivatives(dz(Ls)) for dz in Dz]
+        EL = [f[i] - g[i] for i in eachindex(f,g)]
 
         Ω  = [Dx[i](ϑ[j]) - Dx[j](ϑ[i]) for i in eachindex(Dx,ϑ), j in eachindex(Dx,ϑ)]
         ω  = [Dz[i](θ[j]) - Dz[j](θ[i]) for i in eachindex(Dz,θ), j in eachindex(Dz,θ)]
         M  = [Dv[i](ϑ[j]) for i in eachindex(Dv), j in eachindex(ϑ)]
         N  = [Dx[i](ϑ[j]) for i in eachindex(Dv), j in eachindex(ϑ)]
 
-        if dosimplify
-            Ω = simplify.(Ω)
-            ω = simplify.(ω)
-            M = simplify.(M)
-            N = simplify.(N)
+        if simplify
+            Ω = Symbolics.simplify.(Ω)
+            ω = Symbolics.simplify.(ω)
+            M = Symbolics.simplify.(M)
+            N = Symbolics.simplify.(N)
         end
 
         Ω = expand_derivatives.(Ω)
@@ -53,7 +56,7 @@ struct LagrangianSystem
         N = expand_derivatives.(N)
 
         equs = (
-            L = L,
+            L = Ls,
             EL = EL,
             f = f,
             g = g,
@@ -99,7 +102,7 @@ struct LagrangianSystem
             # P  = substitute_parameters(build_function(equs_subs.Σ,  t, X, V, params...; nanmath = false)[2], params),
         )
 
-        new(L, t, x, v, params, equs, generate_code(code))
+        new(Ls, t, x, v, params, equs, generate_code(code))
     end
 end
 

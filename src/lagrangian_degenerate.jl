@@ -10,7 +10,7 @@ struct DegenerateLagrangianSystem
     equations
     functions
 
-    function DegenerateLagrangianSystem(K, H, t, x, v, params = NamedTuple())
+    function DegenerateLagrangianSystem(K, H, t, x, v, params = NamedTuple(); simplify = true, scalarize = true)
 
         @assert eachindex(x) == eachindex(v)
 
@@ -27,21 +27,27 @@ struct DegenerateLagrangianSystem
         
         ẋ  = collect(Dt.(x))
 
-        L  = K - H
-        EL = [expand_derivatives(Dx[i](L) - Dt(Dv[i](L))) for i in eachindex(Dx,Dv)]
-        ∇H = [expand_derivatives(dx(H)) for dx in Dx]
-        ϑ  = [expand_derivatives(dv(K)) for dv in Dv]
-        f  = [expand_derivatives(dx(L)) for dx in Dx]
+        Ks = scalarize ? Symbolics.scalarize(K) : K
+        Hs = scalarize ? Symbolics.scalarize(H) : H
+
+        Ks = simplify ? Symbolics.simplify(Ks) : Ks
+        Hs = simplify ? Symbolics.simplify(Hs) : Hs
+
+        Ls = Ks - Hs
+        ∇H = [expand_derivatives(dx(Hs)) for dx in Dx]
+        ϑ  = [expand_derivatives(dv(Ls)) for dv in Dv]
+        f  = [expand_derivatives(dx(Ls)) for dx in Dx]
+        g  = [expand_derivatives(Dt(θ)) for θ in ϑ]
+        ḡ  = [expand_derivatives(dx(Ks)) for dx in Dx]
+        ω  = [expand_derivatives(Symbolics.simplify(Dx[i](ϑ[j]) - Dx[j](ϑ[i]))) for i in eachindex(Dx,ϑ), j in eachindex(Dx,ϑ)]
+        N  = [expand_derivatives(Symbolics.simplify(Dx[i](ϑ[j]))) for i in eachindex(Dv), j in eachindex(ϑ)]
         u  = [u for u in ẋ]
-        g  = [expand_derivatives(Dt.(ϑ))]
         ū  = [u for u in ẋ]
-        ḡ  = [expand_derivatives(dx(K)) for dx in Dx]
-        ω  = [expand_derivatives(simplify(Dx[i](ϑ[j]) - Dx[j](ϑ[i]))) for i in eachindex(Dx,ϑ), j in eachindex(Dx,ϑ)]
-        N  = [expand_derivatives(simplify(Dx[i](ϑ[j]))) for i in eachindex(Dv), j in eachindex(ϑ)]
+        EL = [f[i] - g[i] for i in eachindex(f,g)]
 
         equs = (
-            L = L,
-            H = H,
+            L = Ls,
+            H = Hs,
             EL = EL,
             ∇H = ∇H,
             f = f,
@@ -55,14 +61,19 @@ struct DegenerateLagrangianSystem
         )
 
         equs_subs = substitute_lagrangian_variables(equs, x, ẋ, v)
+
+        σ = inv(equs_subs.ω)
+
         equs_subs = merge(equs_subs, (
             ϕ = P .- equs_subs.ϑ,
             ψ = F .- equs_subs.g,
-            σ = simplify.(inv(equs_subs.ω)),
+            σ = simplify ? Symbolics.simplify.(σ) : σ,
         ))
 
+        ẋeq = equs_subs.σ * equs_subs.∇H
+
         equs_subs = merge(equs_subs, (
-            ẋ = equs_subs.σ * equs_subs.∇H,
+            ẋ = simplify ? Symbolics.simplify.(ẋeq) : ẋeq,
         ))
 
         # equs = substitute_v_with_ẋ(equs, v, ẋ)
@@ -91,7 +102,7 @@ struct DegenerateLagrangianSystem
             P  = substitute_parameters(build_function(equs_subs.σ,  t, X, V, params...; nanmath = false)[2], params),
         )
 
-        new(L, t, x, v, params, equs, generate_code(code))
+        new(Ls, t, x, v, params, equs, generate_code(code))
     end
 end
 

@@ -1,6 +1,7 @@
 using EulerLagrange
 using GeometricEquations
 using LinearAlgebra
+using Symbolics
 using Test
 
 
@@ -14,7 +15,7 @@ t, q, p = hamiltonian_variables(2)
 sym_ham = H(t, q, p, params)
 ham_sys = HamiltonianSystem(sym_ham, t, q, p)
 
-@test isequal(hamiltonian(ham_sys), sym_ham)
+@test isequal(hamiltonian(ham_sys), Symbolics.simplify(sym_ham))
 @test isequal(variables(ham_sys), (t, q, p))
 @test isequal(EulerLagrange.parameters(ham_sys), NamedTuple())
 
