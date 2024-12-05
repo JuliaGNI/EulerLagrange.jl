@@ -14,8 +14,17 @@ dϑ₁dx₁(t, q) = - log(q[2]) / q[1]^2 / 2
 dϑ₁dx₂(t, q) = + 1 / (q[1] * q[2]) / 2
 dϑ₂dx₁(t, q) = - 1 / (q[2] * q[1]) / 2
 dϑ₂dx₂(t, q) = + log(q[1]) / q[2]^2 / 2
+
+
+v₁(t, q, params) = + q[1] * (params.a₂ * q[2] + params.b₂)
+v₂(t, q, params) = - q[2] * (params.a₁ * q[1] + params.b₁)
 f₁(t, q, v) = dϑ₁dx₁(t,q) * v[1] + dϑ₂dx₁(t,q) * v[2]
 f₂(t, q, v) = dϑ₁dx₂(t,q) * v[1] + dϑ₂dx₂(t,q) * v[2]
+
+function ṽ(v, t, q, params)
+    v[1] = v₁(t,q, params)
+    v[2] = v₂(t,q, params)
+end
 
 function p̃(p, t, q, q̇, params)
     p[1] = + log(q[2]) / q[1] / 2
@@ -78,18 +87,22 @@ f̃(ṗ₂, t₀, q₀, v₀, params)
 
 deg_lag_sys = DegenerateLagrangianSystem(ϑ(t,x,v,sparams), H(t,x,v,sparams), t, x, v, sparams)
 
+q̇₁, q̇₂ = zero(q₀), zero(q₀)
 p₁, p₂ = zero(p₀), zero(p₀)
 ṗ₁, ṗ₂ = zero(p₀), zero(p₀)
     
 deg_eqs = functions(deg_lag_sys)
 
+deg_eqs.ẋ(q̇₁, t₀, q₀, params)
 deg_eqs.ϑ(p₁, t₀, q₀, v₀, params)
 deg_eqs.f(ṗ₁, t₀, q₀, v₀, params)
 
+ṽ(q̇₂, t₀, q₀, params)
 p̃(p₂, t₀, q₀, v₀, params)
 f̃(ṗ₂, t₀, q₀, v₀, params)
 
 @test deg_eqs.L(t₀, q₀, v₀, params) == L(t₀, q₀, v₀, params)
+@test q̇₁ ≈ q̇₂  atol=2eps()
 @test p₁ ≈ p₂  atol=2eps()
 @test ṗ₁ ≈ ṗ₂  atol=2eps()
 
