@@ -45,3 +45,11 @@ function lagrangian_variables(dimension::Int)
 
     return (t,x,v)
 end
+
+function lagrangian_derivatives(t, x, v)
+    Dt = Differential(t)
+    Dx = collect(Differential.(x))
+    Dv = collect(Differential.(v))
+    
+    return (Dt, Dx, Dv)
+end

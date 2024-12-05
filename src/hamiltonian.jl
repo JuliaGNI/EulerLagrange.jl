@@ -13,6 +13,23 @@ function substitute_hamiltonian_variables(equs::NamedTuple, q, p)
     NamedTuple{keys(equs)}(Tuple(substitute_hamiltonian_variables(eq, q, p) for eq in equs))
 end
 
+
+function hamiltonian_variables(dimension::Int)
+    t = parameter(:t)
+    @variables (q(t))[1:dimension]
+    @variables (p(t))[1:dimension]
+    return (t,q,p)
+end
+
+function hamiltonian_derivatives(t, q, p)
+    Dt = Differential(t)
+    Dq = collect(Differential.(q))
+    Dp = collect(Differential.(p))
+    
+    return (Dt, Dq, Dp)
+end
+
+
 """
     HamiltonianSystem
 """
@@ -32,9 +49,7 @@ struct HamiltonianSystem
         @variables Q[axes(q,1)]
         @variables P[axes(p,1)]
 
-        Dt = Differential(t)
-        Dq = collect(Differential.(q))
-        Dp = collect(Differential.(p))
+        Dt, Dq, Dp = hamiltonian_derivatives(t, q, p)
 
         Hs = dosimplify ? simplify(H) : H
 
@@ -88,13 +103,6 @@ function Base.show(io::IO, hsys::HamiltonianSystem)
     #     print(io, eq)
     #     print(io, "\n")
     # end
-end
-
-function hamiltonian_variables(dimension::Int)
-    t = parameter(:t)
-    @variables (q(t))[1:dimension]
-    @variables (p(t))[1:dimension]
-    return (t,q,p)
 end
 
 

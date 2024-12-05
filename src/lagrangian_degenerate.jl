@@ -23,9 +23,8 @@ struct DegenerateLagrangianSystem
         @variables F[axes(x, 1)]
         @variables Λ[axes(v, 1)]
 
-        Dt = Differential(t)
-        Dx = collect(Differential.(x))
-        Dv = collect(Differential.(v))
+        Dt, Dx, Dv = lagrangian_derivatives(t, x, v)
+        
         ẋ  = collect(Dt.(x))
 
         K  = θ ⋅ v

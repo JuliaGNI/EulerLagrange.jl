@@ -29,13 +29,13 @@ module EulerLagrange
 
 
     export HamiltonianSystem
-    export hamiltonian, hamiltonian_variables
+    export hamiltonian, hamiltonian_variables, hamiltonian_derivatives
 
     include("hamiltonian.jl")
 
 
     export LagrangianSystem, DegenerateLagrangianSystem
-    export lagrangian, lagrangian_variables
+    export lagrangian, lagrangian_variables, lagrangian_derivatives
 
     include("lagrangian_common.jl")
     include("lagrangian.jl")
