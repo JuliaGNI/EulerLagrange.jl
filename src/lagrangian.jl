@@ -100,9 +100,7 @@ struct LagrangianSystem
             # P  = substitute_parameters(build_function(equs_subs.Σ,  t, X, V, params...; nanmath = false)[2], params),
         )
 
-        funcs = generate_code(code)
-
-        new(L, t, x, v, params, equs, funcs)
+        new(L, t, x, v, params, equs, generate_code(code))
     end
 end
 
@@ -124,14 +122,14 @@ function Base.show(io::IO, lsys::LagrangianSystem)
 end
 
 
-function LODE(lsys::LagrangianSystem; v̄ = _lode_default_v̄, f̄ = functions(lsys).f, kwargs...)
+function LODE(lsys::LagrangianSystem; kwargs...)
     eqs = functions(lsys)
-    LODE(eqs.ϑ, eqs.f, eqs.g, eqs.ω, eqs.L; v̄ = v̄, f̄ = f̄, kwargs...)
+    LODE(eqs.ϑ, eqs.f, eqs.g, eqs.ω, eqs.L; kwargs...)
 end
 
-function LODEProblem(lsys::LagrangianSystem, tspan::Tuple, tstep::Real, ics::NamedTuple; v̄ = _lode_default_v̄, f̄ = functions(lsys).f, kwargs...)
+function LODEProblem(lsys::LagrangianSystem, tspan::Tuple, tstep::Real, ics::NamedTuple; kwargs...)
     eqs = functions(lsys)
-    LODEProblem(eqs.ϑ, eqs.f, eqs.g, eqs.ω, eqs.L, tspan, tstep, ics; v̄ = v̄, f̄ = f̄, kwargs...)
+    LODEProblem(eqs.ϑ, eqs.f, eqs.g, eqs.ω, eqs.L, tspan, tstep, ics; kwargs...)
 end
 
 function LODEProblem(lsys::LagrangianSystem, tspan::Tuple, tstep::Real, q₀::StateVariable, p₀::StateVariable, λ₀::AlgebraicVariable; kwargs...)

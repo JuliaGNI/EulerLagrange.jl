@@ -79,7 +79,7 @@ struct DegenerateLagrangianSystem
             EL = substitute_parameters(build_function(equs_subs.EL, t, X, V, params...; nanmath = false)[2], params),
             ∇H = substitute_parameters(build_function(equs_subs.∇H, t, X, V, params...; nanmath = false)[2], params),
             ẋ  = substitute_parameters(build_function(equs_subs.ẋ,  t, X, params...; nanmath = false)[2], params),
-            v  = substitute_parameters(build_function(equs_subs.ẋ,  t, X, V, params...; nanmath = false)[2], params),
+            v  = substitute_parameters(build_function(equs_subs.ẋ,  t, X, P, params...; nanmath = false)[2], params),
             f  = substitute_parameters(build_function(equs_subs.f,  t, X, V, params...; nanmath = false)[2], params),
             u  = substitute_parameters(build_function(equs_subs.u,  t, X, Λ, V, params...; nanmath = false)[2], params),
             g  = substitute_parameters(build_function(equs_subs.g,  t, X, Λ, V, params...; nanmath = false)[2], params),
@@ -93,9 +93,7 @@ struct DegenerateLagrangianSystem
             P  = substitute_parameters(build_function(equs_subs.σ,  t, X, V, params...; nanmath = false)[2], params),
         )
 
-        funcs = generate_code(code)
-
-        new(L, t, x, v, params, equs, funcs)
+        new(L, t, x, v, params, equs, generate_code(code))
     end
 end
 
@@ -118,11 +116,13 @@ end
 
 
 function ODE(lsys::DegenerateLagrangianSystem; kwargs...)
-    ODE(functions(lsys).ẋ; invariants = (h = functions(lsys).H,), kwargs...)
+    eqs = functions(lsys)
+    ODE(eqs.ẋ; invariants = (h = eqs.H,), kwargs...)
 end
 
 function ODEProblem(lsys::DegenerateLagrangianSystem, tspan::Tuple, tstep::Real, ics::NamedTuple; kwargs...)
-    ODEProblem(functions(lsys).ẋ, tspan, tstep, ics; invariants = (h = functions(lsys).H,), kwargs...)
+    eqs = functions(lsys)
+    ODEProblem(eqs.ẋ, tspan, tstep, ics; invariants = (h = eqs.H,), kwargs...)
 end
 
 function ODEProblem(lsys::DegenerateLagrangianSystem, tspan::Tuple, tstep::Real, q₀::StateVariable; kwargs...)

@@ -39,6 +39,9 @@ end
 t₀, q₀, v₀ = (0.0, [2.0, 1.0], [0.5, 2.0])
 p₀ = zero(v₀)
 
+tspan = (0.0, 1.0)
+tstep = 0.1
+
 params = (
     a₁ = -1.0,
     a₂ = -1.0,
@@ -82,6 +85,9 @@ f̃(ṗ₂, t₀, q₀, v₀, params)
 
 @test eqs.L(t₀, q₀, v₀, params_alt) != L(t₀, q₀, v₀, params)
 
+@test_nowarn LODE(lag_sys)
+@test_nowarn LODEProblem(lag_sys, tspan, tstep, q₀, v₀; parameters = params)
+
 
 # DegenerateLagrangianSystem
 
@@ -107,3 +113,9 @@ f̃(ṗ₂, t₀, q₀, v₀, params)
 @test ṗ₁ ≈ ṗ₂  atol=2eps()
 
 @test deg_eqs.L(t₀, q₀, v₀, params_alt) != L(t₀, q₀, v₀, params)
+
+@test_nowarn ODE(deg_lag_sys)
+@test_nowarn ODEProblem(deg_lag_sys, tspan, tstep, q₀; parameters = params)
+
+@test_nowarn LODE(deg_lag_sys)
+@test_nowarn LODEProblem(deg_lag_sys, tspan, tstep, q₀, v₀; parameters = params)
