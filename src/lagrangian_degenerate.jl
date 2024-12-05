@@ -155,3 +155,27 @@ function LODEProblem(lsys::DegenerateLagrangianSystem, tspan::Tuple, tstep::Real
     _λ₀ = AlgebraicVariable(λ₀)
     LODEProblem(lsys, tspan, tstep, _q₀, _p₀, _λ₀; kwargs...)
 end
+
+
+function LDAE(lsys::DegenerateLagrangianSystem; v̄ = functions(lsys).v, f̄ = functions(lsys).f, kwargs...)
+    eqs = functions(lsys)
+    LDAE(eqs.ϑ, eqs.f, eqs.u, eqs.g, eqs.ϕ, eqs.ū, eqs.ḡ, eqs.ψ, eqs.ω, eqs.L; v̄ = v̄, f̄ = f̄, invariants = (h = eqs.H,), kwargs...)
+end
+
+function LDAEProblem(lsys::DegenerateLagrangianSystem, tspan::Tuple, tstep::Real, ics::NamedTuple; v̄ = functions(lsys).v, f̄ = functions(lsys).f, kwargs...)
+    eqs = functions(lsys)
+    LDAEProblem(eqs.ϑ, eqs.f, eqs.u, eqs.g, eqs.ϕ, eqs.ū, eqs.ḡ, eqs.ψ, eqs.ω, eqs.L, tspan, tstep, ics; v̄ = v̄, f̄ = f̄, invariants = (h = eqs.H,), kwargs...)
+end
+
+function LDAEProblem(lsys::DegenerateLagrangianSystem, tspan::Tuple, tstep::Real, q₀::StateVariable, p₀::StateVariable, λ₀::AlgebraicVariable, μ₀::AlgebraicVariable; kwargs...)
+    ics = (q = q₀, p = p₀, λ = λ₀, μ = μ₀)
+    LDAEProblem(lsys, tspan, tstep, ics; kwargs...)
+end
+
+function LDAEProblem(lsys::DegenerateLagrangianSystem, tspan::Tuple, tstep::Real, q₀::AbstractArray, p₀::AbstractArray, λ₀::AbstractArray = zero(q₀), μ₀::AbstractArray = zero(λ₀); kwargs...)
+    _q₀ = StateVariable(q₀)
+    _p₀ = StateVariable(p₀)
+    _λ₀ = AlgebraicVariable(λ₀)
+    _μ₀ = AlgebraicVariable(μ₀)
+    LDAEProblem(lsys, tspan, tstep, _q₀, _p₀, _λ₀, _μ₀; kwargs...)
+end

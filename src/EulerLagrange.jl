@@ -8,15 +8,17 @@ module EulerLagrange
 
     import GeometricBase: equations, functions, parameters
     import GeometricEquations: HODE, HODEProblem
-    import GeometricEquations: LODE, LODEProblem
+    import GeometricEquations: LODE, LODEProblem, LDAE, LDAEProblem
     import GeometricEquations: ODE, ODEProblem
     import GeometricEquations: _lode_default_v̄
 
     RuntimeGeneratedFunctions.init(@__MODULE__)
 
 
+    export ODE, ODEProblem
     export HODE, HODEProblem
     export LODE, LODEProblem
+    export LDAE, LDAEProblem
 
     export equations, functions, parameters, variables
 

@@ -1,5 +1,4 @@
 using EulerLagrange
-using GeometricEquations
 using LinearAlgebra
 using Test
 
@@ -119,3 +118,6 @@ f̃(ṗ₂, t₀, q₀, v₀, params)
 
 @test_nowarn LODE(deg_lag_sys)
 @test_nowarn LODEProblem(deg_lag_sys, tspan, tstep, q₀, v₀; parameters = params)
+
+@test_nowarn LDAE(deg_lag_sys)
+@test_nowarn LDAEProblem(deg_lag_sys, tspan, tstep, q₀, v₀; parameters = params)
