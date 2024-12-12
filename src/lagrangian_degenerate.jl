@@ -65,8 +65,8 @@ struct DegenerateLagrangianSystem
         σ = inv(equs_subs.ω)
 
         equs_subs = merge(equs_subs, (
-            ϕ = P .- equs_subs.ϑ,
-            ψ = F .- equs_subs.ḡ,
+            ϕ = [P[i] - equs_subs.ϑ[i] for i in eachindex(P, equs_subs.ϑ)],
+            ψ = [F[i] - equs_subs.ḡ[i] for i in eachindex(F, equs_subs.ḡ)],
             σ = simplify ? Symbolics.simplify.(σ) : σ,
         ))
 
@@ -75,12 +75,6 @@ struct DegenerateLagrangianSystem
         equs_subs = merge(equs_subs, (
             ẋ = simplify ? Symbolics.simplify.(ẋeq) : ẋeq,
         ))
-
-        # equs = substitute_v_with_ẋ(equs, v, ẋ)
-        # equs = merge(equs, (
-        #     ϕ = p .- equs.ϑ,
-        #     ψ = ṗ .- equs.g,
-        # ))
 
         code = (
             L  = substitute_parameters(build_function(equs_subs.L,  t, X, V, params...; nanmath = false), params),
@@ -92,8 +86,8 @@ struct DegenerateLagrangianSystem
             f  = substitute_parameters(build_function(equs_subs.f,  t, X, V, params...; nanmath = false)[2], params),
             u  = substitute_parameters(build_function(equs_subs.u,  t, X, Λ, V, params...; nanmath = false)[2], params),
             g  = substitute_parameters(build_function(equs_subs.g,  t, X, Λ, V, params...; nanmath = false)[2], params),
-            ū  = substitute_parameters(build_function(equs_subs.ū,  t, X, Λ, V, params...; nanmath = false)[2], params),
-            ḡ  = substitute_parameters(build_function(equs_subs.ḡ,  t, X, Λ, V, params...; nanmath = false)[2], params),
+            ū  = substitute_parameters(build_function(equs_subs.ū,  t, X, Λ, P, V, params...; nanmath = false)[2], params),
+            ḡ  = substitute_parameters(build_function(equs_subs.ḡ,  t, X, Λ, P, V, params...; nanmath = false)[2], params),
             p  = substitute_parameters(build_function(equs_subs.ϑ,  t, X, V, params...; nanmath = false)[1], params),
             ϑ  = substitute_parameters(build_function(equs_subs.ϑ,  t, X, V, params...; nanmath = false)[2], params),
             ω  = substitute_parameters(build_function(equs_subs.ω,  t, X, V, params...; nanmath = false)[2], params),
@@ -148,10 +142,10 @@ end
 
 function LDAE(lsys::DegenerateLagrangianSystem; v̄ = functions(lsys).v, f̄ = functions(lsys).f, kwargs...)
     eqs = functions(lsys)
-    LDAE(eqs.ϑ, eqs.f, eqs.u, eqs.g, eqs.ϕ, eqs.ū, eqs.ḡ, eqs.ψ, eqs.ω, eqs.L; v̄ = v̄, f̄ = f̄, invariants = (h = (t,q,v,params) -> eqs.H(t,q,params),), kwargs...)
+    LDAE(eqs.ϑ, eqs.f, (u,t,q,v,p,λ,params) -> eqs.u(u,t,q,v,λ,params), (g,t,q,v,p,λ,params) -> eqs.g(g,t,q,v,λ,params), eqs.ϕ, eqs.ū, eqs.ḡ, eqs.ψ, eqs.ω, eqs.L; v̄ = v̄, f̄ = f̄, invariants = (h = (t,q,v,params) -> eqs.H(t,q,params),), kwargs...)
 end
 
 function LDAEProblem(lsys::DegenerateLagrangianSystem, tspan::Tuple, tstep::Real, ics...; v̄ = functions(lsys).v, f̄ = functions(lsys).f, kwargs...)
     eqs = functions(lsys)
-    LDAEProblem(eqs.ϑ, eqs.f, eqs.u, eqs.g, eqs.ϕ, eqs.ū, eqs.ḡ, eqs.ψ, eqs.ω, eqs.L, tspan, tstep, ics...; v̄ = v̄, f̄ = f̄, invariants = (h = (t,q,v,params) -> eqs.H(t,q,params),), kwargs...)
+    LDAEProblem(eqs.ϑ, eqs.f, (u,t,q,v,p,λ,params) -> eqs.u(u,t,q,v,λ,params), (g,t,q,v,p,λ,params) -> eqs.g(g,t,q,v,λ,params), eqs.ϕ, eqs.ū, eqs.ḡ, eqs.ψ, eqs.ω, eqs.L, tspan, tstep, ics...; v̄ = v̄, f̄ = f̄, invariants = (h = (t,q,v,params) -> eqs.H(t,q,params),), kwargs...)
 end
