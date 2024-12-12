@@ -37,8 +37,8 @@ struct DegenerateLagrangianSystem
         ∇H = [expand_derivatives(dx(Hs)) for dx in Dx]
         ϑ  = [expand_derivatives(dv(Ls)) for dv in Dv]
         f  = [expand_derivatives(dx(Ls)) for dx in Dx]
-        g  = [expand_derivatives(Dt(θ)) for θ in ϑ]
-        ḡ  = [expand_derivatives(dx(Ks)) for dx in Dx]
+        g  = [expand_derivatives(dx(Ks)) for dx in Dx]
+        ḡ  = [expand_derivatives(Dt(θ)) for θ in ϑ]
         ω  = [expand_derivatives(Symbolics.simplify(Dx[i](ϑ[j]) - Dx[j](ϑ[i]))) for i in eachindex(Dx,ϑ), j in eachindex(Dx,ϑ)]
         N  = [expand_derivatives(Symbolics.simplify(Dx[i](ϑ[j]))) for i in eachindex(Dv), j in eachindex(ϑ)]
         u  = [u for u in ẋ]
@@ -66,7 +66,7 @@ struct DegenerateLagrangianSystem
 
         equs_subs = merge(equs_subs, (
             ϕ = P .- equs_subs.ϑ,
-            ψ = F .- equs_subs.g,
+            ψ = F .- equs_subs.ḡ,
             σ = simplify ? Symbolics.simplify.(σ) : σ,
         ))
 
