@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Hamiltonian Systems · EulerLagrange.jl</title><meta name="title" content="Hamiltonian Systems · EulerLagrange.jl"/><meta property="og:title" content="Hamiltonian Systems · EulerLagrange.jl"/><meta property="twitter:title" content="Hamiltonian Systems · EulerLagrange.jl"/><meta name="description" content="Documentation for EulerLagrange.jl."/><meta property="og:description" content="Documentation for EulerLagrange.jl."/><meta property="twitter:description" content="Documentation for EulerLagrange.jl."/><meta property="og:url" content="https://JuliaGNI.github.io/EulerLagrange.jl/hamiltonian/"/><meta property="twitter:url" content="https://JuliaGNI.github.io/EulerLagrange.jl/hamiltonian/"/><link rel="canonical" href="https://JuliaGNI.github.io/EulerLagrange.jl/hamiltonian/"/><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../search_index.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../">EulerLagrange.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../">Home</a></li><li class="is-active"><a class="tocitem" href>Hamiltonian Systems</a><ul class="internal"><li><a class="tocitem" href="#Harmonic-Oscillator"><span>Harmonic Oscillator</span></a></li></ul></li><li><a class="tocitem" href="../lagrangian/">Lagrangian Systems</a></li><li><a class="tocitem" href="../degenerate_lagrangian/">Degenerate Lagrangian Systems</a></li><li><a class="tocitem" href="../caveats/">Caveats</a></li><li><a class="tocitem" href="../library/">Library</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Hamiltonian Systems</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Hamiltonian Systems</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/JuliaGNI/EulerLagrange.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/JuliaGNI/EulerLagrange.jl/blob/main/docs/src/hamiltonian.md" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Hamiltonian-Systems"><a class="docs-heading-anchor" href="#Hamiltonian-Systems">Hamiltonian Systems</a><a id="Hamiltonian-Systems-1"></a><a class="docs-heading-anchor-permalink" href="#Hamiltonian-Systems" title="Permalink"></a></h1><p>Hamilton&#39;s equations of motion are given in terms of the Hamiltonian <span>$H(q,p)$</span> by</p><p class="math-container">\[\begin{align*}
+\frac{dq}{dt} &amp;= \frac{\partial H}{\partial p} , &amp;
+\frac{dp}{dt} &amp;= - \frac{\partial H}{\partial q} .
+\end{align*}\]</p><p>In the following, we show how these equations can be obtained for the example of a harmonic oscillator.</p><h2 id="Harmonic-Oscillator"><a class="docs-heading-anchor" href="#Harmonic-Oscillator">Harmonic Oscillator</a><a id="Harmonic-Oscillator-1"></a><a class="docs-heading-anchor-permalink" href="#Harmonic-Oscillator" title="Permalink"></a></h2><p>Before any use, we need to load <code>EulerLagrange</code>:</p><pre><code class="language-julia hljs">using EulerLagrange</code></pre><p>Next, we generate symbolic variables for a one-dimensional Hamiltonian system:</p><pre><code class="language-julia hljs">t, q, p = hamiltonian_variables(1)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">(t, (q(t))[1:1], (p(t))[1:1])</code></pre><p>We define a named tuple with typical values for the parameters, e.g.,</p><pre><code class="language-julia hljs">params = (k=0.5, ω=√0.5)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">(k = 0.5, ω = 0.7071067811865476)</code></pre><p>We use the function <code>symbolize</code> to generate a symbolic version of the parameters:</p><pre><code class="language-julia hljs">sparams = symbolize(params)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">(k = kₚ, ω = ωₚ)</code></pre><p>Now we can define the Hamiltonian function:</p><pre><code class="language-julia hljs">using LinearAlgebra
+H(t, q, p, params) = p ⋅ p / 2 + params.k * (q ⋅ q) / 2</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">H (generic function with 1 method)</code></pre><p>The Hamiltonian, evaluated on and together with the symbolic variables and parameters is used to construct a <code>HamiltonianSystem</code>:</p><pre><code class="language-julia hljs">ham_sys = HamiltonianSystem(H(t, q, p, sparams), t, q, p, sparams)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">
+Hamiltonian system with
+
+H = (1//2)*((p(t))[1]^2) + (1//2)*kₚ*((q(t))[1]^2)</code></pre><p>The constructor computes Hamilton&#39;s equations and generates the corresponding Julia code. In the last step, we can now construct a <code>HODEProblem</code> from the <code>HamiltonianSystem</code> and some appropriate initial conditions, a time span to integrate over and a time step:</p><pre><code class="language-julia hljs">tspan = (0.0, 10.0)
+tstep = 0.01
+q₀, p₀ = [0.5], [0.0]
+
+hprob = HODEProblem(ham_sys, tspan, tstep, q₀, p₀; parameters = params)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Geometric Equation Problem for Hamiltonian Ordinary Differential Equation (HODE)
+
+ with vector fields
+   v = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :Q, :P, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xe5312b5f, 0x659f961f, 0x5a7d2ff2, 0x3f963362, 0x8646876d), Expr}(quote
+    <span class="sgr90">#= none:1 =#</span>
+    <span class="sgr90">#= none:2 =#</span>
+    <span class="sgr90">#= none:2 =#</span> @inbounds begin
+            <span class="sgr90">#= none:4 =#</span>
+            begin
+                <span class="sgr90">#= none:8 =#</span>
+                <span class="sgr90">#= none:8 =#</span> @inbounds begin
+                        <span class="sgr90">#= none:10 =#</span>
+                        ˍ₋out[1] = getindex(P, 1)
+                        <span class="sgr90">#= none:12 =#</span>
+                        ˍ₋out
+                    end
+            end
+        end
+end)
+   f = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :Q, :P, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x7059e7ce, 0xa19a00a4, 0xe52fc928, 0xd3a7a959, 0x3add9c2a), Expr}(quote
+    <span class="sgr90">#= none:1 =#</span>
+    <span class="sgr90">#= none:2 =#</span>
+    <span class="sgr90">#= none:2 =#</span> @inbounds begin
+            <span class="sgr90">#= none:4 =#</span>
+            begin
+                <span class="sgr90">#= none:8 =#</span>
+                <span class="sgr90">#= none:8 =#</span> @inbounds begin
+                        <span class="sgr90">#= none:10 =#</span>
+                        ˍ₋out[1] = (-1 // 1 * getindex(Q, 1)) * params.k
+                        <span class="sgr90">#= none:12 =#</span>
+                        ˍ₋out
+                    end
+            end
+        end
+end)
+
+ Hamiltonian: H = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :Q, :P, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x05b30522, 0x8e3423dc, 0x9ce4cc09, 0xa35d7f5e, 0x405968cd), Expr}(quote
+    <span class="sgr90">#= none:1 =#</span>
+    <span class="sgr90">#= none:2 =#</span>
+    <span class="sgr90">#= none:2 =#</span> @inbounds begin
+            <span class="sgr90">#= none:4 =#</span>
+            begin
+                <span class="sgr90">#= none:8 =#</span>
+                1 // 2 * getindex(P, 1) ^ 2 + (1 // 2 * getindex(Q, 1) ^ 2) * params.k
+            end
+        end
+end)
+
+ Invariants: 
+   GeometricBase.NullInvariants()
+
+ Timespan: (0.0, 10.0) 
+ Timestep: 0.01 
+
+ Initial conditions: 
+   (t = 0.0, q = [0.5], p = [0.0])
+
+ Parameters: 
+   (k = 0.5, ω = 0.7071067811865476)</code></pre><p>We can integrate this system using GeometricIntegrators:</p><pre><code class="language-julia hljs">using GeometricIntegrators
+sol = integrate(hprob, Gauss(1))
+
+using CairoMakie
+fig = lines(parent(sol.q[:,1]), parent(sol.p[:,1]);
+    axis = (; xlabel = &quot;q₁&quot;, ylabel = &quot;p₁&quot;, title = &quot;Harmonic Oscillator&quot;),
+    figure = (; size = (800,600), fontsize = 22))</code></pre><p><img src="../harmonic-oscillator-hamiltonian.svg" alt/></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../">« Home</a><a class="docs-footer-nextpage" href="../lagrangian/">Lagrangian Systems »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.13.0 on <span class="colophon-date" title="Friday 27 June 2025 12:43">Friday 27 June 2025</span>. Using Julia version 1.11.5.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
