@@ -18,278 +18,353 @@ p₀ = ϑ(q₀, params)
 lprob = LODEProblem(lag_sys, tspan, tstep, q₀, p₀; parameters = params)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Geometric Equation Problem for Lagrangian Ordinary Differential Equation (LODE)
 
  with vector fields
-   ϑ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x2b6796c5, 0xc7038f1c, 0x05aaa4f2, 0xa7a37a31, 0xb6170ee9), Expr}(quote
+   ϑ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x6674c930, 0x263276c7, 0x31cddabe, 0xdc2f6268, 0xf23430a9), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
-    <span class="sgr90">#= none:5 =#</span>
-    begin
-        <span class="sgr90">#= none:7 =#</span>
-        <span class="sgr90">#= none:7 =#</span> @inbounds begin
-                <span class="sgr90">#= none:9 =#</span>
-                ˍ₋out[1] = (1 // 2 * log(getindex(X, 2))) / getindex(X, 1)
-                <span class="sgr90">#= none:10 =#</span>
-                ˍ₋out[2] = (-1 // 2 * log(getindex(X, 1))) / getindex(X, 2)
-                <span class="sgr90">#= none:12 =#</span>
-                nothing
+    <span class="sgr90">#= none:2 =#</span>
+    <span class="sgr90">#= none:2 =#</span> @inbounds begin
+            <span class="sgr90">#= none:4 =#</span>
+            begin
+                <span class="sgr90">#= none:8 =#</span>
+                <span class="sgr90">#= none:8 =#</span> @inbounds begin
+                        <span class="sgr90">#= none:10 =#</span>
+                        ˍ₋out[1] = (1 // 2 * log(getindex(X, 2))) / getindex(X, 1)
+                        <span class="sgr90">#= none:11 =#</span>
+                        ˍ₋out[2] = (-1 // 2 * log(getindex(X, 1))) / getindex(X, 2)
+                        <span class="sgr90">#= none:13 =#</span>
+                        ˍ₋out
+                    end
             end
-    end
+        end
 end)
-   f = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xad437f9d, 0xbc3e83f1, 0x0fcc84bd, 0xc003e345, 0x864d5cf8), Expr}(quote
+   f = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x136bb501, 0x668179a6, 0x697c5293, 0x8d3a8b3d, 0x322beefc), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
-    <span class="sgr90">#= none:5 =#</span>
-    begin
-        <span class="sgr90">#= none:7 =#</span>
-        <span class="sgr90">#= none:7 =#</span> @inbounds begin
-                <span class="sgr90">#= none:9 =#</span>
-                ˍ₋out[1] = ((-1 * params.a₁ + (-1 // 2 * getindex(V, 2) + (-1 // 2 * getindex(V, 2)) * log(getindex(X, 1))) / (getindex(X, 1) * getindex(X, 2))) + (-1 * params.b₁) / getindex(X, 1)) + (((-1 // 2 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + ((1 // 2 * getindex(V, 2)) * getindex(X, 1)) * log(getindex(X, 1))) / (getindex(X, 1) ^ 2 * getindex(X, 2))
-                <span class="sgr90">#= none:10 =#</span>
-                ˍ₋out[2] = ((-1 * params.a₂ + (-1 * params.b₂) / getindex(X, 2)) + (((-1 // 2 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + ((1 // 2 * getindex(V, 2)) * getindex(X, 1)) * log(getindex(X, 1))) / (getindex(X, 1) * getindex(X, 2) ^ 2)) + (1 // 2 * getindex(V, 1) + (1 // 2 * getindex(V, 1)) * log(getindex(X, 2))) / (getindex(X, 1) * getindex(X, 2))
-                <span class="sgr90">#= none:12 =#</span>
-                nothing
+    <span class="sgr90">#= none:2 =#</span>
+    <span class="sgr90">#= none:2 =#</span> @inbounds begin
+            <span class="sgr90">#= none:4 =#</span>
+            begin
+                <span class="sgr90">#= none:8 =#</span>
+                <span class="sgr90">#= none:8 =#</span> @inbounds begin
+                        <span class="sgr90">#= none:10 =#</span>
+                        ˍ₋out[1] = ((-1 * params.a₁ + (-1 // 2 * getindex(V, 2) + (-1 // 2 * getindex(V, 2)) * log(getindex(X, 1))) / (getindex(X, 1) * getindex(X, 2))) + (-1 * params.b₁) / getindex(X, 1)) + (((-1 // 2 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + ((1 // 2 * getindex(V, 2)) * getindex(X, 1)) * log(getindex(X, 1))) / (getindex(X, 1) ^ 2 * getindex(X, 2))
+                        <span class="sgr90">#= none:11 =#</span>
+                        ˍ₋out[2] = ((-1 * params.a₂ + (-1 * params.b₂) / getindex(X, 2)) + (((-1 // 2 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + ((1 // 2 * getindex(V, 2)) * getindex(X, 1)) * log(getindex(X, 1))) / (getindex(X, 1) * getindex(X, 2) ^ 2)) + (1 // 2 * getindex(V, 1) + (1 // 2 * getindex(V, 1)) * log(getindex(X, 2))) / (getindex(X, 1) * getindex(X, 2))
+                        <span class="sgr90">#= none:13 =#</span>
+                        ˍ₋out
+                    end
             end
-    end
+        end
 end)
-   g = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xc952f36d, 0x0b3274a1, 0x5a98bf60, 0x2329f298, 0x8174cb0d), Expr}(quote
+   g = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x64e91999, 0xfe109d19, 0x2cf5f368, 0xac469621, 0x50889fea), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
-    <span class="sgr90">#= none:5 =#</span>
-    begin
-        <span class="sgr90">#= none:7 =#</span>
-        <span class="sgr90">#= none:7 =#</span> @inbounds begin
-                <span class="sgr90">#= none:9 =#</span>
-                ˍ₋out[1] = (-1 // 2 * getindex(V, 2) + (-1 // 2 * getindex(V, 2)) * log(getindex(X, 1))) / (getindex(X, 1) * getindex(X, 2)) + (((-1 // 2 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + ((1 // 2 * getindex(V, 2)) * getindex(X, 1)) * log(getindex(X, 1))) / (getindex(X, 1) ^ 2 * getindex(X, 2))
-                <span class="sgr90">#= none:10 =#</span>
-                ˍ₋out[2] = (((-1 // 2 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + ((1 // 2 * getindex(V, 2)) * getindex(X, 1)) * log(getindex(X, 1))) / (getindex(X, 1) * getindex(X, 2) ^ 2) + (1 // 2 * getindex(V, 1) + (1 // 2 * getindex(V, 1)) * log(getindex(X, 2))) / (getindex(X, 1) * getindex(X, 2))
-                <span class="sgr90">#= none:12 =#</span>
-                nothing
+    <span class="sgr90">#= none:2 =#</span>
+    <span class="sgr90">#= none:2 =#</span> @inbounds begin
+            <span class="sgr90">#= none:4 =#</span>
+            begin
+                <span class="sgr90">#= none:8 =#</span>
+                <span class="sgr90">#= none:8 =#</span> @inbounds begin
+                        <span class="sgr90">#= none:10 =#</span>
+                        ˍ₋out[1] = (-1 // 2 * getindex(V, 2) + (-1 // 2 * getindex(V, 2)) * log(getindex(X, 1))) / (getindex(X, 1) * getindex(X, 2)) + (((-1 // 2 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + ((1 // 2 * getindex(V, 2)) * getindex(X, 1)) * log(getindex(X, 1))) / (getindex(X, 1) ^ 2 * getindex(X, 2))
+                        <span class="sgr90">#= none:11 =#</span>
+                        ˍ₋out[2] = (((-1 // 2 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + ((1 // 2 * getindex(V, 2)) * getindex(X, 1)) * log(getindex(X, 1))) / (getindex(X, 1) * getindex(X, 2) ^ 2) + (1 // 2 * getindex(V, 1) + (1 // 2 * getindex(V, 1)) * log(getindex(X, 2))) / (getindex(X, 1) * getindex(X, 2))
+                        <span class="sgr90">#= none:13 =#</span>
+                        ˍ₋out
+                    end
             end
-    end
+        end
 end)
 
- Lagrangian: L = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xfc4f47a4, 0x4fbe2d9e, 0x542e7e9b, 0xc4e07e8e, 0x44c0c820), Expr}(quote
+ Lagrangian: L = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x21c2abaa, 0x5d66f8c2, 0x525a0892, 0xd4e06c6d, 0xa934c8e6), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
-    <span class="sgr90">#= none:5 =#</span>
-    ((((((1 // 2 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + ((-1 // 2 * getindex(V, 2)) * getindex(X, 1)) * log(getindex(X, 1))) / (getindex(X, 1) * getindex(X, 2)) + (-1 * getindex(X, 1)) * params.a₁) + (-1 * getindex(X, 2)) * params.a₂) + (-1 * params.b₁) * log(getindex(X, 1))) + (-1 * params.b₂) * log(getindex(X, 2))
+    <span class="sgr90">#= none:2 =#</span>
+    <span class="sgr90">#= none:2 =#</span> @inbounds begin
+            <span class="sgr90">#= none:4 =#</span>
+            begin
+                <span class="sgr90">#= none:8 =#</span>
+                ((((((1 // 2 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + ((-1 // 2 * getindex(V, 2)) * getindex(X, 1)) * log(getindex(X, 1))) / (getindex(X, 1) * getindex(X, 2)) + (-1 * getindex(X, 1)) * params.a₁) + (-1 * getindex(X, 2)) * params.a₂) + (-1 * params.b₁) * log(getindex(X, 1))) + (-1 * params.b₂) * log(getindex(X, 2))
+            end
+        end
 end)
 
  Invariants: 
-   (h = EulerLagrange.var&quot;#90#91&quot;{@NamedTuple{L::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xfc4f47a4, 0x4fbe2d9e, 0x542e7e9b, 0xc4e07e8e, 0x44c0c820), Expr}, H::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x1fd90528, 0xad128186, 0xac9fbe57, 0xcaac718b, 0xf104b744), Expr}, EL::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xbfa88298, 0xe4eeac6c, 0x6282c223, 0x0f2d42df, 0x0be87f06), Expr}, ∇H::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xb02a312d, 0xdcc8f664, 0x77fea323, 0x3c6e1dcf, 0x85143e8a), Expr}, ẋ::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xcd1ffa8c, 0xc4441362, 0xe0f83747, 0x1beb287f, 0xa154b416), Expr}, v::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :P, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xcd1ffa8c, 0xc4441362, 0xe0f83747, 0x1beb287f, 0xa154b416), Expr}, f::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xad437f9d, 0xbc3e83f1, 0x0fcc84bd, 0xc003e345, 0x864d5cf8), Expr}, u::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x9074dbae, 0x9dbd5857, 0x29f62319, 0xac7fc940, 0x64f9e588), Expr}, g::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xc952f36d, 0x0b3274a1, 0x5a98bf60, 0x2329f298, 0x8174cb0d), Expr}, ū::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :P, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x9074dbae, 0x9dbd5857, 0x29f62319, 0xac7fc940, 0x64f9e588), Expr}, ḡ::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :P, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x5dd8f1c1, 0x64ee23ef, 0x65d6e415, 0x93a2dcf0, 0xc9116c7a), Expr}, p::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xdeb1e969, 0x01b4695d, 0x35148672, 0xdc0212d8, 0xfddd0261), Expr}, ϑ::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x2b6796c5, 0xc7038f1c, 0x05aaa4f2, 0xa7a37a31, 0xb6170ee9), Expr}, ω::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x9f1dd65e, 0xe98e31d6, 0xc077f403, 0xbf1d9b2a, 0xfdcf4fcd), Expr}, ϕ::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :P, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x5fc08be0, 0x9d1c6478, 0x1fc693e6, 0x049c9ff7, 0x07f82e11), Expr}, ψ::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :P, :F, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x1385c301, 0x477bd586, 0x5d26ff37, 0xfad84fef, 0x150de6c6), Expr}, P::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xb3beb4ec, 0x1199f700, 0x9e11c355, 0x025bf187, 0xfd792d21), Expr}}}((L = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xfc4f47a4, 0x4fbe2d9e, 0x542e7e9b, 0xc4e07e8e, 0x44c0c820), Expr}(quote
+   (h = EulerLagrange.var&quot;#90#91&quot;{@NamedTuple{L::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x21c2abaa, 0x5d66f8c2, 0x525a0892, 0xd4e06c6d, 0xa934c8e6), Expr}, H::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xd4486f26, 0x7f39bbae, 0xe0d71131, 0x6b3ce74a, 0x20ebaa55), Expr}, EL::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x04ccd514, 0x9a648c25, 0x465055ba, 0x34188cb9, 0x2164f696), Expr}, ∇H::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x00a50584, 0xb8c6d74e, 0x295d8e3a, 0x94624794, 0x5b77be50), Expr}, ẋ::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x7597e48f, 0x5b18ebc5, 0xce803108, 0x785c56c2, 0x37b4bd42), Expr}, v::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :P, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x7597e48f, 0x5b18ebc5, 0xce803108, 0x785c56c2, 0x37b4bd42), Expr}, f::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x136bb501, 0x668179a6, 0x697c5293, 0x8d3a8b3d, 0x322beefc), Expr}, u::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x600f0e62, 0xb5de2968, 0x05f3f7bb, 0xcd7da120, 0x86c52545), Expr}, g::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x64e91999, 0xfe109d19, 0x2cf5f368, 0xac469621, 0x50889fea), Expr}, ū::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :P, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x600f0e62, 0xb5de2968, 0x05f3f7bb, 0xcd7da120, 0x86c52545), Expr}, ḡ::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :P, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x5f340ef2, 0x81a4f592, 0xce25457c, 0xf3d186a5, 0x227887f5), Expr}, p::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xbb044137, 0xb45bea04, 0x5e090008, 0x49919d1a, 0x45c40333), Expr}, ϑ::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x6674c930, 0x263276c7, 0x31cddabe, 0xdc2f6268, 0xf23430a9), Expr}, ω::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x5eacc370, 0x1d49aacf, 0x06e0937f, 0xe0548ae5, 0xfc243566), Expr}, ϕ::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :P, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xbcaeb9a3, 0x59403f23, 0xa07dfef7, 0x15c6c86a, 0xe47c84cc), Expr}, ψ::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :P, :F, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x2f0bc395, 0x242d43b7, 0xb6913fec, 0xc6919df8, 0xc1222b7f), Expr}, P::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x81b43702, 0x69cb5c49, 0x9492d742, 0x6870c341, 0xdf25bce4), Expr}}}((L = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x21c2abaa, 0x5d66f8c2, 0x525a0892, 0xd4e06c6d, 0xa934c8e6), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
-    <span class="sgr90">#= none:5 =#</span>
-    ((((((1 // 2 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + ((-1 // 2 * getindex(V, 2)) * getindex(X, 1)) * log(getindex(X, 1))) / (getindex(X, 1) * getindex(X, 2)) + (-1 * getindex(X, 1)) * params.a₁) + (-1 * getindex(X, 2)) * params.a₂) + (-1 * params.b₁) * log(getindex(X, 1))) + (-1 * params.b₂) * log(getindex(X, 2))
-end), H = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x1fd90528, 0xad128186, 0xac9fbe57, 0xcaac718b, 0xf104b744), Expr}(quote
-    <span class="sgr90">#= none:1 =#</span>
-    <span class="sgr90">#= none:5 =#</span>
-    ((getindex(X, 1) * params.a₁ + getindex(X, 2) * params.a₂) + params.b₁ * log(getindex(X, 1))) + params.b₂ * log(getindex(X, 2))
-end), EL = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xbfa88298, 0xe4eeac6c, 0x6282c223, 0x0f2d42df, 0x0be87f06), Expr}(quote
-    <span class="sgr90">#= none:1 =#</span>
-    <span class="sgr90">#= none:5 =#</span>
-    begin
-        <span class="sgr90">#= none:7 =#</span>
-        <span class="sgr90">#= none:7 =#</span> @inbounds begin
-                <span class="sgr90">#= none:9 =#</span>
-                ˍ₋out[1] = -1 * params.a₁ + (-1 * params.b₁) / getindex(X, 1)
-                <span class="sgr90">#= none:10 =#</span>
-                ˍ₋out[2] = -1 * params.a₂ + (-1 * params.b₂) / getindex(X, 2)
-                <span class="sgr90">#= none:12 =#</span>
-                nothing
+    <span class="sgr90">#= none:2 =#</span>
+    <span class="sgr90">#= none:2 =#</span> @inbounds begin
+            <span class="sgr90">#= none:4 =#</span>
+            begin
+                <span class="sgr90">#= none:8 =#</span>
+                ((((((1 // 2 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + ((-1 // 2 * getindex(V, 2)) * getindex(X, 1)) * log(getindex(X, 1))) / (getindex(X, 1) * getindex(X, 2)) + (-1 * getindex(X, 1)) * params.a₁) + (-1 * getindex(X, 2)) * params.a₂) + (-1 * params.b₁) * log(getindex(X, 1))) + (-1 * params.b₂) * log(getindex(X, 2))
             end
-    end
-end), ∇H = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xb02a312d, 0xdcc8f664, 0x77fea323, 0x3c6e1dcf, 0x85143e8a), Expr}(quote
+        end
+end), H = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xd4486f26, 0x7f39bbae, 0xe0d71131, 0x6b3ce74a, 0x20ebaa55), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
-    <span class="sgr90">#= none:5 =#</span>
-    begin
-        <span class="sgr90">#= none:7 =#</span>
-        <span class="sgr90">#= none:7 =#</span> @inbounds begin
-                <span class="sgr90">#= none:9 =#</span>
-                ˍ₋out[1] = params.a₁ + params.b₁ / getindex(X, 1)
-                <span class="sgr90">#= none:10 =#</span>
-                ˍ₋out[2] = params.a₂ + params.b₂ / getindex(X, 2)
-                <span class="sgr90">#= none:12 =#</span>
-                nothing
+    <span class="sgr90">#= none:2 =#</span>
+    <span class="sgr90">#= none:2 =#</span> @inbounds begin
+            <span class="sgr90">#= none:4 =#</span>
+            begin
+                <span class="sgr90">#= none:8 =#</span>
+                ((getindex(X, 1) * params.a₁ + getindex(X, 2) * params.a₂) + params.b₁ * log(getindex(X, 1))) + params.b₂ * log(getindex(X, 2))
             end
-    end
-end), ẋ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xcd1ffa8c, 0xc4441362, 0xe0f83747, 0x1beb287f, 0xa154b416), Expr}(quote
+        end
+end), EL = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x04ccd514, 0x9a648c25, 0x465055ba, 0x34188cb9, 0x2164f696), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
-    <span class="sgr90">#= none:5 =#</span>
-    begin
-        <span class="sgr90">#= none:7 =#</span>
-        <span class="sgr90">#= none:7 =#</span> @inbounds begin
-                <span class="sgr90">#= none:9 =#</span>
-                ˍ₋out[1] = getindex(X, 1) * (params.b₂ + getindex(X, 2) * params.a₂)
-                <span class="sgr90">#= none:10 =#</span>
-                ˍ₋out[2] = (-1 * (params.b₁ + getindex(X, 1) * params.a₁)) * getindex(X, 2)
-                <span class="sgr90">#= none:12 =#</span>
-                nothing
+    <span class="sgr90">#= none:2 =#</span>
+    <span class="sgr90">#= none:2 =#</span> @inbounds begin
+            <span class="sgr90">#= none:4 =#</span>
+            begin
+                <span class="sgr90">#= none:8 =#</span>
+                <span class="sgr90">#= none:8 =#</span> @inbounds begin
+                        <span class="sgr90">#= none:10 =#</span>
+                        ˍ₋out[1] = -1 * params.a₁ + (-1 * params.b₁) / getindex(X, 1)
+                        <span class="sgr90">#= none:11 =#</span>
+                        ˍ₋out[2] = -1 * params.a₂ + (-1 * params.b₂) / getindex(X, 2)
+                        <span class="sgr90">#= none:13 =#</span>
+                        ˍ₋out
+                    end
             end
-    end
-end), v = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :P, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xcd1ffa8c, 0xc4441362, 0xe0f83747, 0x1beb287f, 0xa154b416), Expr}(quote
+        end
+end), ∇H = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x00a50584, 0xb8c6d74e, 0x295d8e3a, 0x94624794, 0x5b77be50), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
-    <span class="sgr90">#= none:5 =#</span>
-    begin
-        <span class="sgr90">#= none:7 =#</span>
-        <span class="sgr90">#= none:7 =#</span> @inbounds begin
-                <span class="sgr90">#= none:9 =#</span>
-                ˍ₋out[1] = getindex(X, 1) * (params.b₂ + getindex(X, 2) * params.a₂)
-                <span class="sgr90">#= none:10 =#</span>
-                ˍ₋out[2] = (-1 * (params.b₁ + getindex(X, 1) * params.a₁)) * getindex(X, 2)
-                <span class="sgr90">#= none:12 =#</span>
-                nothing
+    <span class="sgr90">#= none:2 =#</span>
+    <span class="sgr90">#= none:2 =#</span> @inbounds begin
+            <span class="sgr90">#= none:4 =#</span>
+            begin
+                <span class="sgr90">#= none:8 =#</span>
+                <span class="sgr90">#= none:8 =#</span> @inbounds begin
+                        <span class="sgr90">#= none:10 =#</span>
+                        ˍ₋out[1] = params.a₁ + params.b₁ / getindex(X, 1)
+                        <span class="sgr90">#= none:11 =#</span>
+                        ˍ₋out[2] = params.a₂ + params.b₂ / getindex(X, 2)
+                        <span class="sgr90">#= none:13 =#</span>
+                        ˍ₋out
+                    end
             end
-    end
-end), f = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xad437f9d, 0xbc3e83f1, 0x0fcc84bd, 0xc003e345, 0x864d5cf8), Expr}(quote
+        end
+end), ẋ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x7597e48f, 0x5b18ebc5, 0xce803108, 0x785c56c2, 0x37b4bd42), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
-    <span class="sgr90">#= none:5 =#</span>
-    begin
-        <span class="sgr90">#= none:7 =#</span>
-        <span class="sgr90">#= none:7 =#</span> @inbounds begin
-                <span class="sgr90">#= none:9 =#</span>
-                ˍ₋out[1] = ((-1 * params.a₁ + (-1 // 2 * getindex(V, 2) + (-1 // 2 * getindex(V, 2)) * log(getindex(X, 1))) / (getindex(X, 1) * getindex(X, 2))) + (-1 * params.b₁) / getindex(X, 1)) + (((-1 // 2 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + ((1 // 2 * getindex(V, 2)) * getindex(X, 1)) * log(getindex(X, 1))) / (getindex(X, 1) ^ 2 * getindex(X, 2))
-                <span class="sgr90">#= none:10 =#</span>
-                ˍ₋out[2] = ((-1 * params.a₂ + (-1 * params.b₂) / getindex(X, 2)) + (((-1 // 2 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + ((1 // 2 * getindex(V, 2)) * getindex(X, 1)) * log(getindex(X, 1))) / (getindex(X, 1) * getindex(X, 2) ^ 2)) + (1 // 2 * getindex(V, 1) + (1 // 2 * getindex(V, 1)) * log(getindex(X, 2))) / (getindex(X, 1) * getindex(X, 2))
-                <span class="sgr90">#= none:12 =#</span>
-                nothing
+    <span class="sgr90">#= none:2 =#</span>
+    <span class="sgr90">#= none:2 =#</span> @inbounds begin
+            <span class="sgr90">#= none:4 =#</span>
+            begin
+                <span class="sgr90">#= none:8 =#</span>
+                <span class="sgr90">#= none:8 =#</span> @inbounds begin
+                        <span class="sgr90">#= none:10 =#</span>
+                        ˍ₋out[1] = getindex(X, 1) * (params.b₂ + getindex(X, 2) * params.a₂)
+                        <span class="sgr90">#= none:11 =#</span>
+                        ˍ₋out[2] = (-1 * (params.b₁ + getindex(X, 1) * params.a₁)) * getindex(X, 2)
+                        <span class="sgr90">#= none:13 =#</span>
+                        ˍ₋out
+                    end
             end
-    end
-end), u = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x9074dbae, 0x9dbd5857, 0x29f62319, 0xac7fc940, 0x64f9e588), Expr}(quote
+        end
+end), v = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :P, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x7597e48f, 0x5b18ebc5, 0xce803108, 0x785c56c2, 0x37b4bd42), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
-    <span class="sgr90">#= none:5 =#</span>
-    begin
-        <span class="sgr90">#= none:7 =#</span>
-        <span class="sgr90">#= none:7 =#</span> @inbounds begin
-                <span class="sgr90">#= none:9 =#</span>
-                ˍ₋out[1] = getindex(V, 1)
-                <span class="sgr90">#= none:10 =#</span>
-                ˍ₋out[2] = getindex(V, 2)
-                <span class="sgr90">#= none:12 =#</span>
-                nothing
+    <span class="sgr90">#= none:2 =#</span>
+    <span class="sgr90">#= none:2 =#</span> @inbounds begin
+            <span class="sgr90">#= none:4 =#</span>
+            begin
+                <span class="sgr90">#= none:8 =#</span>
+                <span class="sgr90">#= none:8 =#</span> @inbounds begin
+                        <span class="sgr90">#= none:10 =#</span>
+                        ˍ₋out[1] = getindex(X, 1) * (params.b₂ + getindex(X, 2) * params.a₂)
+                        <span class="sgr90">#= none:11 =#</span>
+                        ˍ₋out[2] = (-1 * (params.b₁ + getindex(X, 1) * params.a₁)) * getindex(X, 2)
+                        <span class="sgr90">#= none:13 =#</span>
+                        ˍ₋out
+                    end
             end
-    end
-end), g = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xc952f36d, 0x0b3274a1, 0x5a98bf60, 0x2329f298, 0x8174cb0d), Expr}(quote
+        end
+end), f = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x136bb501, 0x668179a6, 0x697c5293, 0x8d3a8b3d, 0x322beefc), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
-    <span class="sgr90">#= none:5 =#</span>
-    begin
-        <span class="sgr90">#= none:7 =#</span>
-        <span class="sgr90">#= none:7 =#</span> @inbounds begin
-                <span class="sgr90">#= none:9 =#</span>
-                ˍ₋out[1] = (-1 // 2 * getindex(V, 2) + (-1 // 2 * getindex(V, 2)) * log(getindex(X, 1))) / (getindex(X, 1) * getindex(X, 2)) + (((-1 // 2 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + ((1 // 2 * getindex(V, 2)) * getindex(X, 1)) * log(getindex(X, 1))) / (getindex(X, 1) ^ 2 * getindex(X, 2))
-                <span class="sgr90">#= none:10 =#</span>
-                ˍ₋out[2] = (((-1 // 2 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + ((1 // 2 * getindex(V, 2)) * getindex(X, 1)) * log(getindex(X, 1))) / (getindex(X, 1) * getindex(X, 2) ^ 2) + (1 // 2 * getindex(V, 1) + (1 // 2 * getindex(V, 1)) * log(getindex(X, 2))) / (getindex(X, 1) * getindex(X, 2))
-                <span class="sgr90">#= none:12 =#</span>
-                nothing
+    <span class="sgr90">#= none:2 =#</span>
+    <span class="sgr90">#= none:2 =#</span> @inbounds begin
+            <span class="sgr90">#= none:4 =#</span>
+            begin
+                <span class="sgr90">#= none:8 =#</span>
+                <span class="sgr90">#= none:8 =#</span> @inbounds begin
+                        <span class="sgr90">#= none:10 =#</span>
+                        ˍ₋out[1] = ((-1 * params.a₁ + (-1 // 2 * getindex(V, 2) + (-1 // 2 * getindex(V, 2)) * log(getindex(X, 1))) / (getindex(X, 1) * getindex(X, 2))) + (-1 * params.b₁) / getindex(X, 1)) + (((-1 // 2 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + ((1 // 2 * getindex(V, 2)) * getindex(X, 1)) * log(getindex(X, 1))) / (getindex(X, 1) ^ 2 * getindex(X, 2))
+                        <span class="sgr90">#= none:11 =#</span>
+                        ˍ₋out[2] = ((-1 * params.a₂ + (-1 * params.b₂) / getindex(X, 2)) + (((-1 // 2 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + ((1 // 2 * getindex(V, 2)) * getindex(X, 1)) * log(getindex(X, 1))) / (getindex(X, 1) * getindex(X, 2) ^ 2)) + (1 // 2 * getindex(V, 1) + (1 // 2 * getindex(V, 1)) * log(getindex(X, 2))) / (getindex(X, 1) * getindex(X, 2))
+                        <span class="sgr90">#= none:13 =#</span>
+                        ˍ₋out
+                    end
             end
-    end
-end), ū = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :P, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x9074dbae, 0x9dbd5857, 0x29f62319, 0xac7fc940, 0x64f9e588), Expr}(quote
+        end
+end), u = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x600f0e62, 0xb5de2968, 0x05f3f7bb, 0xcd7da120, 0x86c52545), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
-    <span class="sgr90">#= none:5 =#</span>
-    begin
-        <span class="sgr90">#= none:7 =#</span>
-        <span class="sgr90">#= none:7 =#</span> @inbounds begin
-                <span class="sgr90">#= none:9 =#</span>
-                ˍ₋out[1] = getindex(V, 1)
-                <span class="sgr90">#= none:10 =#</span>
-                ˍ₋out[2] = getindex(V, 2)
-                <span class="sgr90">#= none:12 =#</span>
-                nothing
+    <span class="sgr90">#= none:2 =#</span>
+    <span class="sgr90">#= none:2 =#</span> @inbounds begin
+            <span class="sgr90">#= none:4 =#</span>
+            begin
+                <span class="sgr90">#= none:8 =#</span>
+                <span class="sgr90">#= none:8 =#</span> @inbounds begin
+                        <span class="sgr90">#= none:10 =#</span>
+                        ˍ₋out[1] = getindex(V, 1)
+                        <span class="sgr90">#= none:11 =#</span>
+                        ˍ₋out[2] = getindex(V, 2)
+                        <span class="sgr90">#= none:13 =#</span>
+                        ˍ₋out
+                    end
             end
-    end
-end), ḡ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :P, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x5dd8f1c1, 0x64ee23ef, 0x65d6e415, 0x93a2dcf0, 0xc9116c7a), Expr}(quote
+        end
+end), g = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x64e91999, 0xfe109d19, 0x2cf5f368, 0xac469621, 0x50889fea), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
-    <span class="sgr90">#= none:5 =#</span>
-    begin
-        <span class="sgr90">#= none:7 =#</span>
-        <span class="sgr90">#= none:7 =#</span> @inbounds begin
-                <span class="sgr90">#= none:9 =#</span>
-                ˍ₋out[1] = getindex(V, 2) / ((2 * getindex(X, 1)) * getindex(X, 2)) + ((-1 // 2 * getindex(V, 1)) * log(getindex(X, 2))) / getindex(X, 1) ^ 2
-                <span class="sgr90">#= none:10 =#</span>
-                ˍ₋out[2] = ((1 // 2 * getindex(V, 2)) * log(getindex(X, 1))) / getindex(X, 2) ^ 2 + (-1 * getindex(V, 1)) / ((2 * getindex(X, 1)) * getindex(X, 2))
-                <span class="sgr90">#= none:12 =#</span>
-                nothing
+    <span class="sgr90">#= none:2 =#</span>
+    <span class="sgr90">#= none:2 =#</span> @inbounds begin
+            <span class="sgr90">#= none:4 =#</span>
+            begin
+                <span class="sgr90">#= none:8 =#</span>
+                <span class="sgr90">#= none:8 =#</span> @inbounds begin
+                        <span class="sgr90">#= none:10 =#</span>
+                        ˍ₋out[1] = (-1 // 2 * getindex(V, 2) + (-1 // 2 * getindex(V, 2)) * log(getindex(X, 1))) / (getindex(X, 1) * getindex(X, 2)) + (((-1 // 2 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + ((1 // 2 * getindex(V, 2)) * getindex(X, 1)) * log(getindex(X, 1))) / (getindex(X, 1) ^ 2 * getindex(X, 2))
+                        <span class="sgr90">#= none:11 =#</span>
+                        ˍ₋out[2] = (((-1 // 2 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + ((1 // 2 * getindex(V, 2)) * getindex(X, 1)) * log(getindex(X, 1))) / (getindex(X, 1) * getindex(X, 2) ^ 2) + (1 // 2 * getindex(V, 1) + (1 // 2 * getindex(V, 1)) * log(getindex(X, 2))) / (getindex(X, 1) * getindex(X, 2))
+                        <span class="sgr90">#= none:13 =#</span>
+                        ˍ₋out
+                    end
             end
-    end
-end), p = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xdeb1e969, 0x01b4695d, 0x35148672, 0xdc0212d8, 0xfddd0261), Expr}(quote
+        end
+end), ū = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :P, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x600f0e62, 0xb5de2968, 0x05f3f7bb, 0xcd7da120, 0x86c52545), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
-    <span class="sgr90">#= none:5 =#</span>
-    begin
-        <span class="sgr90">#= none:7 =#</span>
-        SymbolicUtils.Code.create_array(Array, nothing, Val{1}(), Val{(2,)}(), (1 // 2 * log(getindex(X, 2))) / getindex(X, 1), (-1 // 2 * log(getindex(X, 1))) / getindex(X, 2))
-    end
-end), ϑ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x2b6796c5, 0xc7038f1c, 0x05aaa4f2, 0xa7a37a31, 0xb6170ee9), Expr}(quote
-    <span class="sgr90">#= none:1 =#</span>
-    <span class="sgr90">#= none:5 =#</span>
-    begin
-        <span class="sgr90">#= none:7 =#</span>
-        <span class="sgr90">#= none:7 =#</span> @inbounds begin
-                <span class="sgr90">#= none:9 =#</span>
-                ˍ₋out[1] = (1 // 2 * log(getindex(X, 2))) / getindex(X, 1)
-                <span class="sgr90">#= none:10 =#</span>
-                ˍ₋out[2] = (-1 // 2 * log(getindex(X, 1))) / getindex(X, 2)
-                <span class="sgr90">#= none:12 =#</span>
-                nothing
+    <span class="sgr90">#= none:2 =#</span>
+    <span class="sgr90">#= none:2 =#</span> @inbounds begin
+            <span class="sgr90">#= none:4 =#</span>
+            begin
+                <span class="sgr90">#= none:8 =#</span>
+                <span class="sgr90">#= none:8 =#</span> @inbounds begin
+                        <span class="sgr90">#= none:10 =#</span>
+                        ˍ₋out[1] = getindex(V, 1)
+                        <span class="sgr90">#= none:11 =#</span>
+                        ˍ₋out[2] = getindex(V, 2)
+                        <span class="sgr90">#= none:13 =#</span>
+                        ˍ₋out
+                    end
             end
-    end
-end), ω = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x9f1dd65e, 0xe98e31d6, 0xc077f403, 0xbf1d9b2a, 0xfdcf4fcd), Expr}(quote
+        end
+end), ḡ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :P, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x5f340ef2, 0x81a4f592, 0xce25457c, 0xf3d186a5, 0x227887f5), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
-    <span class="sgr90">#= none:5 =#</span>
-    begin
-        <span class="sgr90">#= none:7 =#</span>
-        <span class="sgr90">#= none:7 =#</span> @inbounds begin
-                <span class="sgr90">#= none:9 =#</span>
-                ˍ₋out[1] = 0
-                <span class="sgr90">#= none:10 =#</span>
-                ˍ₋out[2] = 1 / (getindex(X, 1) * getindex(X, 2))
-                <span class="sgr90">#= none:11 =#</span>
-                ˍ₋out[3] = -1 / (getindex(X, 1) * getindex(X, 2))
-                <span class="sgr90">#= none:12 =#</span>
-                ˍ₋out[4] = 0
-                <span class="sgr90">#= none:14 =#</span>
-                nothing
+    <span class="sgr90">#= none:2 =#</span>
+    <span class="sgr90">#= none:2 =#</span> @inbounds begin
+            <span class="sgr90">#= none:4 =#</span>
+            begin
+                <span class="sgr90">#= none:8 =#</span>
+                <span class="sgr90">#= none:8 =#</span> @inbounds begin
+                        <span class="sgr90">#= none:10 =#</span>
+                        ˍ₋out[1] = getindex(V, 2) / ((2 * getindex(X, 1)) * getindex(X, 2)) + ((-1 // 2 * getindex(V, 1)) * log(getindex(X, 2))) / getindex(X, 1) ^ 2
+                        <span class="sgr90">#= none:11 =#</span>
+                        ˍ₋out[2] = ((1 // 2 * getindex(V, 2)) * log(getindex(X, 1))) / getindex(X, 2) ^ 2 + (-1 * getindex(V, 1)) / ((2 * getindex(X, 1)) * getindex(X, 2))
+                        <span class="sgr90">#= none:13 =#</span>
+                        ˍ₋out
+                    end
             end
-    end
-end), ϕ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :P, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x5fc08be0, 0x9d1c6478, 0x1fc693e6, 0x049c9ff7, 0x07f82e11), Expr}(quote
+        end
+end), p = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xbb044137, 0xb45bea04, 0x5e090008, 0x49919d1a, 0x45c40333), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
-    <span class="sgr90">#= none:5 =#</span>
-    begin
-        <span class="sgr90">#= none:7 =#</span>
-        <span class="sgr90">#= none:7 =#</span> @inbounds begin
-                <span class="sgr90">#= none:9 =#</span>
-                ˍ₋out[1] = getindex(P, 1) + (-1 // 2 * log(getindex(X, 2))) / getindex(X, 1)
-                <span class="sgr90">#= none:10 =#</span>
-                ˍ₋out[2] = getindex(P, 2) + (1 // 2 * log(getindex(X, 1))) / getindex(X, 2)
-                <span class="sgr90">#= none:12 =#</span>
-                nothing
+    <span class="sgr90">#= none:2 =#</span>
+    <span class="sgr90">#= none:2 =#</span> @inbounds begin
+            <span class="sgr90">#= none:4 =#</span>
+            begin
+                <span class="sgr90">#= none:8 =#</span>
+                begin
+                    <span class="sgr90">#= none:10 =#</span>
+                    SymbolicUtils.Code.create_array(Array, nothing, Val{1}(), Val{(2,)}(), (1 // 2 * log(getindex(X, 2))) / getindex(X, 1), (-1 // 2 * log(getindex(X, 1))) / getindex(X, 2))
+                end
             end
-    end
-end), ψ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :P, :F, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x1385c301, 0x477bd586, 0x5d26ff37, 0xfad84fef, 0x150de6c6), Expr}(quote
+        end
+end), ϑ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x6674c930, 0x263276c7, 0x31cddabe, 0xdc2f6268, 0xf23430a9), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
-    <span class="sgr90">#= none:5 =#</span>
-    begin
-        <span class="sgr90">#= none:7 =#</span>
-        <span class="sgr90">#= none:7 =#</span> @inbounds begin
-                <span class="sgr90">#= none:9 =#</span>
-                ˍ₋out[1] = (getindex(F, 1) + ((1 // 2 * getindex(V, 1)) * log(getindex(X, 2))) / getindex(X, 1) ^ 2) + (-1 * getindex(V, 2)) / ((2 * getindex(X, 1)) * getindex(X, 2))
-                <span class="sgr90">#= none:10 =#</span>
-                ˍ₋out[2] = (getindex(F, 2) + ((-1 // 2 * getindex(V, 2)) * log(getindex(X, 1))) / getindex(X, 2) ^ 2) + getindex(V, 1) / ((2 * getindex(X, 1)) * getindex(X, 2))
-                <span class="sgr90">#= none:12 =#</span>
-                nothing
+    <span class="sgr90">#= none:2 =#</span>
+    <span class="sgr90">#= none:2 =#</span> @inbounds begin
+            <span class="sgr90">#= none:4 =#</span>
+            begin
+                <span class="sgr90">#= none:8 =#</span>
+                <span class="sgr90">#= none:8 =#</span> @inbounds begin
+                        <span class="sgr90">#= none:10 =#</span>
+                        ˍ₋out[1] = (1 // 2 * log(getindex(X, 2))) / getindex(X, 1)
+                        <span class="sgr90">#= none:11 =#</span>
+                        ˍ₋out[2] = (-1 // 2 * log(getindex(X, 1))) / getindex(X, 2)
+                        <span class="sgr90">#= none:13 =#</span>
+                        ˍ₋out
+                    end
             end
-    end
-end), P = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xb3beb4ec, 0x1199f700, 0x9e11c355, 0x025bf187, 0xfd792d21), Expr}(quote
+        end
+end), ω = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x5eacc370, 0x1d49aacf, 0x06e0937f, 0xe0548ae5, 0xfc243566), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
-    <span class="sgr90">#= none:5 =#</span>
-    begin
-        <span class="sgr90">#= none:7 =#</span>
-        <span class="sgr90">#= none:7 =#</span> @inbounds begin
-                <span class="sgr90">#= none:9 =#</span>
-                ˍ₋out[1] = 0
-                <span class="sgr90">#= none:10 =#</span>
-                ˍ₋out[2] = (-1 * getindex(X, 1)) * getindex(X, 2)
-                <span class="sgr90">#= none:11 =#</span>
-                ˍ₋out[3] = getindex(X, 1) * getindex(X, 2)
-                <span class="sgr90">#= none:12 =#</span>
-                ˍ₋out[4] = 0
-                <span class="sgr90">#= none:14 =#</span>
-                nothing
+    <span class="sgr90">#= none:2 =#</span>
+    <span class="sgr90">#= none:2 =#</span> @inbounds begin
+            <span class="sgr90">#= none:4 =#</span>
+            begin
+                <span class="sgr90">#= none:8 =#</span>
+                <span class="sgr90">#= none:8 =#</span> @inbounds begin
+                        <span class="sgr90">#= none:10 =#</span>
+                        ˍ₋out[1] = 0
+                        <span class="sgr90">#= none:11 =#</span>
+                        ˍ₋out[2] = 1 / (getindex(X, 1) * getindex(X, 2))
+                        <span class="sgr90">#= none:12 =#</span>
+                        ˍ₋out[3] = -1 / (getindex(X, 1) * getindex(X, 2))
+                        <span class="sgr90">#= none:13 =#</span>
+                        ˍ₋out[4] = 0
+                        <span class="sgr90">#= none:15 =#</span>
+                        ˍ₋out
+                    end
             end
-    end
+        end
+end), ϕ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :P, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xbcaeb9a3, 0x59403f23, 0xa07dfef7, 0x15c6c86a, 0xe47c84cc), Expr}(quote
+    <span class="sgr90">#= none:1 =#</span>
+    <span class="sgr90">#= none:2 =#</span>
+    <span class="sgr90">#= none:2 =#</span> @inbounds begin
+            <span class="sgr90">#= none:4 =#</span>
+            begin
+                <span class="sgr90">#= none:8 =#</span>
+                <span class="sgr90">#= none:8 =#</span> @inbounds begin
+                        <span class="sgr90">#= none:10 =#</span>
+                        ˍ₋out[1] = getindex(P, 1) + (-1 // 2 * log(getindex(X, 2))) / getindex(X, 1)
+                        <span class="sgr90">#= none:11 =#</span>
+                        ˍ₋out[2] = getindex(P, 2) + (1 // 2 * log(getindex(X, 1))) / getindex(X, 2)
+                        <span class="sgr90">#= none:13 =#</span>
+                        ˍ₋out
+                    end
+            end
+        end
+end), ψ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :P, :F, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x2f0bc395, 0x242d43b7, 0xb6913fec, 0xc6919df8, 0xc1222b7f), Expr}(quote
+    <span class="sgr90">#= none:1 =#</span>
+    <span class="sgr90">#= none:2 =#</span>
+    <span class="sgr90">#= none:2 =#</span> @inbounds begin
+            <span class="sgr90">#= none:4 =#</span>
+            begin
+                <span class="sgr90">#= none:8 =#</span>
+                <span class="sgr90">#= none:8 =#</span> @inbounds begin
+                        <span class="sgr90">#= none:10 =#</span>
+                        ˍ₋out[1] = (getindex(F, 1) + ((1 // 2 * getindex(V, 1)) * log(getindex(X, 2))) / getindex(X, 1) ^ 2) + (-1 * getindex(V, 2)) / ((2 * getindex(X, 1)) * getindex(X, 2))
+                        <span class="sgr90">#= none:11 =#</span>
+                        ˍ₋out[2] = (getindex(F, 2) + ((-1 // 2 * getindex(V, 2)) * log(getindex(X, 1))) / getindex(X, 2) ^ 2) + getindex(V, 1) / ((2 * getindex(X, 1)) * getindex(X, 2))
+                        <span class="sgr90">#= none:13 =#</span>
+                        ˍ₋out
+                    end
+            end
+        end
+end), P = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x81b43702, 0x69cb5c49, 0x9492d742, 0x6870c341, 0xdf25bce4), Expr}(quote
+    <span class="sgr90">#= none:1 =#</span>
+    <span class="sgr90">#= none:2 =#</span>
+    <span class="sgr90">#= none:2 =#</span> @inbounds begin
+            <span class="sgr90">#= none:4 =#</span>
+            begin
+                <span class="sgr90">#= none:8 =#</span>
+                <span class="sgr90">#= none:8 =#</span> @inbounds begin
+                        <span class="sgr90">#= none:10 =#</span>
+                        ˍ₋out[1] = 0
+                        <span class="sgr90">#= none:11 =#</span>
+                        ˍ₋out[2] = (-1 * getindex(X, 1)) * getindex(X, 2)
+                        <span class="sgr90">#= none:12 =#</span>
+                        ˍ₋out[3] = getindex(X, 1) * getindex(X, 2)
+                        <span class="sgr90">#= none:13 =#</span>
+                        ˍ₋out[4] = 0
+                        <span class="sgr90">#= none:15 =#</span>
+                        ˍ₋out
+                    end
+            end
+        end
 end))),)
 
  Timespan: (0.0, 10.0) 
@@ -305,4 +380,4 @@ sol = integrate(lprob, Gauss(1))
 using CairoMakie
 fig = lines(parent(sol.q[:,1]), parent(sol.q[:,2]);
     axis = (; xlabel = &quot;x₁&quot;, ylabel = &quot;x₂&quot;, title = &quot;Lotka-Volterra system in 2d&quot;),
-    figure = (; size = (800,600), fontsize = 22))</code></pre><p><img src="../lotka-volterra.svg" alt/></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../lagrangian/">« Lagrangian Systems</a><a class="docs-footer-nextpage" href="../caveats/">Caveats »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.8.0 on <span class="colophon-date" title="Thursday 12 December 2024 10:45">Thursday 12 December 2024</span>. Using Julia version 1.11.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+    figure = (; size = (800,600), fontsize = 22))</code></pre><p><img src="../lotka-volterra.svg" alt/></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../lagrangian/">« Lagrangian Systems</a><a class="docs-footer-nextpage" href="../caveats/">Caveats »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.13.0 on <span class="colophon-date" title="Friday 27 June 2025 12:21">Friday 27 June 2025</span>. Using Julia version 1.11.5.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
