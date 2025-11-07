@@ -1,7 +1,7 @@
 name = "EulerLagrange"
 uuid = "e4b6a126-98cc-486b-a68d-c3e5d57f8cc9"
-authors = ["Michael Kraus"]
 version = "0.4.4"
+authors = ["Michael Kraus"]
 
 [deps]
 GeometricBase = "9a0b12b7-583b-4f04-aa1f-d8551b6addc9"
@@ -14,7 +14,7 @@ Symbolics = "0c5d862f-8b57-4792-8d23-62f2024744c7"
 GeometricBase = "0.10, 0.11, 0.12"
 GeometricEquations = "0.16, 0.17, 0.18, 0.19, 0.20"
 RuntimeGeneratedFunctions = "0.5"
-Symbolics = "5.24, 6"
+Symbolics = "5.24, 6, 7"
 julia = "1.10"
 
 [extras]
