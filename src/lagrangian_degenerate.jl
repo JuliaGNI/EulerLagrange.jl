@@ -10,7 +10,7 @@ struct DegenerateLagrangianSystem
     equations
     functions
 
-    function DegenerateLagrangianSystem(K, H, t, x, v, params=NamedTuple(); simplify=true, scalarize=true)
+    function DegenerateLagrangianSystem(K, H, t, x, v, params=NamedTuple(); simplify=true)#, scalarize=false
 
         @assert eachindex(x) == eachindex(v)
 
@@ -27,11 +27,11 @@ struct DegenerateLagrangianSystem
 
         ẋ = collect(Dt.(x))
 
-        Ks = scalarize ? Symbolics.scalarize(K) : K
-        Hs = scalarize ? Symbolics.scalarize(H) : H
+        # Ks = scalarize ? Symbolics.scalarize(K) : K
+        # Hs = scalarize ? Symbolics.scalarize(H) : H
 
-        Ks = simplify ? Symbolics.simplify(Ks) : Ks
-        Hs = simplify ? Symbolics.simplify(Hs) : Hs
+        Ks = simplify ? Symbolics.simplify(K) : K
+        Hs = simplify ? Symbolics.simplify(H) : H
 
         Ls = Ks - Hs
         ∇H = [expand_derivatives(dx(Hs)) for dx in Dx]

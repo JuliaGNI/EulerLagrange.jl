@@ -10,7 +10,7 @@ struct LagrangianSystem
     equations
     functions
 
-    function LagrangianSystem(L, t, x, v, params=NamedTuple(); simplify=true, scalarize=true)
+    function LagrangianSystem(L, t, x, v, params=NamedTuple(); simplify=true)#, scalarize=true
 
         @assert eachindex(x) == eachindex(v)
 
@@ -29,8 +29,8 @@ struct LagrangianSystem
         ẋ = collect(Dt.(x))
         ṗ = collect(Dt.(p))
 
-        Ls = scalarize ? Symbolics.scalarize(L) : L
-        Ls = simplify ? Symbolics.simplify(Ls) : Ls
+        # Ls = scalarize ? Symbolics.scalarize(L) : L
+        Ls = simplify ? Symbolics.simplify(L) : L
 
         f = [expand_derivatives(dx(Ls)) for dx in Dx]
         g = [expand_derivatives(Dt(dv(Ls))) for dv in Dv]
