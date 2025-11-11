@@ -41,6 +41,7 @@ H(t, q, p, params) = p ⋅ p / 2 + params.k * (q ⋅ q) / 2
 
 The Hamiltonian, evaluated on and together with the symbolic variables and parameters is used to construct a `HamiltonianSystem`:
 ```@example ham
+import EulerLagrange: HamiltonianSystem # hide
 ham_sys = HamiltonianSystem(H(t, q, p, sparams), t, q, p, sparams)
 ```
 The constructor computes Hamilton's equations and generates the corresponding Julia code.

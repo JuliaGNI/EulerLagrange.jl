@@ -58,6 +58,7 @@ H(x, params) = params.a₁ * x[1] + params.a₂ * x[2] + params.b₁ * log(x[1])
 
 The Hamiltonian and the symplectic potential, evaluated on and together with the symbolic variables and parameters are used to construct a `DegenerateLagrangianSystem`:
 ```@example deglag
+import EulerLagrange: DegenerateLagrangianSystem # hide
 lag_sys = DegenerateLagrangianSystem(ϑ(x,sparams) ⋅ v, H(x,sparams), t, x, v, sparams)
 ```
 The constructor computes the Euler-Lagrange equations and generates the corresponding Julia code.
