@@ -6,14 +6,14 @@
 H(t, q, p, params) = p ⋅ p / 2 + params.k * (q ⋅ q) / 2</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">H (generic function with 1 method)</code></pre><p>The Hamiltonian, evaluated on and together with the symbolic variables and parameters is used to construct a <code>HamiltonianSystem</code>:</p><pre><code class="language-julia hljs">ham_sys = HamiltonianSystem(H(t, q, p, sparams), t, q, p, sparams)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">
 Hamiltonian system with
 
-H = (1//2)*((p(t))[1]^2) + (1//2)*kₚ*((q(t))[1]^2)</code></pre><p>The constructor computes Hamilton&#39;s equations and generates the corresponding Julia code. In the last step, we can now construct a <code>HODEProblem</code> from the <code>HamiltonianSystem</code> and some appropriate initial conditions, a time span to integrate over and a time step:</p><pre><code class="language-julia hljs">tspan = (0.0, 10.0)
+H = ((p(t))[<span class="sgr34">1</span>]^2) / <span class="sgr34">2</span> + <span class="sgr34">1//2</span>*kₚ*((q(t))[<span class="sgr34">1</span>]^2)</code></pre><p>The constructor computes Hamilton&#39;s equations and generates the corresponding Julia code. In the last step, we can now construct a <code>HODEProblem</code> from the <code>HamiltonianSystem</code> and some appropriate initial conditions, a time span to integrate over and a time step:</p><pre><code class="language-julia hljs">tspan = (0.0, 10.0)
 tstep = 0.01
 q₀, p₀ = [0.5], [0.0]
 
 hprob = HODEProblem(ham_sys, tspan, tstep, q₀, p₀; parameters = params)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Geometric Equation Problem for Hamiltonian Ordinary Differential Equation (HODE)
 
  with vector fields
-   v = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :Q, :P, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xe5312b5f, 0x659f961f, 0x5a7d2ff2, 0x3f963362, 0x8646876d), Expr}(quote
+   v = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :Q, :P, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x460611ac, 0xe24025f3, 0x9d1f024f, 0x058863b1, 0xaf6683cd), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
     <span class="sgr90">#= none:2 =#</span>
     <span class="sgr90">#= none:2 =#</span> @inbounds begin
@@ -29,7 +29,7 @@ hprob = HODEProblem(ham_sys, tspan, tstep, q₀, p₀; parameters = params)</cod
             end
         end
 end)
-   f = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :Q, :P, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x7059e7ce, 0xa19a00a4, 0xe52fc928, 0xd3a7a959, 0x3add9c2a), Expr}(quote
+   f = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :Q, :P, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xd3ad23d4, 0x9932c96a, 0x2dd038b8, 0x7b555b95, 0xdadfc88e), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
     <span class="sgr90">#= none:2 =#</span>
     <span class="sgr90">#= none:2 =#</span> @inbounds begin
@@ -46,14 +46,14 @@ end)
         end
 end)
 
- Hamiltonian: H = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :Q, :P, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x05b30522, 0x8e3423dc, 0x9ce4cc09, 0xa35d7f5e, 0x405968cd), Expr}(quote
+ Hamiltonian: H = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :Q, :P, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x2b0db5e8, 0xa6d9b540, 0x7da6f137, 0x0517de37, 0xee47f332), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
     <span class="sgr90">#= none:2 =#</span>
     <span class="sgr90">#= none:2 =#</span> @inbounds begin
             <span class="sgr90">#= none:4 =#</span>
             begin
                 <span class="sgr90">#= none:8 =#</span>
-                1 // 2 * getindex(P, 1) ^ 2 + (1 // 2 * getindex(Q, 1) ^ 2) * params.k
+                getindex(P, 1) ^ 2 / 2 + (1 // 2 * getindex(Q, 1) ^ 2) * params.k
             end
         end
 end)
@@ -65,7 +65,7 @@ end)
  Timestep: 0.01 
 
  Initial conditions: 
-   (t = 0.0, q = [0.5], p = [0.0])
+   (t = fill(0.0), q = [0.5], p = [0.0])
 
  Parameters: 
    (k = 0.5, ω = 0.7071067811865476)</code></pre><p>We can integrate this system using GeometricIntegrators:</p><pre><code class="language-julia hljs">using GeometricIntegrators
@@ -74,4 +74,4 @@ sol = integrate(hprob, Gauss(1))
 using CairoMakie
 fig = lines(parent(sol.q[:,1]), parent(sol.p[:,1]);
     axis = (; xlabel = &quot;q₁&quot;, ylabel = &quot;p₁&quot;, title = &quot;Harmonic Oscillator&quot;),
-    figure = (; size = (800,600), fontsize = 22))</code></pre><p><img src="../harmonic-oscillator-hamiltonian.svg" alt/></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../">« Home</a><a class="docs-footer-nextpage" href="../lagrangian/">Lagrangian Systems »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.14.1 on <span class="colophon-date" title="Tuesday 15 July 2025 10:12">Tuesday 15 July 2025</span>. Using Julia version 1.11.6.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+    figure = (; size = (800,600), fontsize = 22))</code></pre><p><img src="../harmonic-oscillator-hamiltonian.svg" alt/></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../">« Home</a><a class="docs-footer-nextpage" href="../lagrangian/">Lagrangian Systems »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.15.0 on <span class="colophon-date" title="Tuesday 11 November 2025 21:38">Tuesday 11 November 2025</span>. Using Julia version 1.12.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
