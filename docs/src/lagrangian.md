@@ -37,6 +37,7 @@ L = v ⋅ v / 2 - x ⋅ x / 2
 
 This Lagrangian together with the symbolic variables is then used to construct a `LagrangianSystem`:
 ```@example lag
+import EulerLagrange: LagrangianSystem # hide
 lag_sys = LagrangianSystem(L, t, x, v)
 ```
 

@@ -1,6 +1,7 @@
 using EulerLagrange
 using GeometricEquations
 using LinearAlgebra
+using Symbolics
 using Test
 
 
@@ -17,19 +18,19 @@ f₁, f₂ = zero(p₀), zero(p₀)
 ntime = 1000
 tstep = 0.01
 tspan = (0.0, ntime * tstep)
-ics   = (q = StateVariable(q₀), p = StateVariable(p₀), λ = AlgebraicVariable(zero(q₀)))
+ics = (q=StateVariable(q₀), p=StateVariable(p₀), λ=AlgebraicVariable(zero(q₀)))
 
 
 # Test without parameters
 
-L(t,x,v,params) = v ⋅ v / 2 - x ⋅ x / 2
+L(t, x, v, params) = v ⋅ v / 2 - x ⋅ x / 2
 
 params = nothing
 
 sym_lag = L(t, x, v, params)
 lag_sys = LagrangianSystem(sym_lag, t, x, v)
 
-@test isequal(lagrangian(lag_sys), sym_lag)
+@test isequal(lagrangian(lag_sys), simplify(sym_lag))
 @test isequal(variables(lag_sys), (t, x, v))
 @test isequal(EulerLagrange.parameters(lag_sys), NamedTuple())
 
@@ -68,9 +69,9 @@ lprob2 = LODEProblem(lag_sys, tspan, tstep, q₀, p₀)
 
 # Test with parameters
 
-Lₚ(t,x,v,params) = v ⋅ v / 2 - params.α * (x ⋅ x) / 2
+Lₚ(t, x, v, params) = v ⋅ v / 2 - params.α * (x ⋅ x) / 2
 
-params = (α = 5.0,)
+params = (α=5.0,)
 sparams = symbolize(params)
 
 sym_lag = Lₚ(t, x, v, params)
@@ -80,7 +81,7 @@ lag_sys = LagrangianSystem(sym_lag, t, x, v, sparams)
 @test isequal(EulerLagrange.parameters(lag_sys), sparams)
 
 p̃ₚ(p, t, q, q̇, params) = p .= q̇
-f̃ₚ(f, t, q, q̇, params) = f .= - params.α * q
+f̃ₚ(f, t, q, q̇, params) = f .= -params.α * q
 
 eqs = functions(lag_sys)
 
