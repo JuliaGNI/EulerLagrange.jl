@@ -1,11 +1,11 @@
 
 function substitute_hamiltonian_variables(equ, q, p)
-    @variables Q[axes(q,1)]
-    @variables P[axes(p,1)]
-    substitute(equ, [zᵢ=>Zᵢ for (zᵢ,Zᵢ) in zip([q..., p...], [Q..., P...])])
+    @variables Q[axes(q, 1)]
+    @variables P[axes(p, 1)]
+    substitute(equ, [zᵢ => Zᵢ for (zᵢ, Zᵢ) in zip([q..., p...], [Q..., P...])])
 end
 
-function substitute_hamiltonian_variables(equs::Union{AbstractArray, ArrayLike}, q, p)
+function substitute_hamiltonian_variables(equs::AbstractArray, q, p)
     [substitute_hamiltonian_variables(eq, q, p) for eq in equs]
 end
 
@@ -15,17 +15,17 @@ end
 
 
 function hamiltonian_variables(dimension::Int)
-    t = parameter(:t)
-    @variables (q(t))[1:dimension]
-    @variables (p(t))[1:dimension]
-    return (t,q,p)
+    @variables t
+    @variables q(t)[1:dimension]
+    @variables p(t)[1:dimension]
+    return (t, q, p)
 end
 
 function hamiltonian_derivatives(t, q, p)
     Dt = Differential(t)
     Dq = collect(Differential.(q))
     Dp = collect(Differential.(p))
-    
+
     return (Dt, Dq, Dp)
 end
 
@@ -42,45 +42,45 @@ struct HamiltonianSystem
     equations
     functions
 
-    function HamiltonianSystem(H, t, q, p, params = NamedTuple(); simplify = true, scalarize = true)
+    function HamiltonianSystem(H, t, q, p, params=NamedTuple(); simplify=true, scalarize=true)
 
         @assert eachindex(q) == eachindex(p)
 
-        @variables Q[axes(q,1)]
-        @variables P[axes(p,1)]
+        @variables Q[axes(q, 1)]
+        @variables P[axes(p, 1)]
 
         Dt, Dq, Dp = hamiltonian_derivatives(t, q, p)
 
         Hs = scalarize ? Symbolics.scalarize(H) : H
         Hs = simplify ? Symbolics.simplify(Hs) : Hs
 
-        EHq = [expand_derivatives(Dt(q[i]) - Dp[i](Hs)) for i in eachindex(Dp,q)]
-        EHp = [expand_derivatives(Dt(p[i]) + Dq[i](Hs)) for i in eachindex(Dq,p)]
-        EH  = vcat(EHq, EHp)
-        v   = [expand_derivatives( dp(Hs)) for dp in Dp]
-        f   = [expand_derivatives(-dq(Hs)) for dq in Dq]
-        ż   = vcat(v, f)
+        EHq = [expand_derivatives(Dt(q[i]) - Dp[i](Hs)) for i in eachindex(Dp, q)]
+        EHp = [expand_derivatives(Dt(p[i]) + Dq[i](Hs)) for i in eachindex(Dq, p)]
+        EH = vcat(EHq, EHp)
+        v = [expand_derivatives(dp(Hs)) for dp in Dp]
+        f = [expand_derivatives(-dq(Hs)) for dq in Dq]
+        ż = vcat(v, f)
 
         equs = (
-            H = Hs,
-            EH = EH,
-            EHq = EHq,
-            EHp = EHp,
-            v = v,
-            f = f,
-            ż = ż,
+            H=Hs,
+            EH=EH,
+            EHq=EHq,
+            EHp=EHp,
+            v=v,
+            f=f,
+            ż=ż,
         )
 
         equs_subs = substitute_hamiltonian_variables(equs, q, p)
 
         code = (
-            H   = substitute_parameters(build_function(equs_subs.H, t, Q, P, params...; nanmath = false),      params),
-            EH  = substitute_parameters(build_function(equs_subs.EH, t, Q, P, params...; nanmath = false)[2],  params),
-            EHq = substitute_parameters(build_function(equs_subs.EHq, t, Q, P, params...; nanmath = false)[2], params),
-            EHp = substitute_parameters(build_function(equs_subs.EHp, t, Q, P, params...; nanmath = false)[2], params),
-            v   = substitute_parameters(build_function(equs_subs.v, t, Q, P, params...; nanmath = false)[2],   params),
-            f   = substitute_parameters(build_function(equs_subs.f, t, Q, P, params...; nanmath = false)[2],   params),
-            ż   = substitute_parameters(build_function(equs_subs.ż, t, Q, P, params...; nanmath = false)[2],   params),
+            H=substitute_parameters(build_function(equs_subs.H, t, Q, P, params...; nanmath=false), params),
+            EH=substitute_parameters(build_function(equs_subs.EH, t, Q, P, params...; nanmath=false)[2], params),
+            EHq=substitute_parameters(build_function(equs_subs.EHq, t, Q, P, params...; nanmath=false)[2], params),
+            EHp=substitute_parameters(build_function(equs_subs.EHp, t, Q, P, params...; nanmath=false)[2], params),
+            v=substitute_parameters(build_function(equs_subs.v, t, Q, P, params...; nanmath=false)[2], params),
+            f=substitute_parameters(build_function(equs_subs.f, t, Q, P, params...; nanmath=false)[2], params),
+            ż=substitute_parameters(build_function(equs_subs.ż, t, Q, P, params...; nanmath=false)[2], params),
         )
 
         funcs = generate_code(code)

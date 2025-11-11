@@ -1,7 +1,4 @@
 
-parameter(name::Symbol) = Num(Sym{Real}(name))
-
-
 function substitute_parameters(code, params)
     if length(params) > 0
         # generate string of parameter arguments as they appear in generated code
@@ -37,21 +34,22 @@ function substitute_parameters(code, params)
 end
 
 
-function symbolize(p::Union{AbstractArray, Tuple}, name)
+function symbolize(p::Union{AbstractArray,Tuple}, name)
     vars = @variables $(name)[axes(p)...]
     first(vars)
 end
 
-function symbolize(::Number, name)
-    parameter(name)
+function symbolize(x::T, name) where {T<:Number}
+    vars = @variables $(name)::Real
+    first(vars)
 end
 
-function symbolize(p::Union{Symbolics.Num, Symbolics.Arr{Symbolics.Num}}, name)
+function symbolize(p::Union{T,AbstractArray{T},Symbolics.Arr{<:Num}}, name) where {T<:SymbolicUtils.BasicSymbolicImpl.Type}
     p
 end
 
 function symbolize(params::NamedTuple)
-    NamedTuple{keys(params)}(Tuple(symbolize(v, Symbol("$(k)ₚ")) for (k,v) in pairs(params)))
+    NamedTuple{keys(params)}(Tuple(symbolize(v, Symbol("$(k)ₚ")) for (k, v) in pairs(params)))
 end
 
 function symbolize(::Union{Nothing,NullParameters})
