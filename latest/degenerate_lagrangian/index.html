@@ -36,7 +36,7 @@ lprob = LODEProblem(lag_sys, tspan, tstep, q₀, p₀; parameters = params)</cod
             end
         end
 end)
-   f = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x56dfacb9, 0xb4b92aef, 0xbde78610, 0x2bf47c76, 0xf2ad60e2), Expr}(quote
+   f = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x49d44af7, 0x1d4dbd02, 0x4e144b7d, 0xb89b1f55, 0x950957a2), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
     <span class="sgr90">#= none:2 =#</span>
     <span class="sgr90">#= none:2 =#</span> @inbounds begin
@@ -45,7 +45,7 @@ end)
                 <span class="sgr90">#= none:8 =#</span>
                 <span class="sgr90">#= none:8 =#</span> @inbounds begin
                         <span class="sgr90">#= none:10 =#</span>
-                        ˍ₋out[1] = ((-1 * params.a₁ + (-1 * params.b₁) / getindex(X, 1)) + (-1 * getindex(V, 2) + (-1 * getindex(V, 2)) * log(getindex(X, 1))) / ((2 * getindex(X, 1)) * getindex(X, 2))) + (((-1 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + (getindex(V, 2) * getindex(X, 1)) * log(getindex(X, 1))) / ((2 * getindex(X, 1) ^ 2) * getindex(X, 2))
+                        ˍ₋out[1] = ((-1 * params.a₁ + (-1 * params.b₁) / getindex(X, 1)) + (((-1 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + (getindex(V, 2) * getindex(X, 1)) * log(getindex(X, 1))) / ((2 * getindex(X, 1) ^ 2) * getindex(X, 2))) + (-1 * getindex(V, 2) + (-1 * getindex(V, 2)) * log(getindex(X, 1))) / ((2 * getindex(X, 1)) * getindex(X, 2))
                         <span class="sgr90">#= none:11 =#</span>
                         ˍ₋out[2] = ((-1 * params.a₂ + (getindex(V, 1) + getindex(V, 1) * log(getindex(X, 2))) / ((2 * getindex(X, 1)) * getindex(X, 2))) + (-1 * params.b₂) / getindex(X, 2)) + (((-1 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + (getindex(V, 2) * getindex(X, 1)) * log(getindex(X, 1))) / ((2 * getindex(X, 1)) * getindex(X, 2) ^ 2)
                         <span class="sgr90">#= none:13 =#</span>
@@ -54,7 +54,7 @@ end)
             end
         end
 end)
-   g = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x4fc03c6c, 0xbb2c9b65, 0x8c3e572f, 0xb3cf99de, 0x4b2d8d51), Expr}(quote
+   g = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x20813b47, 0x473ac96b, 0x125c3108, 0x71639974, 0x81831468), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
     <span class="sgr90">#= none:2 =#</span>
     <span class="sgr90">#= none:2 =#</span> @inbounds begin
@@ -63,7 +63,7 @@ end)
                 <span class="sgr90">#= none:8 =#</span>
                 <span class="sgr90">#= none:8 =#</span> @inbounds begin
                         <span class="sgr90">#= none:10 =#</span>
-                        ˍ₋out[1] = (-1 * getindex(V, 2) + (-1 * getindex(V, 2)) * log(getindex(X, 1))) / ((2 * getindex(X, 1)) * getindex(X, 2)) + (((-1 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + (getindex(V, 2) * getindex(X, 1)) * log(getindex(X, 1))) / ((2 * getindex(X, 1) ^ 2) * getindex(X, 2))
+                        ˍ₋out[1] = (((-1 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + (getindex(V, 2) * getindex(X, 1)) * log(getindex(X, 1))) / ((2 * getindex(X, 1) ^ 2) * getindex(X, 2)) + (-1 * getindex(V, 2) + (-1 * getindex(V, 2)) * log(getindex(X, 1))) / ((2 * getindex(X, 1)) * getindex(X, 2))
                         <span class="sgr90">#= none:11 =#</span>
                         ˍ₋out[2] = (getindex(V, 1) + getindex(V, 1) * log(getindex(X, 2))) / ((2 * getindex(X, 1)) * getindex(X, 2)) + (((-1 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + (getindex(V, 2) * getindex(X, 1)) * log(getindex(X, 1))) / ((2 * getindex(X, 1)) * getindex(X, 2) ^ 2)
                         <span class="sgr90">#= none:13 =#</span>
@@ -86,7 +86,7 @@ end)
 end)
 
  Invariants: 
-   (h = EulerLagrange.var&quot;#102#103&quot;{@NamedTuple{L::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xfa7d8373, 0x88a78a96, 0x63af3756, 0x9028d5fb, 0xed7d87f2), Expr}, H::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xac5bfab4, 0xa9024449, 0x9c498a28, 0x059148de, 0xa4bbd30d), Expr}, EL::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xd973ae68, 0xc3ced41a, 0xdefe1f56, 0x2eb4eba4, 0xa31fc8f3), Expr}, ∇H::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x9bea2bf4, 0xefb3213d, 0x0dd89dc5, 0x2cc8b930, 0x75d17729), Expr}, ẋ::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xcc398c5d, 0x520167e0, 0x43877207, 0xb23eb456, 0xd7a36a2c), Expr}, v::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :P, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xcc398c5d, 0x520167e0, 0x43877207, 0xb23eb456, 0xd7a36a2c), Expr}, f::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x56dfacb9, 0xb4b92aef, 0xbde78610, 0x2bf47c76, 0xf2ad60e2), Expr}, u::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xd20c7564, 0xd9f14488, 0x7c9632d0, 0x567848cf, 0x0ce88cdb), Expr}, g::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x4fc03c6c, 0xbb2c9b65, 0x8c3e572f, 0xb3cf99de, 0x4b2d8d51), Expr}, ū::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :P, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xd20c7564, 0xd9f14488, 0x7c9632d0, 0x567848cf, 0x0ce88cdb), Expr}, ḡ::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :P, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x75aee8b5, 0x19ea15bf, 0xb1e220dd, 0x30ec7668, 0x246ccb17), Expr}, p::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xe9912e1f, 0xebb1dd3e, 0x53c1640c, 0x7293ae55, 0x7aada184), Expr}, ϑ::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xf311f19d, 0xc8b557ea, 0xc98bcd8a, 0xe5ab0856, 0x025e67e8), Expr}, ω::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x6e2eecfa, 0x18781c0d, 0xabb45a2a, 0xeb27d0b1, 0x1a280cff), Expr}, ϕ::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :P, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xfefbd262, 0xde882f29, 0x3ed25564, 0x5fcbc742, 0x4908734c), Expr}, ψ::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :P, :F, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x6511dc17, 0xc41e7c2d, 0xa7d5e87f, 0x203752be, 0x73095c34), Expr}, P::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xe4448603, 0x32b58c2a, 0xd43f4eae, 0xcefa934f, 0xef815687), Expr}}}((L = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xfa7d8373, 0x88a78a96, 0x63af3756, 0x9028d5fb, 0xed7d87f2), Expr}(quote
+   (h = EulerLagrange.var&quot;#102#103&quot;{@NamedTuple{L::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xfa7d8373, 0x88a78a96, 0x63af3756, 0x9028d5fb, 0xed7d87f2), Expr}, H::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xac5bfab4, 0xa9024449, 0x9c498a28, 0x059148de, 0xa4bbd30d), Expr}, EL::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xd973ae68, 0xc3ced41a, 0xdefe1f56, 0x2eb4eba4, 0xa31fc8f3), Expr}, ∇H::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x9bea2bf4, 0xefb3213d, 0x0dd89dc5, 0x2cc8b930, 0x75d17729), Expr}, ẋ::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xcc398c5d, 0x520167e0, 0x43877207, 0xb23eb456, 0xd7a36a2c), Expr}, v::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :P, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xcc398c5d, 0x520167e0, 0x43877207, 0xb23eb456, 0xd7a36a2c), Expr}, f::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x49d44af7, 0x1d4dbd02, 0x4e144b7d, 0xb89b1f55, 0x950957a2), Expr}, u::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xd20c7564, 0xd9f14488, 0x7c9632d0, 0x567848cf, 0x0ce88cdb), Expr}, g::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x20813b47, 0x473ac96b, 0x125c3108, 0x71639974, 0x81831468), Expr}, ū::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :P, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xd20c7564, 0xd9f14488, 0x7c9632d0, 0x567848cf, 0x0ce88cdb), Expr}, ḡ::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :P, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x7e6f2131, 0xe36b2548, 0x0e99b113, 0xceafaa76, 0x3e8b9f45), Expr}, p::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xe9912e1f, 0xebb1dd3e, 0x53c1640c, 0x7293ae55, 0x7aada184), Expr}, ϑ::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xf311f19d, 0xc8b557ea, 0xc98bcd8a, 0xe5ab0856, 0x025e67e8), Expr}, ω::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x6e2eecfa, 0x18781c0d, 0xabb45a2a, 0xeb27d0b1, 0x1a280cff), Expr}, ϕ::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :P, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xfefbd262, 0xde882f29, 0x3ed25564, 0x5fcbc742, 0x4908734c), Expr}, ψ::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :P, :F, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x3e095004, 0x58cea392, 0x4c8284bc, 0xc9261cb3, 0x7f7ff843), Expr}, P::RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xe4448603, 0x32b58c2a, 0xd43f4eae, 0xcefa934f, 0xef815687), Expr}}}((L = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xfa7d8373, 0x88a78a96, 0x63af3756, 0x9028d5fb, 0xed7d87f2), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
     <span class="sgr90">#= none:2 =#</span>
     <span class="sgr90">#= none:2 =#</span> @inbounds begin
@@ -174,7 +174,7 @@ end), v = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X,
                     end
             end
         end
-end), f = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x56dfacb9, 0xb4b92aef, 0xbde78610, 0x2bf47c76, 0xf2ad60e2), Expr}(quote
+end), f = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x49d44af7, 0x1d4dbd02, 0x4e144b7d, 0xb89b1f55, 0x950957a2), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
     <span class="sgr90">#= none:2 =#</span>
     <span class="sgr90">#= none:2 =#</span> @inbounds begin
@@ -183,7 +183,7 @@ end), f = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X,
                 <span class="sgr90">#= none:8 =#</span>
                 <span class="sgr90">#= none:8 =#</span> @inbounds begin
                         <span class="sgr90">#= none:10 =#</span>
-                        ˍ₋out[1] = ((-1 * params.a₁ + (-1 * params.b₁) / getindex(X, 1)) + (-1 * getindex(V, 2) + (-1 * getindex(V, 2)) * log(getindex(X, 1))) / ((2 * getindex(X, 1)) * getindex(X, 2))) + (((-1 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + (getindex(V, 2) * getindex(X, 1)) * log(getindex(X, 1))) / ((2 * getindex(X, 1) ^ 2) * getindex(X, 2))
+                        ˍ₋out[1] = ((-1 * params.a₁ + (-1 * params.b₁) / getindex(X, 1)) + (((-1 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + (getindex(V, 2) * getindex(X, 1)) * log(getindex(X, 1))) / ((2 * getindex(X, 1) ^ 2) * getindex(X, 2))) + (-1 * getindex(V, 2) + (-1 * getindex(V, 2)) * log(getindex(X, 1))) / ((2 * getindex(X, 1)) * getindex(X, 2))
                         <span class="sgr90">#= none:11 =#</span>
                         ˍ₋out[2] = ((-1 * params.a₂ + (getindex(V, 1) + getindex(V, 1) * log(getindex(X, 2))) / ((2 * getindex(X, 1)) * getindex(X, 2))) + (-1 * params.b₂) / getindex(X, 2)) + (((-1 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + (getindex(V, 2) * getindex(X, 1)) * log(getindex(X, 1))) / ((2 * getindex(X, 1)) * getindex(X, 2) ^ 2)
                         <span class="sgr90">#= none:13 =#</span>
@@ -208,7 +208,7 @@ end), u = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X,
                     end
             end
         end
-end), g = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x4fc03c6c, 0xbb2c9b65, 0x8c3e572f, 0xb3cf99de, 0x4b2d8d51), Expr}(quote
+end), g = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x20813b47, 0x473ac96b, 0x125c3108, 0x71639974, 0x81831468), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
     <span class="sgr90">#= none:2 =#</span>
     <span class="sgr90">#= none:2 =#</span> @inbounds begin
@@ -217,7 +217,7 @@ end), g = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X,
                 <span class="sgr90">#= none:8 =#</span>
                 <span class="sgr90">#= none:8 =#</span> @inbounds begin
                         <span class="sgr90">#= none:10 =#</span>
-                        ˍ₋out[1] = (-1 * getindex(V, 2) + (-1 * getindex(V, 2)) * log(getindex(X, 1))) / ((2 * getindex(X, 1)) * getindex(X, 2)) + (((-1 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + (getindex(V, 2) * getindex(X, 1)) * log(getindex(X, 1))) / ((2 * getindex(X, 1) ^ 2) * getindex(X, 2))
+                        ˍ₋out[1] = (((-1 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + (getindex(V, 2) * getindex(X, 1)) * log(getindex(X, 1))) / ((2 * getindex(X, 1) ^ 2) * getindex(X, 2)) + (-1 * getindex(V, 2) + (-1 * getindex(V, 2)) * log(getindex(X, 1))) / ((2 * getindex(X, 1)) * getindex(X, 2))
                         <span class="sgr90">#= none:11 =#</span>
                         ˍ₋out[2] = (getindex(V, 1) + getindex(V, 1) * log(getindex(X, 2))) / ((2 * getindex(X, 1)) * getindex(X, 2)) + (((-1 * getindex(V, 1)) * getindex(X, 2)) * log(getindex(X, 2)) + (getindex(V, 2) * getindex(X, 1)) * log(getindex(X, 1))) / ((2 * getindex(X, 1)) * getindex(X, 2) ^ 2)
                         <span class="sgr90">#= none:13 =#</span>
@@ -242,7 +242,7 @@ end), ū = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X
                     end
             end
         end
-end), ḡ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :P, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x75aee8b5, 0x19ea15bf, 0xb1e220dd, 0x30ec7668, 0x246ccb17), Expr}(quote
+end), ḡ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :Λ, :P, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x7e6f2131, 0xe36b2548, 0x0e99b113, 0xceafaa76, 0x3e8b9f45), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
     <span class="sgr90">#= none:2 =#</span>
     <span class="sgr90">#= none:2 =#</span> @inbounds begin
@@ -251,9 +251,9 @@ end), ḡ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :
                 <span class="sgr90">#= none:8 =#</span>
                 <span class="sgr90">#= none:8 =#</span> @inbounds begin
                         <span class="sgr90">#= none:10 =#</span>
-                        ˍ₋out[1] = ((-1 * getindex(V, 1)) * log(getindex(X, 2))) / (2 * getindex(X, 1) ^ 2) + getindex(V, 2) / ((2 * getindex(X, 1)) * getindex(X, 2))
+                        ˍ₋out[1] = getindex(V, 2) / ((2 * getindex(X, 1)) * getindex(X, 2)) + ((-1 * getindex(V, 1)) * log(getindex(X, 2))) / (2 * getindex(X, 1) ^ 2)
                         <span class="sgr90">#= none:11 =#</span>
-                        ˍ₋out[2] = (getindex(V, 2) * log(getindex(X, 1))) / (2 * getindex(X, 2) ^ 2) + (-1 * getindex(V, 1)) / ((2 * getindex(X, 1)) * getindex(X, 2))
+                        ˍ₋out[2] = (-1 * getindex(V, 1)) / ((2 * getindex(X, 1)) * getindex(X, 2)) + (getindex(V, 2) * log(getindex(X, 1))) / (2 * getindex(X, 2) ^ 2)
                         <span class="sgr90">#= none:13 =#</span>
                         ˍ₋out
                     end
@@ -327,7 +327,7 @@ end), ϕ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X
                     end
             end
         end
-end), ψ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :P, :F, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x6511dc17, 0xc41e7c2d, 0xa7d5e87f, 0x203752be, 0x73095c34), Expr}(quote
+end), ψ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :P, :F, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x3e095004, 0x58cea392, 0x4c8284bc, 0xc9261cb3, 0x7f7ff843), Expr}(quote
     <span class="sgr90">#= none:1 =#</span>
     <span class="sgr90">#= none:2 =#</span>
     <span class="sgr90">#= none:2 =#</span> @inbounds begin
@@ -336,9 +336,9 @@ end), ψ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X
                 <span class="sgr90">#= none:8 =#</span>
                 <span class="sgr90">#= none:8 =#</span> @inbounds begin
                         <span class="sgr90">#= none:10 =#</span>
-                        ˍ₋out[1] = (getindex(F, 1) + -1 * (((-1 * getindex(V, 1)) * log(getindex(X, 2))) / (2 * getindex(X, 1) ^ 2))) + -1 * (getindex(V, 2) / ((2 * getindex(X, 1)) * getindex(X, 2)))
+                        ˍ₋out[1] = (getindex(F, 1) + -1 * (getindex(V, 2) / ((2 * getindex(X, 1)) * getindex(X, 2)))) + -1 * (((-1 * getindex(V, 1)) * log(getindex(X, 2))) / (2 * getindex(X, 1) ^ 2))
                         <span class="sgr90">#= none:11 =#</span>
-                        ˍ₋out[2] = (getindex(F, 2) + -1 * ((getindex(V, 2) * log(getindex(X, 1))) / (2 * getindex(X, 2) ^ 2))) + -1 * ((-1 * getindex(V, 1)) / ((2 * getindex(X, 1)) * getindex(X, 2)))
+                        ˍ₋out[2] = (getindex(F, 2) + -1 * ((-1 * getindex(V, 1)) / ((2 * getindex(X, 1)) * getindex(X, 2)))) + -1 * ((getindex(V, 2) * log(getindex(X, 1))) / (2 * getindex(X, 2) ^ 2))
                         <span class="sgr90">#= none:13 =#</span>
                         ˍ₋out
                     end
@@ -380,4 +380,4 @@ sol = integrate(lprob, Gauss(1))
 using CairoMakie
 fig = lines(parent(sol.q[:,1]), parent(sol.q[:,2]);
     axis = (; xlabel = &quot;x₁&quot;, ylabel = &quot;x₂&quot;, title = &quot;Lotka-Volterra system in 2d&quot;),
-    figure = (; size = (800,600), fontsize = 22))</code></pre><p><img src="../lotka-volterra.svg" alt/></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../lagrangian/">« Lagrangian Systems</a><a class="docs-footer-nextpage" href="../caveats/">Caveats »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.15.0 on <span class="colophon-date" title="Tuesday 11 November 2025 21:45">Tuesday 11 November 2025</span>. Using Julia version 1.12.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+    figure = (; size = (800,600), fontsize = 22))</code></pre><p><img src="../lotka-volterra.svg" alt/></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../lagrangian/">« Lagrangian Systems</a><a class="docs-footer-nextpage" href="../caveats/">Caveats »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.15.0 on <span class="colophon-date" title="Wednesday 12 November 2025 09:08">Wednesday 12 November 2025</span>. Using Julia version 1.12.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
