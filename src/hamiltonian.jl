@@ -42,7 +42,7 @@ struct HamiltonianSystem
     equations
     functions
 
-    function HamiltonianSystem(H, t, q, p, params=NamedTuple(); simplify=true)#, scalarize=true
+    function HamiltonianSystem(H, t, q, p, params=NamedTuple(); simplify=true, scalarize=true)
 
         @assert eachindex(q) == eachindex(p)
 
@@ -51,8 +51,9 @@ struct HamiltonianSystem
 
         Dt, Dq, Dp = hamiltonian_derivatives(t, q, p)
 
-        # Hs = scalarize ? Symbolics.scalarize(H) : H
-        Hs = simplify ? Symbolics.simplify(H) : H
+        Hs = scalarize ? Symbolics.scalarize(H) : H
+        Hs = simplify ? Symbolics.simplify(Hs) : Hs
+        Hs = Num(Hs)
 
         EHq = [expand_derivatives(Dt(q[i]) - Dp[i](Hs)) for i in eachindex(Dp, q)]
         EHp = [expand_derivatives(Dt(p[i]) + Dq[i](Hs)) for i in eachindex(Dq, p)]
