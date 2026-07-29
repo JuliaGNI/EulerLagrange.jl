@@ -17,9 +17,12 @@ Since `L` is regular, the system is second order in ``n`` equations, equivalentl
     `simplify = true` was never faster to evaluate and up to 15× slower, at 23× the total
     construction cost.
   - `scalarize`: apply `Symbolics.scalarize` to `L`, expanding array expressions into components.
-  - `cse`: eliminate common subexpressions in the generated code. On by default; this is what keeps
-    each repeated subexpression from being re-emitted at every occurrence. It binds constant nodes to
-    temporaries as well, so results may differ from `cse = false` in the last bit.
+  - `cse`: eliminate common subexpressions in the generated code. On by default: measured over 45
+    generated functions in GeometricProblems it was faster to evaluate 18 times, slower once, and
+    equal otherwise, with the wins concentrated in the forces (up to 8.4× on the 18-degree-of-freedom
+    N-body force). Note that it emits *larger* code in most cases — it binds constant nodes to
+    temporaries as well as shared subexpressions — so size is not a proxy for speed here. Binding
+    constants also means results may differ from `cse = false` in the last bit.
   - `nanmath`: emit `NaNMath` variants of functions like `log`, `sqrt` and `^`, which return `NaN`
     outside their real domain instead of throwing a `DomainError`. Off by default, so the generated
     code uses the ordinary `Base` functions and an out-of-domain state is reported as an error rather
