@@ -14,6 +14,29 @@ function substitute_hamiltonian_variables(equs::NamedTuple, q, p)
 end
 
 
+"""
+    substitute_time_derivatives(equ, dq, V, dp, F)
+
+Replace the time derivatives `dq = d/dt(q)` and `dp = d/dt(p)` by the algebraic variables `V`, `F`.
+
+The residual forms `EHq = q̇ - ∂H/∂p` and `EHp = ṗ + ∂H/∂q` contain those derivatives, and nothing
+else in the pipeline removes them, so without this they reach `build_function` as derivatives of
+variables the generated function never receives.
+"""
+function substitute_time_derivatives(equ, dq, V, dp, F)
+    pairs = vcat([dqᵢ => Vᵢ for (dqᵢ, Vᵢ) in zip(dq, collect(V))],
+        [dpᵢ => Fᵢ for (dpᵢ, Fᵢ) in zip(dp, collect(F))])
+    substitute(equ, pairs)
+end
+
+function substitute_time_derivatives(equs::AbstractArray, dq, V, dp, F)
+    [substitute_time_derivatives(eq, dq, V, dp, F) for eq in equs]
+end
+
+function substitute_time_derivatives(equs::NamedTuple, dq, V, dp, F)
+    NamedTuple{keys(equs)}(Tuple(substitute_time_derivatives(eq, dq, V, dp, F) for eq in equs))
+end
+
 function hamiltonian_variables(dimension::Int)
     @variables t
     @variables q(t)[1:dimension]
@@ -31,7 +54,22 @@ end
 
 
 """
-    HamiltonianSystem
+    HamiltonianSystem(H, t, q, p, params = NamedTuple(); simplify = false, scalarize = true,
+                      cse = true, nanmath = false)
+
+The equations of motion of the Hamiltonian `H`, generated symbolically.
+
+# Keyword arguments
+
+  - `simplify`: apply `Symbolics.simplify` to `H` before differentiating. Off by default; see
+    [`LagrangianSystem`](@ref) for the measurements behind that choice.
+  - `scalarize`: apply `Symbolics.scalarize` to `H`, expanding array expressions into components.
+  - `cse`: eliminate common subexpressions in the generated code. On by default; it binds constant
+    nodes to temporaries as well, so results may differ from `cse = false` in the last bit.
+  - `nanmath`: emit `NaNMath` variants of functions like `log`, `sqrt` and `^`, which return `NaN`
+    outside their real domain instead of throwing a `DomainError`. Off by default, so the generated
+    code uses the ordinary `Base` functions and an out-of-domain state is reported as an error rather
+    than propagating silently.
 """
 struct HamiltonianSystem
     H
@@ -42,12 +80,17 @@ struct HamiltonianSystem
     equations
     functions
 
-    function HamiltonianSystem(H, t, q, p, params=NamedTuple(); simplify=true, scalarize=true)
+    function HamiltonianSystem(H, t, q, p, params=NamedTuple(); simplify=false, scalarize=true, cse=true, nanmath=false)
 
         @assert eachindex(q) == eachindex(p)
 
         @variables Q[axes(q, 1)]
         @variables P[axes(p, 1)]
+
+        # Algebraic stand-ins for the time derivatives that appear in the residual form of the
+        # equations of motion: `V` for d/dt(q) and `F` for d/dt(p).
+        @variables V[axes(q, 1)]
+        @variables F[axes(p, 1)]
 
         Dt, Dq, Dp = hamiltonian_derivatives(t, q, p)
 
@@ -72,16 +115,24 @@ struct HamiltonianSystem
             ż=ż,
         )
 
+        # `EHq`, `EHp` and `EH` are residuals, so they carry the time derivatives d/dt(q) and d/dt(p)
+        # explicitly. Replace those by the algebraic `V` and `F` before code generation: otherwise
+        # they survive as derivatives of variables that do not exist in the generated function, which
+        # makes those three throw as soon as they are called.
+        equs = substitute_time_derivatives(equs, collect(Dt.(q)), V, collect(Dt.(p)), F)
+
         equs_subs = substitute_hamiltonian_variables(equs, q, p)
 
+        _build(expr, extra...) = build_function(expr, t, Q, P, extra..., params...; nanmath=nanmath, cse=cse)
+
         code = (
-            H=substitute_parameters(build_function(equs_subs.H, t, Q, P, params...; nanmath=false), params),
-            EH=substitute_parameters(build_function(equs_subs.EH, t, Q, P, params...; nanmath=false)[2], params),
-            EHq=substitute_parameters(build_function(equs_subs.EHq, t, Q, P, params...; nanmath=false)[2], params),
-            EHp=substitute_parameters(build_function(equs_subs.EHp, t, Q, P, params...; nanmath=false)[2], params),
-            v=substitute_parameters(build_function(equs_subs.v, t, Q, P, params...; nanmath=false)[2], params),
-            f=substitute_parameters(build_function(equs_subs.f, t, Q, P, params...; nanmath=false)[2], params),
-            ż=substitute_parameters(build_function(equs_subs.ż, t, Q, P, params...; nanmath=false)[2], params),
+            H=substitute_parameters(_build(equs_subs.H), params),
+            EH=substitute_parameters(_build(equs_subs.EH, V, F)[2], params),
+            EHq=substitute_parameters(_build(equs_subs.EHq, V, F)[2], params),
+            EHp=substitute_parameters(_build(equs_subs.EHp, V, F)[2], params),
+            v=substitute_parameters(_build(equs_subs.v)[2], params),
+            f=substitute_parameters(_build(equs_subs.f)[2], params),
+            ż=substitute_parameters(_build(equs_subs.ż)[2], params),
         )
 
         funcs = generate_code(code)

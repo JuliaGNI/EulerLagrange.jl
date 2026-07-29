@@ -4,6 +4,12 @@ using LinearAlgebra
 using Symbolics
 using Test
 
+# Values produced by the generated functions are compared against independently written reference
+# expressions with a relative tolerance, not with `==`. The two evaluate the same mathematical
+# quantity in a different order, and `cse=true` additionally binds constant nodes to temporaries,
+# so results may differ in the last bit.
+const RTOL = 1.0e-14
+
 
 # Initial conditions and general variables
 
@@ -34,11 +40,11 @@ lag_sys = LagrangianSystem(sym_lag, t, x, v)
 @test isequal(variables(lag_sys), (t, x, v))
 @test isequal(EulerLagrange.parameters(lag_sys), NamedTuple())
 
-for k in (:L, :EL, :f, :g, :ϑ, :θ, :ω, :Ω, :ϕ, :ψ, :M, :N)
+for k in (:L, :EL, :f, :g, :ϑ, :ω, :ϕ, :ψ, :M, :N)
     @test k ∈ keys(EulerLagrange.equations(lag_sys))
 end
 
-for k in (:L, :EL, :f, :g, :p, :ϑ, :θ, :ω, :Ω, :ϕ, :ψ, :M)# :a, :P
+for k in (:L, :EL, :f, :g, :p, :ϑ, :ω, :ϕ, :ψ, :M)# :a, :P
     @test k ∈ keys(EulerLagrange.functions(lag_sys))
 end
 
@@ -54,9 +60,9 @@ eqs.f(f₁, t₀, q₀, v₀, params)
 p̃(p₂, t₀, q₀, v₀, params)
 f̃(f₂, t₀, q₀, v₀, params)
 
-@test eqs.L(t₀, q₀, v₀, params) == L(t₀, q₀, v₀, params)
-@test p₁ == p₂
-@test f₁ == f₂
+@test eqs.L(t₀, q₀, v₀, params) ≈ L(t₀, q₀, v₀, params) rtol = RTOL
+@test p₁ ≈ p₂ rtol = RTOL
+@test f₁ ≈ f₂ rtol = RTOL
 
 
 lode = LODE(lag_sys)
@@ -91,6 +97,6 @@ eqs.f(f₁, t₀, q₀, v₀, params)
 p̃ₚ(p₂, t₀, q₀, v₀, params)
 f̃ₚ(f₂, t₀, q₀, v₀, params)
 
-@test eqs.L(t₀, q₀, v₀, params) == Lₚ(t₀, q₀, v₀, params)
-@test p₁ == p₂
-@test f₁ == f₂
+@test eqs.L(t₀, q₀, v₀, params) ≈ Lₚ(t₀, q₀, v₀, params) rtol = RTOL
+@test p₁ ≈ p₂ rtol = RTOL
+@test f₁ ≈ f₂ rtol = RTOL

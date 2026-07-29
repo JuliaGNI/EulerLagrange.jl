@@ -22,6 +22,29 @@ function substitute_ẋ_with_v(equs::AbstractArray, ẋ, v)
     [substitute_ẋ_with_v(eq, ẋ, v) for eq in equs]
 end
 
+"""
+    substitute_acceleration(equ, dv, Λ)
+
+Replace the time derivatives of the velocities, `dv = d/dt(v)`, by the algebraic variable `Λ`.
+
+Any quantity built from `Dt(∂L/∂v)` — `g`, and hence `EL = f - g` and `ψ = ṗ - g` — contains the
+acceleration. `substitute_ẋ_with_v` removes only the *first* derivatives `d/dt(x)`, so without this
+the generated code refers to an unevaluated `Differential(t)(v[i])`: a variable that does not exist,
+which makes the function throw as soon as it is called. `Λ` is the slot the generated signatures
+already carry for exactly this purpose.
+"""
+function substitute_acceleration(equ, dv, Λ)
+    substitute(equ, [dvᵢ => Λᵢ for (dvᵢ, Λᵢ) in zip(dv, collect(Λ))])
+end
+
+function substitute_acceleration(equs::AbstractArray, dv, Λ)
+    [substitute_acceleration(eq, dv, Λ) for eq in equs]
+end
+
+function substitute_acceleration(equs::NamedTuple, dv, Λ)
+    NamedTuple{keys(equs)}(Tuple(substitute_acceleration(eq, dv, Λ) for eq in equs))
+end
+
 function substitute_lagrangian_variables(equ, x, v)
     @variables X[axes(x, 1)]
     @variables V[axes(v, 1)]

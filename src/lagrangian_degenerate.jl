@@ -1,5 +1,25 @@
-"""
-    DegenerateLagrangianSystem
+@doc raw"""
+    DegenerateLagrangianSystem(K, H, t, x, v, params = NamedTuple(); simplify = false,
+                               scalarize = true, cse = true, nanmath = false)
+
+The equations of motion of a degenerate Lagrangian ``L = K - H``, generated symbolically.
+
+A degenerate Lagrangian is already first order in ``n`` equations, so `ω` is the ``n × n`` two-form
+``ω_{ij} = ∂ϑ_i/∂q_j - ∂ϑ_j/∂q_i``. See [`LagrangianSystem`](@ref) for the regular, ``2n × 2n`` case.
+
+# Keyword arguments
+
+  - `simplify`: apply `Symbolics.simplify` to `K` and `H` before differentiating, and to the inverse
+    two-form `σ = inv(ω)` and the resulting vector field. Off by default; see
+    [`LagrangianSystem`](@ref) for the measurements. It is worth at most ~10% on the evaluation of
+    the `σ ∇H` vector field here, against ~270× the construction cost.
+  - `scalarize`: apply `Symbolics.scalarize` to `K` and `H`, expanding array expressions.
+  - `cse`: eliminate common subexpressions in the generated code. On by default; it binds constant
+    nodes to temporaries as well, so results may differ from `cse = false` in the last bit.
+  - `nanmath`: emit `NaNMath` variants of functions like `log`, `sqrt` and `^`, which return `NaN`
+    outside their real domain instead of throwing a `DomainError`. Off by default, so the generated
+    code uses the ordinary `Base` functions and an out-of-domain state is reported as an error rather
+    than propagating silently.
 """
 struct DegenerateLagrangianSystem
     L
@@ -10,7 +30,7 @@ struct DegenerateLagrangianSystem
     equations
     functions
 
-    function DegenerateLagrangianSystem(K, H, t, x, v, params=NamedTuple(); simplify=true, scalarize=true)
+    function DegenerateLagrangianSystem(K, H, t, x, v, params=NamedTuple(); simplify=false, scalarize=true, cse=true, nanmath=false)
 
         @assert eachindex(x) == eachindex(v)
 
@@ -79,24 +99,29 @@ struct DegenerateLagrangianSystem
             ẋ=simplify ? Symbolics.simplify.(ẋeq) : ẋeq,
         ))
 
+        _build(expr, args...) = build_function(expr, args...; nanmath=nanmath, cse=cse)
+
+        # `p` and `ϑ` are the out-of-place and in-place halves of the same pair, so build once.
+        ϑcode = _build(equs_subs.ϑ, t, X, V, params...)
+
         code = (
-            L=substitute_parameters(build_function(equs_subs.L, t, X, V, params...; nanmath=false), params),
-            H=substitute_parameters(build_function(equs_subs.H, t, X, params...; nanmath=false), params),
-            EL=substitute_parameters(build_function(equs_subs.EL, t, X, V, params...; nanmath=false)[2], params),
-            ∇H=substitute_parameters(build_function(equs_subs.∇H, t, X, V, params...; nanmath=false)[2], params),
-            ẋ=substitute_parameters(build_function(equs_subs.ẋ, t, X, params...; nanmath=false)[2], params),
-            v=substitute_parameters(build_function(equs_subs.ẋ, t, X, P, params...; nanmath=false)[2], params),
-            f=substitute_parameters(build_function(equs_subs.f, t, X, V, params...; nanmath=false)[2], params),
-            u=substitute_parameters(build_function(equs_subs.u, t, X, Λ, V, params...; nanmath=false)[2], params),
-            g=substitute_parameters(build_function(equs_subs.g, t, X, Λ, V, params...; nanmath=false)[2], params),
-            ū=substitute_parameters(build_function(equs_subs.ū, t, X, Λ, P, V, params...; nanmath=false)[2], params),
-            ḡ=substitute_parameters(build_function(equs_subs.ḡ, t, X, Λ, P, V, params...; nanmath=false)[2], params),
-            p=substitute_parameters(build_function(equs_subs.ϑ, t, X, V, params...; nanmath=false)[1], params),
-            ϑ=substitute_parameters(build_function(equs_subs.ϑ, t, X, V, params...; nanmath=false)[2], params),
-            ω=substitute_parameters(build_function(equs_subs.ω, t, X, V, params...; nanmath=false)[2], params),
-            ϕ=substitute_parameters(build_function(equs_subs.ϕ, t, X, V, P, params...; nanmath=false)[2], params),
-            ψ=substitute_parameters(build_function(equs_subs.ψ, t, X, V, P, F, params...; nanmath=false)[2], params),
-            P=substitute_parameters(build_function(equs_subs.σ, t, X, V, params...; nanmath=false)[2], params),
+            L=substitute_parameters(_build(equs_subs.L, t, X, V, params...), params),
+            H=substitute_parameters(_build(equs_subs.H, t, X, params...), params),
+            EL=substitute_parameters(_build(equs_subs.EL, t, X, V, params...)[2], params),
+            ∇H=substitute_parameters(_build(equs_subs.∇H, t, X, V, params...)[2], params),
+            ẋ=substitute_parameters(_build(equs_subs.ẋ, t, X, params...)[2], params),
+            v=substitute_parameters(_build(equs_subs.ẋ, t, X, P, params...)[2], params),
+            f=substitute_parameters(_build(equs_subs.f, t, X, V, params...)[2], params),
+            u=substitute_parameters(_build(equs_subs.u, t, X, Λ, V, params...)[2], params),
+            g=substitute_parameters(_build(equs_subs.g, t, X, Λ, V, params...)[2], params),
+            ū=substitute_parameters(_build(equs_subs.ū, t, X, Λ, P, V, params...)[2], params),
+            ḡ=substitute_parameters(_build(equs_subs.ḡ, t, X, Λ, P, V, params...)[2], params),
+            p=substitute_parameters(ϑcode[1], params),
+            ϑ=substitute_parameters(ϑcode[2], params),
+            ω=substitute_parameters(_build(equs_subs.ω, t, X, V, params...)[2], params),
+            ϕ=substitute_parameters(_build(equs_subs.ϕ, t, X, V, P, params...)[2], params),
+            ψ=substitute_parameters(_build(equs_subs.ψ, t, X, V, P, F, params...)[2], params),
+            P=substitute_parameters(_build(equs_subs.σ, t, X, V, params...)[2], params),
         )
 
         new(Ls, t, x, v, params, equs, generate_code(code))

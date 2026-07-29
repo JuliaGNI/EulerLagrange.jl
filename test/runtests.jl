@@ -10,3 +10,6 @@ end
 @safetestset LagrangianTests = "$(rpad("Lagrangian Systems",80))" begin
     include("lagrangian_tests.jl")
 end
+@safetestset CSETests = "$(rpad("Common Subexpression Elimination",80))" begin
+    include("cse_tests.jl")
+end
