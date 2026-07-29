@@ -2,6 +2,12 @@ using EulerLagrange
 using LinearAlgebra
 using Test
 
+# Values produced by the generated functions are compared against independently written reference
+# expressions with a relative tolerance, not with `==`. The two evaluate the same mathematical
+# quantity in a different order, and `cse=true` additionally binds constant nodes to temporaries,
+# so results may differ in the last bit.
+const RTOL = 1.0e-14
+
 
 ϑ(t, x, v, params) = [log(x[2]) / x[1] / 2, -log(x[1]) / x[2] / 2]
 H(t, x, v, params) = params.a₁ * x[1] + params.a₂ * x[2] + params.b₁ * log(x[1]) + params.b₂ * log(x[2])
@@ -81,7 +87,7 @@ eqs.f(ṗ₁, t₀, q₀, v₀, params)
 p̃(p₂, t₀, q₀, v₀, params)
 f̃(ṗ₂, t₀, q₀, v₀, params)
 
-@test eqs.L(t₀, q₀, v₀, params) == L(t₀, q₀, v₀, params)
+@test eqs.L(t₀, q₀, v₀, params) ≈ L(t₀, q₀, v₀, params) rtol = RTOL
 @test p₁ ≈ p₂ atol = 2eps()
 @test ṗ₁ ≈ ṗ₂ atol = 2eps()
 
@@ -110,7 +116,7 @@ ṽ(q̇₂, t₀, q₀, params)
 p̃(p₂, t₀, q₀, v₀, params)
 f̃(ṗ₂, t₀, q₀, v₀, params)
 
-@test deg_eqs.L(t₀, q₀, v₀, params) == L(t₀, q₀, v₀, params)
+@test deg_eqs.L(t₀, q₀, v₀, params) ≈ L(t₀, q₀, v₀, params) rtol = RTOL
 @test q̇₁ ≈ q̇₂ atol = 2eps()
 @test p₁ ≈ p₂ atol = 2eps()
 @test ṗ₁ ≈ ṗ₂ atol = 2eps()

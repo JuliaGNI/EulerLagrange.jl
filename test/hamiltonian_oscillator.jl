@@ -3,6 +3,12 @@ using GeometricEquations
 using LinearAlgebra
 using Test
 
+# Values produced by the generated functions are compared against independently written reference
+# expressions with a relative tolerance, not with `==`. The two evaluate the same mathematical
+# quantity in a different order, and `cse=true` additionally binds constant nodes to temporaries,
+# so results may differ in the last bit.
+const RTOL = 1.0e-14
+
 
 H(t, q, p, params) = dot(p,p) / 2 + params.k * dot(q,q) / 2
 
@@ -27,6 +33,6 @@ eqs.f(f₁, t₀, q₀, p₀, params)
 ṽ(v₂, t₀, q₀, p₀, params)
 f̃(f₂, t₀, q₀, p₀, params)
     
-@test eqs.H(t₀, q₀, p₀, params) == H(t₀, q₀, p₀, params)
-@test v₁ == v₂
-@test f₁ == f₂
+@test eqs.H(t₀, q₀, p₀, params) ≈ H(t₀, q₀, p₀, params) rtol = RTOL
+@test v₁ ≈ v₂ rtol = RTOL
+@test f₁ ≈ f₂ rtol = RTOL
