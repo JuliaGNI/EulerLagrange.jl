@@ -10,7 +10,7 @@ struct LagrangianSystem
     equations
     functions
 
-    function LagrangianSystem(L, t, x, v, params=NamedTuple(); simplify=true, scalarize=true)
+    function LagrangianSystem(L, t, x, v, params=NamedTuple(); simplify=true, scalarize=true, cse=true)
 
         @assert eachindex(x) == eachindex(v)
 
@@ -36,22 +36,31 @@ struct LagrangianSystem
         f = [expand_derivatives(dx(Ls)) for dx in Dx]
         g = [expand_derivatives(Dt(dv(Ls))) for dv in Dv]
         ϑ = [expand_derivatives(dv(Ls)) for dv in Dv]
-        θ = [expand_derivatives(dz(Ls)) for dz in Dz]
         EL = [f[i] - g[i] for i in eachindex(f, g)]
 
-        Ω = [Dx[i](ϑ[j]) - Dx[j](ϑ[i]) for i in eachindex(Dx, ϑ), j in eachindex(Dx, ϑ)]
-        ω = [Dz[i](θ[j]) - Dz[j](θ[i]) for i in eachindex(Dz, θ), j in eachindex(Dz, θ)]
+        # The Lagrange one-form θ_L = ϑᵢ dqⁱ expressed in the (x, v) coordinates that `Dz` spans: it
+        # has the components of ϑ along dx and none along dv.
+        #
+        # `ω = dθ_L` is built from `ϑ = ∂L/∂v`, not from the full gradient `∂L/∂z`. Taking the latter
+        # gives `ω = d(dL) ≡ 0` — an identically vanishing matrix, and formerly by far the most
+        # expensive quantity in this constructor.
+        #
+        # A `LagrangianSystem` describes a *regular* Lagrangian: a second-order system of n equations,
+        # equivalent to a first-order system of 2n. Its `ω` is therefore the full 2n×2n two-form on
+        # (q, q̇), in block form `[N - Nᵀ  -Mᵀ; M  0]`, which reduces to the canonical `[0 -M; M 0]`
+        # when ϑ depends on the velocities alone. A `DegenerateLagrangianSystem` is a first-order
+        # system of n equations and its `ω` is correspondingly n×n; see `lagrangian_degenerate.jl`.
+        ϑz = vcat(ϑ, zero(ϑ))
+
+        ω = [Dz[i](ϑz[j]) - Dz[j](ϑz[i]) for i in eachindex(Dz, ϑz), j in eachindex(Dz, ϑz)]
         M = [Dv[i](ϑ[j]) for i in eachindex(Dv), j in eachindex(ϑ)]
         N = [Dx[i](ϑ[j]) for i in eachindex(Dv), j in eachindex(ϑ)]
 
-        if simplify
-            Ω = Symbolics.simplify.(Ω)
-            ω = Symbolics.simplify.(ω)
-            M = Symbolics.simplify.(M)
-            N = Symbolics.simplify.(N)
-        end
-
-        Ω = expand_derivatives.(Ω)
+        # `simplify` deliberately does not run here. At this point the entries are still unevaluated
+        # `Differential` applications, so no rewrite rule can cancel anything — simplifying first
+        # costs a great deal and leaves the expanded result unsimplified anyway. Simplifying *after*
+        # the expansion is intractable at the sizes that matter, so `cse=true` in `build_function`
+        # below is what keeps the emitted code small instead.
         ω = expand_derivatives.(ω)
         M = expand_derivatives.(M)
         N = expand_derivatives.(N)
@@ -62,14 +71,17 @@ struct LagrangianSystem
             f=f,
             g=g,
             ϑ=ϑ,
-            θ=θ,
-            Ω=Ω,
             ω=ω,
             M=M,
             N=N,
         )
 
         # _simplify(expr, dosimplify) = dosimplify ? simplify.(expr) : expr
+
+        # `g` — and so `EL = f - g` and `ψ = ṗ - g` — contains the acceleration d/dt(v). Replace it
+        # by `Λ` before the remaining substitutions, otherwise it survives into the generated code as
+        # a derivative of a variable that does not exist there. See `substitute_acceleration`.
+        equs = substitute_acceleration(equs, collect(Dt.(v)), Λ)
 
         equs_subs = substitute_lagrangian_variables(equs, x, ẋ, v)
         equs_subs = merge(equs_subs, (
@@ -86,21 +98,27 @@ struct LagrangianSystem
             ψ=ṗ .- equs.g,
         ))
 
+        _build(expr, args...) = build_function(expr, args...; nanmath=false, cse=cse)
+
+        # `p` and `ϑ` are the out-of-place and in-place halves of the same pair, so build once.
+        ϑcode = _build(equs_subs.ϑ, t, X, V, params...)
+
         code = (
-            L=substitute_parameters(build_function(equs_subs.L, t, X, V, params...; nanmath=false), params),
-            EL=substitute_parameters(build_function(equs_subs.EL, t, X, V, params...; nanmath=false)[2], params),
-            # a  = substitute_parameters(build_function(equs_subs.a,  t, X, V, params...; nanmath = false)[2], params),
-            f=substitute_parameters(build_function(equs_subs.f, t, X, V, params...; nanmath=false)[2], params),
-            g=substitute_parameters(build_function(equs_subs.g, t, X, Λ, V, params...; nanmath=false)[2], params),
-            p=substitute_parameters(build_function(equs_subs.ϑ, t, X, V, params...; nanmath=false)[1], params),
-            ϑ=substitute_parameters(build_function(equs_subs.ϑ, t, X, V, params...; nanmath=false)[2], params),
-            θ=substitute_parameters(build_function(equs_subs.θ, t, X, V, params...; nanmath=false)[2], params),
-            ω=substitute_parameters(build_function(equs_subs.ω, t, X, V, params...; nanmath=false)[2], params),
-            Ω=substitute_parameters(build_function(equs_subs.Ω, t, X, V, params...; nanmath=false)[2], params),
-            ϕ=substitute_parameters(build_function(equs_subs.ϕ, t, X, V, P, params...; nanmath=false)[2], params),
-            ψ=substitute_parameters(build_function(equs_subs.ψ, t, X, V, P, F, params...; nanmath=false)[2], params),
-            M=substitute_parameters(build_function(equs_subs.M, t, X, V, params...; nanmath=false)[2], params),
-            # P  = substitute_parameters(build_function(equs_subs.Σ,  t, X, V, params...; nanmath = false)[2], params),
+            L=substitute_parameters(_build(equs_subs.L, t, X, V, params...), params),
+            # `EL`, `g` and `ψ` take the acceleration `Λ`. `g`'s argument order is fixed by
+            # GeometricEquations, whose `_get_g(::LODE, params)` calls `g(out, t, q, v, λ, params)`;
+            # it used to be built as `(t, X, Λ, V, …)`, with `Λ` and `V` the wrong way round.
+            EL=substitute_parameters(_build(equs_subs.EL, t, X, V, Λ, params...)[2], params),
+            # a  = substitute_parameters(_build(equs_subs.a,  t, X, V, params...)[2], params),
+            f=substitute_parameters(_build(equs_subs.f, t, X, V, params...)[2], params),
+            g=substitute_parameters(_build(equs_subs.g, t, X, V, Λ, params...)[2], params),
+            p=substitute_parameters(ϑcode[1], params),
+            ϑ=substitute_parameters(ϑcode[2], params),
+            ω=substitute_parameters(_build(equs_subs.ω, t, X, V, params...)[2], params),
+            ϕ=substitute_parameters(_build(equs_subs.ϕ, t, X, V, P, params...)[2], params),
+            ψ=substitute_parameters(_build(equs_subs.ψ, t, X, V, P, F, Λ, params...)[2], params),
+            M=substitute_parameters(_build(equs_subs.M, t, X, V, params...)[2], params),
+            # P  = substitute_parameters(_build(equs_subs.Σ,  t, X, V, params...)[2], params),
         )
 
         new(Ls, t, x, v, params, equs, generate_code(code))

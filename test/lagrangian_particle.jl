@@ -34,11 +34,11 @@ lag_sys = LagrangianSystem(sym_lag, t, x, v)
 @test isequal(variables(lag_sys), (t, x, v))
 @test isequal(EulerLagrange.parameters(lag_sys), NamedTuple())
 
-for k in (:L, :EL, :f, :g, :ϑ, :θ, :ω, :Ω, :ϕ, :ψ, :M, :N)
+for k in (:L, :EL, :f, :g, :ϑ, :ω, :ϕ, :ψ, :M, :N)
     @test k ∈ keys(EulerLagrange.equations(lag_sys))
 end
 
-for k in (:L, :EL, :f, :g, :p, :ϑ, :θ, :ω, :Ω, :ϕ, :ψ, :M)# :a, :P
+for k in (:L, :EL, :f, :g, :p, :ϑ, :ω, :ϕ, :ψ, :M)# :a, :P
     @test k ∈ keys(EulerLagrange.functions(lag_sys))
 end
 
