@@ -1,5 +1,6 @@
 @doc raw"""
-    LagrangianSystem(L, t, x, v, params = NamedTuple(); simplify = false, scalarize = true, cse = true)
+    LagrangianSystem(L, t, x, v, params = NamedTuple(); simplify = false, scalarize = true,
+                     cse = true, nanmath = false)
 
 The equations of motion of a regular Lagrangian `L`, generated symbolically.
 
@@ -19,6 +20,10 @@ Since `L` is regular, the system is second order in ``n`` equations, equivalentl
   - `cse`: eliminate common subexpressions in the generated code. On by default; this is what keeps
     each repeated subexpression from being re-emitted at every occurrence. It binds constant nodes to
     temporaries as well, so results may differ from `cse = false` in the last bit.
+  - `nanmath`: emit `NaNMath` variants of functions like `log`, `sqrt` and `^`, which return `NaN`
+    outside their real domain instead of throwing a `DomainError`. Off by default, so the generated
+    code uses the ordinary `Base` functions and an out-of-domain state is reported as an error rather
+    than propagating silently.
 """
 struct LagrangianSystem
     L
@@ -29,7 +34,7 @@ struct LagrangianSystem
     equations
     functions
 
-    function LagrangianSystem(L, t, x, v, params=NamedTuple(); simplify=false, scalarize=true, cse=true)
+    function LagrangianSystem(L, t, x, v, params=NamedTuple(); simplify=false, scalarize=true, cse=true, nanmath=false)
 
         @assert eachindex(x) == eachindex(v)
 
@@ -117,7 +122,7 @@ struct LagrangianSystem
             ψ=ṗ .- equs.g,
         ))
 
-        _build(expr, args...) = build_function(expr, args...; nanmath=false, cse=cse)
+        _build(expr, args...) = build_function(expr, args...; nanmath=nanmath, cse=cse)
 
         # `p` and `ϑ` are the out-of-place and in-place halves of the same pair, so build once.
         ϑcode = _build(equs_subs.ϑ, t, X, V, params...)

@@ -54,7 +54,8 @@ end
 
 
 """
-    HamiltonianSystem(H, t, q, p, params = NamedTuple(); simplify = false, scalarize = true, cse = true)
+    HamiltonianSystem(H, t, q, p, params = NamedTuple(); simplify = false, scalarize = true,
+                      cse = true, nanmath = false)
 
 The equations of motion of the Hamiltonian `H`, generated symbolically.
 
@@ -65,6 +66,10 @@ The equations of motion of the Hamiltonian `H`, generated symbolically.
   - `scalarize`: apply `Symbolics.scalarize` to `H`, expanding array expressions into components.
   - `cse`: eliminate common subexpressions in the generated code. On by default; it binds constant
     nodes to temporaries as well, so results may differ from `cse = false` in the last bit.
+  - `nanmath`: emit `NaNMath` variants of functions like `log`, `sqrt` and `^`, which return `NaN`
+    outside their real domain instead of throwing a `DomainError`. Off by default, so the generated
+    code uses the ordinary `Base` functions and an out-of-domain state is reported as an error rather
+    than propagating silently.
 """
 struct HamiltonianSystem
     H
@@ -75,7 +80,7 @@ struct HamiltonianSystem
     equations
     functions
 
-    function HamiltonianSystem(H, t, q, p, params=NamedTuple(); simplify=false, scalarize=true, cse=true)
+    function HamiltonianSystem(H, t, q, p, params=NamedTuple(); simplify=false, scalarize=true, cse=true, nanmath=false)
 
         @assert eachindex(q) == eachindex(p)
 
@@ -118,7 +123,7 @@ struct HamiltonianSystem
 
         equs_subs = substitute_hamiltonian_variables(equs, q, p)
 
-        _build(expr, extra...) = build_function(expr, t, Q, P, extra..., params...; nanmath=false, cse=cse)
+        _build(expr, extra...) = build_function(expr, t, Q, P, extra..., params...; nanmath=nanmath, cse=cse)
 
         code = (
             H=substitute_parameters(_build(equs_subs.H), params),

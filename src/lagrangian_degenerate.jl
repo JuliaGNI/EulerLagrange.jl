@@ -1,5 +1,6 @@
 @doc raw"""
-    DegenerateLagrangianSystem(K, H, t, x, v, params = NamedTuple(); simplify = false, scalarize = true, cse = true)
+    DegenerateLagrangianSystem(K, H, t, x, v, params = NamedTuple(); simplify = false,
+                               scalarize = true, cse = true, nanmath = false)
 
 The equations of motion of a degenerate Lagrangian ``L = K - H``, generated symbolically.
 
@@ -15,6 +16,10 @@ A degenerate Lagrangian is already first order in ``n`` equations, so `ω` is th
   - `scalarize`: apply `Symbolics.scalarize` to `K` and `H`, expanding array expressions.
   - `cse`: eliminate common subexpressions in the generated code. On by default; it binds constant
     nodes to temporaries as well, so results may differ from `cse = false` in the last bit.
+  - `nanmath`: emit `NaNMath` variants of functions like `log`, `sqrt` and `^`, which return `NaN`
+    outside their real domain instead of throwing a `DomainError`. Off by default, so the generated
+    code uses the ordinary `Base` functions and an out-of-domain state is reported as an error rather
+    than propagating silently.
 """
 struct DegenerateLagrangianSystem
     L
@@ -25,7 +30,7 @@ struct DegenerateLagrangianSystem
     equations
     functions
 
-    function DegenerateLagrangianSystem(K, H, t, x, v, params=NamedTuple(); simplify=false, scalarize=true, cse=true)
+    function DegenerateLagrangianSystem(K, H, t, x, v, params=NamedTuple(); simplify=false, scalarize=true, cse=true, nanmath=false)
 
         @assert eachindex(x) == eachindex(v)
 
@@ -94,7 +99,7 @@ struct DegenerateLagrangianSystem
             ẋ=simplify ? Symbolics.simplify.(ẋeq) : ẋeq,
         ))
 
-        _build(expr, args...) = build_function(expr, args...; nanmath=false, cse=cse)
+        _build(expr, args...) = build_function(expr, args...; nanmath=nanmath, cse=cse)
 
         # `p` and `ϑ` are the out-of-place and in-place halves of the same pair, so build once.
         ϑcode = _build(equs_subs.ϑ, t, X, V, params...)
