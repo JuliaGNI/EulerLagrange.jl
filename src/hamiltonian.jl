@@ -54,7 +54,17 @@ end
 
 
 """
-    HamiltonianSystem
+    HamiltonianSystem(H, t, q, p, params = NamedTuple(); simplify = false, scalarize = true, cse = true)
+
+The equations of motion of the Hamiltonian `H`, generated symbolically.
+
+# Keyword arguments
+
+  - `simplify`: apply `Symbolics.simplify` to `H` before differentiating. Off by default; see
+    [`LagrangianSystem`](@ref) for the measurements behind that choice.
+  - `scalarize`: apply `Symbolics.scalarize` to `H`, expanding array expressions into components.
+  - `cse`: eliminate common subexpressions in the generated code. On by default; it binds constant
+    nodes to temporaries as well, so results may differ from `cse = false` in the last bit.
 """
 struct HamiltonianSystem
     H
@@ -65,7 +75,7 @@ struct HamiltonianSystem
     equations
     functions
 
-    function HamiltonianSystem(H, t, q, p, params=NamedTuple(); simplify=true, scalarize=true, cse=true)
+    function HamiltonianSystem(H, t, q, p, params=NamedTuple(); simplify=false, scalarize=true, cse=true)
 
         @assert eachindex(q) == eachindex(p)
 

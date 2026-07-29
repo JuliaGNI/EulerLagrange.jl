@@ -1,5 +1,20 @@
-"""
-    DegenerateLagrangianSystem
+@doc raw"""
+    DegenerateLagrangianSystem(K, H, t, x, v, params = NamedTuple(); simplify = false, scalarize = true, cse = true)
+
+The equations of motion of a degenerate Lagrangian ``L = K - H``, generated symbolically.
+
+A degenerate Lagrangian is already first order in ``n`` equations, so `ω` is the ``n × n`` two-form
+``ω_{ij} = ∂ϑ_i/∂q_j - ∂ϑ_j/∂q_i``. See [`LagrangianSystem`](@ref) for the regular, ``2n × 2n`` case.
+
+# Keyword arguments
+
+  - `simplify`: apply `Symbolics.simplify` to `K` and `H` before differentiating, and to the inverse
+    two-form `σ = inv(ω)` and the resulting vector field. Off by default; see
+    [`LagrangianSystem`](@ref) for the measurements. It is worth at most ~10% on the evaluation of
+    the `σ ∇H` vector field here, against ~270× the construction cost.
+  - `scalarize`: apply `Symbolics.scalarize` to `K` and `H`, expanding array expressions.
+  - `cse`: eliminate common subexpressions in the generated code. On by default; it binds constant
+    nodes to temporaries as well, so results may differ from `cse = false` in the last bit.
 """
 struct DegenerateLagrangianSystem
     L
@@ -10,7 +25,7 @@ struct DegenerateLagrangianSystem
     equations
     functions
 
-    function DegenerateLagrangianSystem(K, H, t, x, v, params=NamedTuple(); simplify=true, scalarize=true, cse=true)
+    function DegenerateLagrangianSystem(K, H, t, x, v, params=NamedTuple(); simplify=false, scalarize=true, cse=true)
 
         @assert eachindex(x) == eachindex(v)
 

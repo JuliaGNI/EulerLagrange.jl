@@ -1,5 +1,24 @@
-"""
-    LagrangianSystem
+@doc raw"""
+    LagrangianSystem(L, t, x, v, params = NamedTuple(); simplify = false, scalarize = true, cse = true)
+
+The equations of motion of a regular Lagrangian `L`, generated symbolically.
+
+Since `L` is regular, the system is second order in ``n`` equations, equivalently first order in
+``2n``; accordingly `ω` is the ``2n × 2n`` two-form on ``(q, \dot q)``. See
+[`DegenerateLagrangianSystem`](@ref) for the first-order, ``n × n`` case.
+
+# Keyword arguments
+
+  - `simplify`: apply `Symbolics.simplify` to `L` before differentiating. **Off by default**, because
+    it is at best neutral and often much worse: it rewrites a sum of fractions into a
+    common-denominator form whose derivatives are far more expensive both to build and to evaluate.
+    Measured across every EulerLagrange-based problem in GeometricProblems (88 generated functions),
+    `simplify = true` was never faster to evaluate and up to 15× slower, at 23× the total
+    construction cost.
+  - `scalarize`: apply `Symbolics.scalarize` to `L`, expanding array expressions into components.
+  - `cse`: eliminate common subexpressions in the generated code. On by default; this is what keeps
+    each repeated subexpression from being re-emitted at every occurrence. It binds constant nodes to
+    temporaries as well, so results may differ from `cse = false` in the last bit.
 """
 struct LagrangianSystem
     L
@@ -10,7 +29,7 @@ struct LagrangianSystem
     equations
     functions
 
-    function LagrangianSystem(L, t, x, v, params=NamedTuple(); simplify=true, scalarize=true, cse=true)
+    function LagrangianSystem(L, t, x, v, params=NamedTuple(); simplify=false, scalarize=true, cse=true)
 
         @assert eachindex(x) == eachindex(v)
 
