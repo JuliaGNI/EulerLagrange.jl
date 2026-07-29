@@ -13,3 +13,6 @@ end
 @safetestset CSETests = "$(rpad("Common Subexpression Elimination",80))" begin
     include("cse_tests.jl")
 end
+@safetestset SignatureTests = "$(rpad("Generated Function Signatures",80))" begin
+    include("signature_tests.jl")
+end

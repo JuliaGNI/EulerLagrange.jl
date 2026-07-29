@@ -123,6 +123,33 @@ f̃(ṗ₂, t₀, q₀, v₀, params)
 
 @test deg_eqs.L(t₀, q₀, v₀, params_alt) != L(t₀, q₀, v₀, params)
 
+
+# The secondary constraint ψ = ṗ - q̇ ⋅ ∇ϑ, called the way `LDAE` calls it:
+# ψ(out, t, q, v, p, q̇, ṗ, params). The algebraic velocity `v` and the time derivative `q̇` are
+# separate arguments, so they are chosen distinct here — contracting ∇ϑ with the wrong one is
+# exactly the failure this pins down.
+
+function ψ̃(ψ, t, q, q̇, ṗ)
+    ψ[1] = ṗ[1] - (dϑ₁dx₁(t, q) * q̇[1] + dϑ₁dx₂(t, q) * q̇[2])
+    ψ[2] = ṗ[2] - (dϑ₂dx₁(t, q) * q̇[1] + dϑ₂dx₂(t, q) * q̇[2])
+end
+
+q̇₀ = [0.7, -0.3]
+ṗ₀ = [1.3, 0.9]
+
+ψ₁, ψ₂ = zero(p₀), zero(p₀)
+
+deg_eqs.ψ(ψ₁, t₀, q₀, v₀, p₀, q̇₀, ṗ₀, params)
+ψ̃(ψ₂, t₀, q₀, q̇₀, ṗ₀)
+
+@test ψ₁ ≈ ψ₂ rtol = RTOL
+
+# ψ must depend on q̇, not on the algebraic velocity v
+ψ₃ = zero(p₀)
+deg_eqs.ψ(ψ₃, t₀, q₀, 2 .* v₀, p₀, q̇₀, ṗ₀, params)
+@test ψ₃ == ψ₁
+
+
 @test_nowarn ODE(deg_lag_sys)
 @test_nowarn ODEProblem(deg_lag_sys, tspan, tstep, q₀; parameters=params)
 

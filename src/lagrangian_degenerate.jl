@@ -7,6 +7,9 @@ The equations of motion of a degenerate Lagrangian ``L = K - H``, generated symb
 A degenerate Lagrangian is already first order in ``n`` equations, so `ω` is the ``n × n`` two-form
 ``ω_{ij} = ∂ϑ_i/∂q_j - ∂ϑ_j/∂q_i``. See [`LagrangianSystem`](@ref) for the regular, ``2n × 2n`` case.
 
+The secondary constraint `ψ` takes both time derivatives, matching the `LDAE` interface:
+`ψ(out, t, q, v, p, q̇, ṗ, params)`, computing ``\dot p - \dot q \cdot ∇ϑ(t, q)``.
+
 # Keyword arguments
 
   - `simplify`: apply `Symbolics.simplify` to `K` and `H` before differentiating, and to the inverse
@@ -42,6 +45,11 @@ struct DegenerateLagrangianSystem
         @variables P[axes(v, 1)]
         @variables F[axes(x, 1)]
         @variables Λ[axes(v, 1)]
+
+        # The secondary constraint ψ is evaluated along a trajectory, so it takes both time
+        # derivatives: `Ẋ` for q̇ and `F` for ṗ. They are separate slots from the algebraic `V`
+        # and `P`, which GeometricEquations passes independently — see the `ψ` entry in `code`.
+        @variables Ẋ[axes(x, 1)]
 
         Dt, Dx, Dv = lagrangian_derivatives(t, x, v)
 
@@ -87,9 +95,14 @@ struct DegenerateLagrangianSystem
 
         σ = inv(equs_subs.ω)
 
+        # `ḡ = Σⱼ ∂ϑᵢ/∂xⱼ · Vⱼ`, i.e. ∇ϑ contracted with whatever sits in the `V` slot. The
+        # secondary constraint is `ψ = ṗ - q̇ · ∇ϑ`, so it must be contracted with q̇, not with the
+        # algebraic velocity: substitute `V → Ẋ` before subtracting it from `F`.
+        ḡq̇ = substitute.(equs_subs.ḡ, Ref(Dict(Vᵢ => Ẋᵢ for (Vᵢ, Ẋᵢ) in zip(collect(V), collect(Ẋ)))))
+
         equs_subs = merge(equs_subs, (
             ϕ=[P[i] - equs_subs.ϑ[i] for i in eachindex(P, equs_subs.ϑ)],
-            ψ=[F[i] - equs_subs.ḡ[i] for i in eachindex(F, equs_subs.ḡ)],
+            ψ=[F[i] - ḡq̇[i] for i in eachindex(F, ḡq̇)],
             σ=simplify ? Symbolics.simplify.(σ) : σ,
         ))
 
@@ -120,7 +133,9 @@ struct DegenerateLagrangianSystem
             ϑ=substitute_parameters(ϑcode[2], params),
             ω=substitute_parameters(_build(equs_subs.ω, t, X, V, params...)[2], params),
             ϕ=substitute_parameters(_build(equs_subs.ϕ, t, X, V, P, params...)[2], params),
-            ψ=substitute_parameters(_build(equs_subs.ψ, t, X, V, P, F, params...)[2], params),
+            # `ψ` is the secondary constraint of an `LDAE`, called as
+            # `ψ(out, t, q, v, p, q̇, ṗ, params)`; the q̇ slot is `Ẋ` and the ṗ slot is `F`.
+            ψ=substitute_parameters(_build(equs_subs.ψ, t, X, V, P, Ẋ, F, params...)[2], params),
             P=substitute_parameters(_build(equs_subs.σ, t, X, V, params...)[2], params),
         )
 
