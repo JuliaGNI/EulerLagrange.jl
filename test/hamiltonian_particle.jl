@@ -10,7 +10,6 @@ using Test
 # so results may differ in the last bit.
 const RTOL = 1.0e-14
 
-
 H(t, q, p, params) = p ⋅ p / 2 + q ⋅ q / 2
 
 t₀, q₀, p₀ = 0.0, [1.0, 1.0], [0.5, 2.0]
@@ -53,11 +52,10 @@ ż̃(ż₂, t₀, q₀, p₀, params)
 @test f₁ ≈ f₂ rtol = RTOL
 @test ż₁ ≈ ż₂ rtol = RTOL
 
-
 ntime = 1000
 tstep = 0.01
 tspan = (0.0, ntime * tstep)
-ics = (q=StateVariable(q₀), p=StateVariable(p₀))
+ics = (q = StateVariable(q₀), p = StateVariable(p₀))
 
 hode = HODE(ham_sys)
 

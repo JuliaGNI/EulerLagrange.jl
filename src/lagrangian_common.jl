@@ -56,9 +56,9 @@ function substitute_lagrangian_variables(equs::AbstractArray, x, v)
 end
 
 function substitute_lagrangian_variables(equs::NamedTuple, x, ẋ, v)
-    NamedTuple{keys(equs)}(Tuple(substitute_lagrangian_variables(substitute_ẋ_with_v(eq, ẋ, v), x, v) for eq in equs))
+    NamedTuple{keys(equs)}(Tuple(substitute_lagrangian_variables(substitute_ẋ_with_v(eq, ẋ, v), x, v)
+    for eq in equs))
 end
-
 
 function lagrangian_variables(dimension::Int)
     @variables t

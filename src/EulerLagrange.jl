@@ -14,7 +14,6 @@ import GeometricEquations: _lode_default_v̄
 
 RuntimeGeneratedFunctions.init(@__MODULE__)
 
-
 export ODE, ODEProblem
 export HODE, HODEProblem
 export LODE, LODEProblem
@@ -22,17 +21,14 @@ export LDAE, LDAEProblem
 
 export equations, functions, parameters, variables
 
-
 export symbolize
 
 include("symbolics.jl")
-
 
 export HamiltonianSystem
 export hamiltonian, hamiltonian_variables, hamiltonian_derivatives
 
 include("hamiltonian.jl")
-
 
 export LagrangianSystem, DegenerateLagrangianSystem
 export lagrangian, lagrangian_variables, lagrangian_derivatives

@@ -4,7 +4,6 @@ using LinearAlgebra
 using Parameters
 using Test
 
-
 const tspan = (0.0, 3)
 const tstep = 0.5
 
@@ -48,38 +47,37 @@ const p₆ = m₆ * q̇₆
 
 # 2d System
 const ss2 = (
-    d=3,
-    n=2,
-    m=[m₁, m₂],
-    t₀=0.0,
-    q₀=[q₁; q₂],
-    v₀=[q̇₁; q̇₂],
-    p₀=[p₁; p₂],
-    default_parameters=(
-        d=3,
-        n=2,
-        G=2.95912208286e-4,
-        m=[m₁, m₂]
+    d = 3,
+    n = 2,
+    m = [m₁, m₂],
+    t₀ = 0.0,
+    q₀ = [q₁; q₂],
+    v₀ = [q̇₁; q̇₂],
+    p₀ = [p₁; p₂],
+    default_parameters = (
+        d = 3,
+        n = 2,
+        G = 2.95912208286e-4,
+        m = [m₁, m₂]
     )
 )
 
 # 6d System
 const ss6 = (
-    d=3,
-    n=6,
-    m=[m₁, m₂, m₃, m₄, m₅, m₆],
-    t₀=0.0,
-    q₀=[q₁; q₂; q₃; q₄; q₅; q₆],
-    v₀=[q̇₁; q̇₂; q̇₃; q̇₄; q̇₅; q̇₆],
-    p₀=[p₁; p₂; p₃; p₄; p₅; p₆],
-    default_parameters=(
-        d=3,
-        n=6,
-        G=2.95912208286e-4,
-        m=[m₁, m₂, m₃, m₄, m₅, m₆]
+    d = 3,
+    n = 6,
+    m = [m₁, m₂, m₃, m₄, m₅, m₆],
+    t₀ = 0.0,
+    q₀ = [q₁; q₂; q₃; q₄; q₅; q₆],
+    v₀ = [q̇₁; q̇₂; q̇₃; q̇₄; q̇₅; q̇₆],
+    p₀ = [p₁; p₂; p₃; p₄; p₅; p₆],
+    default_parameters = (
+        d = 3,
+        n = 6,
+        G = 2.95912208286e-4,
+        m = [m₁, m₂, m₃, m₄, m₅, m₆]
     )
 )
-
 
 function v̄(v, t, q, p, params)
     p = transpose(reshape(p, params.d, params.n))
@@ -102,14 +100,13 @@ function hamiltonian(t, q, p, params, d, n)
     H = zero(eltype(q))
     for i in 1:n
         H += 1 / 2 / m[i] * p[i, :] ⋅ p[i, :]
-        for j in 1:i-1
+        for j in 1:(i - 1)
             H -= G * (m[i] * m[j]) / norm(q[i, :] - q[j, :])
         end
     end
 
     return H
 end
-
 
 function lagrangian(t, q, v, params, d, n)
     @unpack G, m = params
@@ -120,15 +117,13 @@ function lagrangian(t, q, v, params, d, n)
     L = zero(eltype(q))
     for i in 1:n
         L += 1 / 2 * m[i] * v[i, :] ⋅ v[i, :]
-        for j in 1:i-1
+        for j in 1:(i - 1)
             L += G * (m[i] * m[j]) / norm(q[i, :] - q[j, :])
         end
     end
 
     return L
 end
-
-
 
 function test_solar_system(ss)
     @unpack d, n, m, t₀, q₀, v₀, p₀ = ss
@@ -139,7 +134,8 @@ function test_solar_system(ss)
     sparams = symbolize(params)
 
     # LagrangianSystem
-    lag_sys = LagrangianSystem(lagrangian(t, x, v, sparams, d, n), t, x, v, sparams; simplify=false)
+    lag_sys = LagrangianSystem(
+        lagrangian(t, x, v, sparams, d, n), t, x, v, sparams; simplify = false)
 
     p₁, p₂ = zero(p₀), zero(p₀)
     ṗ₁, ṗ₂ = zero(p₀), zero(p₀)
@@ -157,7 +153,6 @@ function test_solar_system(ss)
     # @test ṗ₁ ≈ ṗ₂  atol=2eps()
 
 end
-
 
 test_solar_system(ss2)
 test_solar_system(ss6)

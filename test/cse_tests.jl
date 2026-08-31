@@ -21,7 +21,8 @@ const D = N * DIM
 function potential(q, params)
     Q = reshape(q, DIM, N)
     s = zero(eltype(q))
-    for i in 2:N, j in 1:i-1
+    for i in 2:N, j in 1:(i - 1)
+
         Δ₁ = Q[1, i] - Q[1, j]
         Δ₂ = Q[2, i] - Q[2, j]
         Δ₃ = Q[3, i] - Q[3, j]
@@ -50,15 +51,15 @@ function hamiltonian(t, q, p, params)
     s / 2 + potential(q, params)
 end
 
-const params = (G=G, m=masses)
+const params = (G = G, m = masses)
 
 # Deterministic, non-degenerate states: no two bodies coincide, so the potential is finite.
 const t₀ = 0.7
-const q₀ = collect(range(-8.0, 11.0; length=D)) .+ 0.25 .* collect(1.0:D)
-const v₀ = collect(range(-0.004, 0.006; length=D))
+const q₀ = collect(range(-8.0, 11.0; length = D)) .+ 0.25 .* collect(1.0:D)
+const v₀ = collect(range(-0.004, 0.006; length = D))
 const p₀ = 0.5 .* v₀
-const p₁ = collect(range(-0.3, 0.4; length=D))
-const a₀ = collect(range(-2.0e-8, 3.0e-8; length=D))  # accelerations, the `Λ` slot
+const p₁ = collect(range(-0.3, 0.4; length = D))
+const a₀ = collect(range(-2.0e-8, 3.0e-8; length = D))  # accelerations, the `Λ` slot
 
 "Evaluate `key` from both variants and return the two results."
 function evaluate(withcse, without, key, sizes, args...)
@@ -82,8 +83,10 @@ end
     sparams = symbolize(params)
     sym_lag = lagrangian(t, x, v, sparams)
 
-    with = functions(LagrangianSystem(sym_lag, t, x, v, sparams; simplify=false, cse=true))
-    without = functions(LagrangianSystem(sym_lag, t, x, v, sparams; simplify=false, cse=false))
+    with = functions(LagrangianSystem(
+        sym_lag, t, x, v, sparams; simplify = false, cse = true))
+    without = functions(LagrangianSystem(
+        sym_lag, t, x, v, sparams; simplify = false, cse = false))
 
     @test with.L(t₀, q₀, v₀, params) ≈ without.L(t₀, q₀, v₀, params) rtol = RTOL
     @test with.L(t₀, q₀, v₀, params) ≈ lagrangian(t₀, q₀, v₀, params) rtol = RTOL
@@ -111,8 +114,10 @@ end
     sparams = symbolize(params)
     sym_ham = hamiltonian(t, q, p, sparams)
 
-    with = functions(HamiltonianSystem(sym_ham, t, q, p, sparams; simplify=false, cse=true))
-    without = functions(HamiltonianSystem(sym_ham, t, q, p, sparams; simplify=false, cse=false))
+    with = functions(HamiltonianSystem(
+        sym_ham, t, q, p, sparams; simplify = false, cse = true))
+    without = functions(HamiltonianSystem(
+        sym_ham, t, q, p, sparams; simplify = false, cse = false))
 
     @test with.H(t₀, q₀, p₀, params) ≈ without.H(t₀, q₀, p₀, params) rtol = RTOL
     @test with.H(t₀, q₀, p₀, params) ≈ hamiltonian(t₀, q₀, p₀, params) rtol = RTOL

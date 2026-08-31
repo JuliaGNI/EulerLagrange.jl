@@ -3,8 +3,7 @@ using EulerLagrange: NullParameters
 using Symbolics
 using Test
 
-
-params = (a=1, b=[2, 2], c=(3, 3))
+params = (a = 1, b = [2, 2], c = (3, 3))
 sparams = symbolize(params)
 
 @test isequal(sparams, symbolize(sparams))

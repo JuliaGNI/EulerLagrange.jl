@@ -37,8 +37,8 @@ struct LagrangianSystem
     equations
     functions
 
-    function LagrangianSystem(L, t, x, v, params=NamedTuple(); simplify=false, scalarize=true, cse=true, nanmath=false)
-
+    function LagrangianSystem(L, t, x, v, params = NamedTuple(); simplify = false,
+            scalarize = true, cse = true, nanmath = false)
         @assert eachindex(x) == eachindex(v)
 
         @variables p(t)[axes(x, 1)]
@@ -93,14 +93,14 @@ struct LagrangianSystem
         N = expand_derivatives.(N)
 
         equs = (
-            L=Ls,
-            EL=EL,
-            f=f,
-            g=g,
-            ϑ=ϑ,
-            ω=ω,
-            M=M,
-            N=N,
+            L = Ls,
+            EL = EL,
+            f = f,
+            g = g,
+            ϑ = ϑ,
+            ω = ω,
+            M = M,
+            N = N
         )
 
         # _simplify(expr, dosimplify) = dosimplify ? simplify.(expr) : expr
@@ -113,38 +113,38 @@ struct LagrangianSystem
         equs_subs = substitute_lagrangian_variables(equs, x, ẋ, v)
         equs_subs = merge(equs_subs, (
             # a = inv(equs_subs.M) * (equs_subs.f - equs_subs.N * V),
-            ϕ=P .- equs_subs.ϑ,
-            ψ=F .- equs_subs.g,
+            ϕ = P .- equs_subs.ϑ,
+            ψ = F .- equs_subs.g
             # σ = _simplify(inv(equs_subs.ω), dosimplify),
             # Σ = _simplify(inv(equs_subs.Ω), dosimplify),
         ))
 
         equs = substitute_v_with_ẋ(equs, v, ẋ)
         equs = merge(equs, (
-            ϕ=p .- equs.ϑ,
-            ψ=ṗ .- equs.g,
+            ϕ = p .- equs.ϑ,
+            ψ = ṗ .- equs.g
         ))
 
-        _build(expr, args...) = build_function(expr, args...; nanmath=nanmath, cse=cse)
+        _build(expr, args...) = build_function(expr, args...; nanmath = nanmath, cse = cse)
 
         # `p` and `ϑ` are the out-of-place and in-place halves of the same pair, so build once.
         ϑcode = _build(equs_subs.ϑ, t, X, V, params...)
 
         code = (
-            L=substitute_parameters(_build(equs_subs.L, t, X, V, params...), params),
+            L = substitute_parameters(_build(equs_subs.L, t, X, V, params...), params),
             # `EL`, `g` and `ψ` take the acceleration `Λ`. `g`'s argument order is fixed by
             # GeometricEquations, whose `_get_g(::LODE, params)` calls `g(out, t, q, v, λ, params)`;
             # it used to be built as `(t, X, Λ, V, …)`, with `Λ` and `V` the wrong way round.
-            EL=substitute_parameters(_build(equs_subs.EL, t, X, V, Λ, params...)[2], params),
+            EL = substitute_parameters(_build(equs_subs.EL, t, X, V, Λ, params...)[2], params),
             # a  = substitute_parameters(_build(equs_subs.a,  t, X, V, params...)[2], params),
-            f=substitute_parameters(_build(equs_subs.f, t, X, V, params...)[2], params),
-            g=substitute_parameters(_build(equs_subs.g, t, X, V, Λ, params...)[2], params),
-            p=substitute_parameters(ϑcode[1], params),
-            ϑ=substitute_parameters(ϑcode[2], params),
-            ω=substitute_parameters(_build(equs_subs.ω, t, X, V, params...)[2], params),
-            ϕ=substitute_parameters(_build(equs_subs.ϕ, t, X, V, P, params...)[2], params),
-            ψ=substitute_parameters(_build(equs_subs.ψ, t, X, V, P, F, Λ, params...)[2], params),
-            M=substitute_parameters(_build(equs_subs.M, t, X, V, params...)[2], params),
+            f = substitute_parameters(_build(equs_subs.f, t, X, V, params...)[2], params),
+            g = substitute_parameters(_build(equs_subs.g, t, X, V, Λ, params...)[2], params),
+            p = substitute_parameters(ϑcode[1], params),
+            ϑ = substitute_parameters(ϑcode[2], params),
+            ω = substitute_parameters(_build(equs_subs.ω, t, X, V, params...)[2], params),
+            ϕ = substitute_parameters(_build(equs_subs.ϕ, t, X, V, P, params...)[2], params),
+            ψ = substitute_parameters(_build(equs_subs.ψ, t, X, V, P, F, Λ, params...)[2], params),
+            M = substitute_parameters(_build(equs_subs.M, t, X, V, params...)[2], params)
             # P  = substitute_parameters(_build(equs_subs.Σ,  t, X, V, params...)[2], params),
         )
 
@@ -168,7 +168,6 @@ function Base.show(io::IO, lsys::LagrangianSystem)
     #     print(io, "\n")
     # end
 end
-
 
 function LODE(lsys::LagrangianSystem; kwargs...)
     eqs = functions(lsys)

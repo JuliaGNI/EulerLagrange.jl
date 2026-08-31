@@ -13,7 +13,6 @@ function substitute_hamiltonian_variables(equs::NamedTuple, q, p)
     NamedTuple{keys(equs)}(Tuple(substitute_hamiltonian_variables(eq, q, p) for eq in equs))
 end
 
-
 """
     substitute_time_derivatives(equ, dq, V, dp, F)
 
@@ -34,7 +33,8 @@ function substitute_time_derivatives(equs::AbstractArray, dq, V, dp, F)
 end
 
 function substitute_time_derivatives(equs::NamedTuple, dq, V, dp, F)
-    NamedTuple{keys(equs)}(Tuple(substitute_time_derivatives(eq, dq, V, dp, F) for eq in equs))
+    NamedTuple{keys(equs)}(Tuple(substitute_time_derivatives(eq, dq, V, dp, F)
+    for eq in equs))
 end
 
 function hamiltonian_variables(dimension::Int)
@@ -51,7 +51,6 @@ function hamiltonian_derivatives(t, q, p)
 
     return (Dt, Dq, Dp)
 end
-
 
 """
     HamiltonianSystem(H, t, q, p, params = NamedTuple(); simplify = false, scalarize = true,
@@ -72,16 +71,16 @@ The equations of motion of the Hamiltonian `H`, generated symbolically.
     than propagating silently.
 """
 struct HamiltonianSystem
-    H
-    t
-    q
-    p
-    parameters
-    equations
-    functions
+    H::Any
+    t::Any
+    q::Any
+    p::Any
+    parameters::Any
+    equations::Any
+    functions::Any
 
-    function HamiltonianSystem(H, t, q, p, params=NamedTuple(); simplify=false, scalarize=true, cse=true, nanmath=false)
-
+    function HamiltonianSystem(H, t, q, p, params = NamedTuple(); simplify = false,
+            scalarize = true, cse = true, nanmath = false)
         @assert eachindex(q) == eachindex(p)
 
         @variables Q[axes(q, 1)]
@@ -106,13 +105,13 @@ struct HamiltonianSystem
         ż = vcat(v, f)
 
         equs = (
-            H=Hs,
-            EH=EH,
-            EHq=EHq,
-            EHp=EHp,
-            v=v,
-            f=f,
-            ż=ż,
+            H = Hs,
+            EH = EH,
+            EHq = EHq,
+            EHp = EHp,
+            v = v,
+            f = f,
+            ż = ż
         )
 
         # `EHq`, `EHp` and `EH` are residuals, so they carry the time derivatives d/dt(q) and d/dt(p)
@@ -123,16 +122,17 @@ struct HamiltonianSystem
 
         equs_subs = substitute_hamiltonian_variables(equs, q, p)
 
-        _build(expr, extra...) = build_function(expr, t, Q, P, extra..., params...; nanmath=nanmath, cse=cse)
+        _build(expr, extra...) = build_function(
+            expr, t, Q, P, extra..., params...; nanmath = nanmath, cse = cse)
 
         code = (
-            H=substitute_parameters(_build(equs_subs.H), params),
-            EH=substitute_parameters(_build(equs_subs.EH, V, F)[2], params),
-            EHq=substitute_parameters(_build(equs_subs.EHq, V, F)[2], params),
-            EHp=substitute_parameters(_build(equs_subs.EHp, V, F)[2], params),
-            v=substitute_parameters(_build(equs_subs.v)[2], params),
-            f=substitute_parameters(_build(equs_subs.f)[2], params),
-            ż=substitute_parameters(_build(equs_subs.ż)[2], params),
+            H = substitute_parameters(_build(equs_subs.H), params),
+            EH = substitute_parameters(_build(equs_subs.EH, V, F)[2], params),
+            EHq = substitute_parameters(_build(equs_subs.EHq, V, F)[2], params),
+            EHp = substitute_parameters(_build(equs_subs.EHp, V, F)[2], params),
+            v = substitute_parameters(_build(equs_subs.v)[2], params),
+            f = substitute_parameters(_build(equs_subs.f)[2], params),
+            ż = substitute_parameters(_build(equs_subs.ż)[2], params)
         )
 
         funcs = generate_code(code)
@@ -157,7 +157,6 @@ function Base.show(io::IO, hsys::HamiltonianSystem)
     #     print(io, "\n")
     # end
 end
-
 
 function HODE(lsys::HamiltonianSystem; kwargs...)
     eqs = functions(lsys)

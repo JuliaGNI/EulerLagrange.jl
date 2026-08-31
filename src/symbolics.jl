@@ -18,7 +18,8 @@ function substitute_parameters(code, params)
     Meta.isexpr(code, :function, 2) && Meta.isexpr(code.args[1], :tuple) ||
         error("substitute_parameters expects `function (args...) ... end`, got $(repr(code))")
 
-    substitutions = Dict{Symbol,Expr}(Symbol("$(k)ₚ") => :(params.$k) for k in keys(params))
+    substitutions = Dict{Symbol, Expr}(Symbol("$(k)ₚ") => :(params.$k)
+    for k in keys(params))
 
     arguments = filter(a -> !(a isa Symbol && haskey(substitutions, a)), code.args[1].args)
     signature = Expr(:tuple, arguments..., :params)
@@ -35,29 +36,29 @@ end
 # Literals, `LineNumberNode`s and `QuoteNode`s pass through unchanged.
 substitute_symbols(ex, substitutions) = ex
 
-
-function symbolize(p::Union{AbstractArray,Tuple}, name)
+function symbolize(p::Union{AbstractArray, Tuple}, name)
     vars = @variables $(name)[axes(p)...]
     first(vars)
 end
 
-function symbolize(x::T, name) where {T<:Number}
+function symbolize(x::T, name) where {T <: Number}
     vars = @variables $(name)::Real
     first(vars)
 end
 
-function symbolize(p::Union{T,AbstractArray{T},Symbolics.Arr{<:Num}}, name) where {T<:SymbolicUtils.BasicSymbolicImpl.Type}
+function symbolize(p::Union{T, AbstractArray{T}, Symbolics.Arr{<:Num}},
+        name) where {T <: SymbolicUtils.BasicSymbolicImpl.Type}
     p
 end
 
 function symbolize(params::NamedTuple)
-    NamedTuple{keys(params)}(Tuple(symbolize(v, Symbol("$(k)ₚ")) for (k, v) in pairs(params)))
+    NamedTuple{keys(params)}(Tuple(symbolize(v, Symbol("$(k)ₚ"))
+    for (k, v) in pairs(params)))
 end
 
-function symbolize(::Union{Nothing,NullParameters})
+function symbolize(::Union{Nothing, NullParameters})
     NamedTuple{}()
 end
-
 
 function generate_code(code)
     @RuntimeGeneratedFunction(code)
