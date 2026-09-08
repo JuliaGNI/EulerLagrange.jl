@@ -27,7 +27,7 @@ v₂(t, q, params) = -q[2] * (params.a₁ * q[1] + params.b₁)
 f₁(t, q, v) = dϑ₁dx₁(t, q) * v[1] + dϑ₂dx₁(t, q) * v[2]
 f₂(t, q, v) = dϑ₁dx₂(t, q) * v[1] + dϑ₂dx₂(t, q) * v[2]
 
-function ṽ(v, t, q, params)
+function ṽ(v, t, q, params)
     v[1] = v₁(t, q, params)
     v[2] = v₂(t, q, params)
 end
@@ -75,19 +75,19 @@ sparams = symbolize(params)
 lag_sys = LagrangianSystem(L(t, x, v, sparams), t, x, v, sparams)
 
 p₁, p₂ = zero(p₀), zero(p₀)
-ṗ₁, ṗ₂ = zero(p₀), zero(p₀)
+ṗ₁, ṗ₂ = zero(p₀), zero(p₀)
 
 eqs = functions(lag_sys)
 
 eqs.ϑ(p₁, t₀, q₀, v₀, params)
-eqs.f(ṗ₁, t₀, q₀, v₀, params)
+eqs.f(ṗ₁, t₀, q₀, v₀, params)
 
 p̃(p₂, t₀, q₀, v₀, params)
-f̃(ṗ₂, t₀, q₀, v₀, params)
+f̃(ṗ₂, t₀, q₀, v₀, params)
 
 @test eqs.L(t₀, q₀, v₀, params) ≈ L(t₀, q₀, v₀, params) rtol = RTOL
 @test p₁ ≈ p₂ atol = 2eps()
-@test ṗ₁ ≈ ṗ₂ atol = 2eps()
+@test ṗ₁ ≈ ṗ₂ atol = 2eps()
 
 @test eqs.L(t₀, q₀, v₀, params_alt) != L(t₀, q₀, v₀, params)
 
@@ -101,22 +101,22 @@ deg_lag_sys = DegenerateLagrangianSystem(
 
 q̇₁, q̇₂ = zero(q₀), zero(q₀)
 p₁, p₂ = zero(p₀), zero(p₀)
-ṗ₁, ṗ₂ = zero(p₀), zero(p₀)
+ṗ₁, ṗ₂ = zero(p₀), zero(p₀)
 
 deg_eqs = functions(deg_lag_sys)
 
-deg_eqs.ẋ(q̇₁, t₀, q₀, params)
+deg_eqs.ẋ(q̇₁, t₀, q₀, params)
 deg_eqs.ϑ(p₁, t₀, q₀, v₀, params)
-deg_eqs.f(ṗ₁, t₀, q₀, v₀, params)
+deg_eqs.f(ṗ₁, t₀, q₀, v₀, params)
 
-ṽ(q̇₂, t₀, q₀, params)
+ṽ(q̇₂, t₀, q₀, params)
 p̃(p₂, t₀, q₀, v₀, params)
-f̃(ṗ₂, t₀, q₀, v₀, params)
+f̃(ṗ₂, t₀, q₀, v₀, params)
 
 @test deg_eqs.L(t₀, q₀, v₀, params) ≈ L(t₀, q₀, v₀, params) rtol = RTOL
 @test q̇₁ ≈ q̇₂ atol = 2eps()
 @test p₁ ≈ p₂ atol = 2eps()
-@test ṗ₁ ≈ ṗ₂ atol = 2eps()
+@test ṗ₁ ≈ ṗ₂ atol = 2eps()
 
 @test deg_eqs.L(t₀, q₀, v₀, params_alt) != L(t₀, q₀, v₀, params)
 

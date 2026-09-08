@@ -53,8 +53,8 @@ struct LagrangianSystem
         Dt, Dx, Dv = lagrangian_derivatives(t, x, v)
 
         Dz = vcat(Dx, Dv)
-        ẋ = collect(Dt.(x))
-        ṗ = collect(Dt.(p))
+        ẋ = collect(Dt.(x))
+        ṗ = collect(Dt.(p))
 
         Ls = scalarize ? Symbolics.scalarize(L) : L
         Ls = simplify ? Symbolics.simplify(Ls) : Ls
@@ -110,7 +110,7 @@ struct LagrangianSystem
         # a derivative of a variable that does not exist there. See `substitute_acceleration`.
         equs = substitute_acceleration(equs, collect(Dt.(v)), Λ)
 
-        equs_subs = substitute_lagrangian_variables(equs, x, ẋ, v)
+        equs_subs = substitute_lagrangian_variables(equs, x, ẋ, v)
         equs_subs = merge(equs_subs, (
             # a = inv(equs_subs.M) * (equs_subs.f - equs_subs.N * V),
             ϕ = P .- equs_subs.ϑ,
@@ -119,10 +119,10 @@ struct LagrangianSystem
             # Σ = _simplify(inv(equs_subs.Ω), dosimplify),
         ))
 
-        equs = substitute_v_with_ẋ(equs, v, ẋ)
+        equs = substitute_v_with_ẋ(equs, v, ẋ)
         equs = merge(equs, (
             ϕ = p .- equs.ϑ,
-            ψ = ṗ .- equs.g
+            ψ = ṗ .- equs.g
         ))
 
         _build(expr, args...) = build_function(expr, args...; nanmath = nanmath, cse = cse)

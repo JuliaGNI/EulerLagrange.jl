@@ -138,19 +138,19 @@ function test_solar_system(ss)
         lagrangian(t, x, v, sparams, d, n), t, x, v, sparams; simplify = false)
 
     p₁, p₂ = zero(p₀), zero(p₀)
-    ṗ₁, ṗ₂ = zero(p₀), zero(p₀)
+    ṗ₁, ṗ₂ = zero(p₀), zero(p₀)
 
     eqs = functions(lag_sys)
 
     eqs.ϑ(p₁, t₀, q₀, v₀, params)
-    eqs.f(ṗ₁, t₀, q₀, v₀, params)
+    eqs.f(ṗ₁, t₀, q₀, v₀, params)
 
     p̃(p₂, t₀, q₀, v₀, params)
-    # f̃(ṗ₂, t₀, q₀, v₀, params)
+    # f̃(ṗ₂, t₀, q₀, v₀, params)
 
     @test eqs.L(t₀, q₀, v₀, params) ≈ lagrangian(t₀, q₀, v₀, params, d, n) atol = sqrt(2eps())
     @test p₁ ≈ p₂ atol = 2eps()
-    # @test ṗ₁ ≈ ṗ₂  atol=2eps()
+    # @test ṗ₁ ≈ ṗ₂  atol=2eps()
 
 end
 

@@ -102,7 +102,7 @@ struct HamiltonianSystem
         EH = vcat(EHq, EHp)
         v = [expand_derivatives(dp(Hs)) for dp in Dp]
         f = [expand_derivatives(-dq(Hs)) for dq in Dq]
-        ż = vcat(v, f)
+        ż = vcat(v, f)
 
         equs = (
             H = Hs,
@@ -111,7 +111,7 @@ struct HamiltonianSystem
             EHp = EHp,
             v = v,
             f = f,
-            ż = ż
+            ż = ż
         )
 
         # `EHq`, `EHp` and `EH` are residuals, so they carry the time derivatives d/dt(q) and d/dt(p)
@@ -132,7 +132,7 @@ struct HamiltonianSystem
             EHp = substitute_parameters(_build(equs_subs.EHp, V, F)[2], params),
             v = substitute_parameters(_build(equs_subs.v)[2], params),
             f = substitute_parameters(_build(equs_subs.f)[2], params),
-            ż = substitute_parameters(_build(equs_subs.ż)[2], params)
+            ż = substitute_parameters(_build(equs_subs.ż)[2], params)
         )
 
         funcs = generate_code(code)

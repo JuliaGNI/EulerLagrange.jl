@@ -25,6 +25,6 @@ To facilitate this, symbolic parameters get `ₚ` attached to their names.
 ## Initial Guesses
 
 For some problems, in particular regular Lagrangian systems, it is in general not straightforward to automatically compute a first-order system of equations to be used as an initial guess for `x` in GeometricIntegrators.
-To circumvent this issue, it is possible to manually specify a function that computes the vector field `ẋ` to the `LODE` and `LODEProblem` constructors via the `v̄` keyword.
-It is also possible to provide a vector field for the initial guess of `p` via the `f̄` keyword, although this is usually not necessary as `ṗ` can be derived automatically.
+To circumvent this issue, it is possible to manually specify a function that computes the vector field `ẋ` to the `LODE` and `LODEProblem` constructors via the `v̄` keyword.
+It is also possible to provide a vector field for the initial guess of `p` via the `f̄` keyword, although this is usually not necessary as `ṗ` can be derived automatically.
 The same keyword arguments exist for the respective constructors of degenerate Lagrangian systems, although also here the vector fields are provided by default.
