@@ -54,7 +54,7 @@ struct DegenerateLagrangianSystem
 
         Dt, Dx, Dv = lagrangian_derivatives(t, x, v)
 
-        ẋ = collect(Dt.(x))
+        ẋ = collect(Dt.(x))
 
         Ks = scalarize ? Symbolics.scalarize(K) : K
         Hs = scalarize ? Symbolics.scalarize(H) : H
@@ -70,13 +70,13 @@ struct DegenerateLagrangianSystem
         ϑ = [expand_derivatives(dv(Ls)) for dv in Dv]
         f = [expand_derivatives(dx(Ls)) for dx in Dx]
         g = [expand_derivatives(dx(Ks)) for dx in Dx]
-        ḡ = [expand_derivatives(Dt(θ)) for θ in ϑ]
+        ḡ = [expand_derivatives(Dt(θ)) for θ in ϑ]
         ω = [expand_derivatives(Symbolics.simplify(Dx[i](ϑ[j]) - Dx[j](ϑ[i])))
              for i in eachindex(Dx, ϑ), j in eachindex(Dx, ϑ)]
         N = [expand_derivatives(Symbolics.simplify(Dx[i](ϑ[j])))
              for i in eachindex(Dv), j in eachindex(ϑ)]
-        u = [u for u in ẋ]
-        ū = [u for u in ẋ]
+        u = [u for u in ẋ]
+        ū = [u for u in ẋ]
         EL = [f[i] - g[i] for i in eachindex(f, g)]
 
         equs = (
@@ -87,34 +87,34 @@ struct DegenerateLagrangianSystem
             f = f,
             u = u,
             g = g,
-            ū = ū,
-            ḡ = ḡ,
+            ū = ū,
+            ḡ = ḡ,
             ϑ = ϑ,
             ω = ω,
             N = N
         )
 
-        equs_subs = substitute_lagrangian_variables(equs, x, ẋ, v)
+        equs_subs = substitute_lagrangian_variables(equs, x, ẋ, v)
 
         σ = inv(equs_subs.ω)
 
-        # `ḡ = Σⱼ ∂ϑᵢ/∂xⱼ · Vⱼ`, i.e. ∇ϑ contracted with whatever sits in the `V` slot. The
+        # `ḡ = Σⱼ ∂ϑᵢ/∂xⱼ · Vⱼ`, i.e. ∇ϑ contracted with whatever sits in the `V` slot. The
         # secondary constraint is `ψ = ṗ - q̇ · ∇ϑ`, so it must be contracted with q̇, not with the
         # algebraic velocity: substitute `V → Ẋ` before subtracting it from `F`.
-        ḡq̇ = substitute.(equs_subs.ḡ, Ref(Dict(Vᵢ => Ẋᵢ
+        ḡq̇ = substitute.(equs_subs.ḡ, Ref(Dict(Vᵢ => Ẋᵢ
         for (Vᵢ, Ẋᵢ) in zip(collect(V), collect(Ẋ)))))
 
         equs_subs = merge(equs_subs,
             (
                 ϕ = [P[i] - equs_subs.ϑ[i] for i in eachindex(P, equs_subs.ϑ)],
-                ψ = [F[i] - ḡq̇[i] for i in eachindex(F, ḡq̇)],
+                ψ = [F[i] - ḡq̇[i] for i in eachindex(F, ḡq̇)],
                 σ = simplify ? Symbolics.simplify.(σ) : σ
             ))
 
-        ẋeq = equs_subs.σ * equs_subs.∇H
+        ẋeq = equs_subs.σ * equs_subs.∇H
 
         equs_subs = merge(equs_subs, (
-            ẋ = simplify ? Symbolics.simplify.(ẋeq) : ẋeq,
+            ẋ = simplify ? Symbolics.simplify.(ẋeq) : ẋeq,
         ))
 
         _build(expr, args...) = build_function(expr, args...; nanmath = nanmath, cse = cse)
@@ -127,13 +127,13 @@ struct DegenerateLagrangianSystem
             H = substitute_parameters(_build(equs_subs.H, t, X, params...), params),
             EL = substitute_parameters(_build(equs_subs.EL, t, X, V, params...)[2], params),
             ∇H = substitute_parameters(_build(equs_subs.∇H, t, X, V, params...)[2], params),
-            ẋ = substitute_parameters(_build(equs_subs.ẋ, t, X, params...)[2], params),
-            v = substitute_parameters(_build(equs_subs.ẋ, t, X, P, params...)[2], params),
+            ẋ = substitute_parameters(_build(equs_subs.ẋ, t, X, params...)[2], params),
+            v = substitute_parameters(_build(equs_subs.ẋ, t, X, P, params...)[2], params),
             f = substitute_parameters(_build(equs_subs.f, t, X, V, params...)[2], params),
             u = substitute_parameters(_build(equs_subs.u, t, X, Λ, V, params...)[2], params),
             g = substitute_parameters(_build(equs_subs.g, t, X, Λ, V, params...)[2], params),
-            ū = substitute_parameters(_build(equs_subs.ū, t, X, Λ, P, V, params...)[2], params),
-            ḡ = substitute_parameters(_build(equs_subs.ḡ, t, X, Λ, P, V, params...)[2], params),
+            ū = substitute_parameters(_build(equs_subs.ū, t, X, Λ, P, V, params...)[2], params),
+            ḡ = substitute_parameters(_build(equs_subs.ḡ, t, X, Λ, P, V, params...)[2], params),
             p = substitute_parameters(ϑcode[1], params),
             ϑ = substitute_parameters(ϑcode[2], params),
             ω = substitute_parameters(_build(equs_subs.ω, t, X, V, params...)[2], params),
@@ -167,13 +167,13 @@ end
 
 function ODE(lsys::DegenerateLagrangianSystem; kwargs...)
     eqs = functions(lsys)
-    ODE(eqs.ẋ; invariants = (h = eqs.H,), kwargs...)
+    ODE(eqs.ẋ; invariants = (h = eqs.H,), kwargs...)
 end
 
 function ODEProblem(
         lsys::DegenerateLagrangianSystem, tspan::Tuple, tstep::Real, ics...; kwargs...)
     eqs = functions(lsys)
-    ODEProblem(eqs.ẋ, tspan, tstep, ics...; invariants = (h = eqs.H,), kwargs...)
+    ODEProblem(eqs.ẋ, tspan, tstep, ics...; invariants = (h = eqs.H,), kwargs...)
 end
 
 function LODE(lsys::DegenerateLagrangianSystem; v̄ = functions(lsys).v, f̄ = functions(lsys).f, kwargs...)
@@ -193,7 +193,7 @@ function LDAE(lsys::DegenerateLagrangianSystem; v̄ = functions(lsys).v, f̄ = f
     eqs = functions(lsys)
     LDAE(eqs.ϑ, eqs.f, (u, t, q, v, p, λ, params) -> eqs.u(u, t, q, v, λ, params),
         (g, t, q, v, p, λ, params) -> eqs.g(g, t, q, v, λ, params),
-        eqs.ϕ, eqs.ū, eqs.ḡ, eqs.ψ, eqs.ω, eqs.L; v̄ = v̄, f̄ = f̄,
+        eqs.ϕ, eqs.ū, eqs.ḡ, eqs.ψ, eqs.ω, eqs.L; v̄ = v̄, f̄ = f̄,
         invariants = (h = (t, q, v, params) -> eqs.H(t, q, params),), kwargs...)
 end
 
@@ -202,6 +202,6 @@ function LDAEProblem(lsys::DegenerateLagrangianSystem, tspan::Tuple, tstep::Real
     eqs = functions(lsys)
     LDAEProblem(eqs.ϑ, eqs.f, (u, t, q, v, p, λ, params) -> eqs.u(u, t, q, v, λ, params),
         (g, t, q, v, p, λ, params) -> eqs.g(g, t, q, v, λ, params), eqs.ϕ,
-        eqs.ū, eqs.ḡ, eqs.ψ, eqs.ω, eqs.L, tspan, tstep, ics...; v̄ = v̄, f̄ = f̄,
+        eqs.ū, eqs.ḡ, eqs.ψ, eqs.ω, eqs.L, tspan, tstep, ics...; v̄ = v̄, f̄ = f̄,
         invariants = (h = (t, q, v, params) -> eqs.H(t, q, params),), kwargs...)
 end

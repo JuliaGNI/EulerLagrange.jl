@@ -21,4 +21,21 @@ first entry is written.
 
 ### Breaking Changes
 
+### Changed
+
+- Every tracked file is now Unicode NFC-normalised. Nine stored `ẋ` (43 times), `ṗ` (21), `ż` (15),
+  `ḡ` (12), `ū` (7) and `ṽ` (6) as a base letter plus a combining mark, inherited from macOS rather
+  than chosen. `q̇`, `v̄`, `f̄`, `f̃`, `p̃` and `ψ̃` have no precomposed codepoint and are unchanged.
+
+  Nothing about the compiled code changes: Julia's parser normalises identifiers to NFC, so the
+  symbols were already precomposed and dispatch, field names and method resolution are untouched.
+  No string literal was affected, and the repository contains no doctests at all. What changes is
+  that the source now matches what a keyboard, an editor search, a `grep` pattern or an automated
+  replacement produces — in an NFD file a pattern typed in NFC matches nothing at all, silently.
+
+  Every changed file is exactly the NFC normalisation of its predecessor, `docs/src/caveats.md`
+  among them. Two further `ż` occurrences carry a tilde as well: `ż̃` composes its dot and keeps
+  the tilde, there being no fully precomposed form, so a grep for `ż` in the old files found 17
+  where 15 are counted above.
+
 ## Open Issues

@@ -1,25 +1,25 @@
 
-function substitute_v_with_ẋ(equ, v, ẋ)
-    for i in eachindex(ẋ, v)
-        equ = substitute(equ, v[i] => ẋ[i])
+function substitute_v_with_ẋ(equ, v, ẋ)
+    for i in eachindex(ẋ, v)
+        equ = substitute(equ, v[i] => ẋ[i])
     end
     return equ
 end
 
-function substitute_v_with_ẋ(equs::AbstractArray, v, ẋ)
-    [substitute_v_with_ẋ(eq, v, ẋ) for eq in equs]
+function substitute_v_with_ẋ(equs::AbstractArray, v, ẋ)
+    [substitute_v_with_ẋ(eq, v, ẋ) for eq in equs]
 end
 
-function substitute_v_with_ẋ(equs::NamedTuple, v, ẋ)
-    NamedTuple{keys(equs)}(Tuple(substitute_v_with_ẋ(eq, v, ẋ) for eq in equs))
+function substitute_v_with_ẋ(equs::NamedTuple, v, ẋ)
+    NamedTuple{keys(equs)}(Tuple(substitute_v_with_ẋ(eq, v, ẋ) for eq in equs))
 end
 
-function substitute_ẋ_with_v(equ, ẋ, v)
-    substitute(equ, [ẋᵢ => vᵢ for (ẋᵢ, vᵢ) in zip(ẋ, v)])
+function substitute_ẋ_with_v(equ, ẋ, v)
+    substitute(equ, [ẋᵢ => vᵢ for (ẋᵢ, vᵢ) in zip(ẋ, v)])
 end
 
-function substitute_ẋ_with_v(equs::AbstractArray, ẋ, v)
-    [substitute_ẋ_with_v(eq, ẋ, v) for eq in equs]
+function substitute_ẋ_with_v(equs::AbstractArray, ẋ, v)
+    [substitute_ẋ_with_v(eq, ẋ, v) for eq in equs]
 end
 
 """
@@ -55,8 +55,8 @@ function substitute_lagrangian_variables(equs::AbstractArray, x, v)
     [substitute_lagrangian_variables(eq, x, v) for eq in equs]
 end
 
-function substitute_lagrangian_variables(equs::NamedTuple, x, ẋ, v)
-    NamedTuple{keys(equs)}(Tuple(substitute_lagrangian_variables(substitute_ẋ_with_v(eq, ẋ, v), x, v)
+function substitute_lagrangian_variables(equs::NamedTuple, x, ẋ, v)
+    NamedTuple{keys(equs)}(Tuple(substitute_lagrangian_variables(substitute_ẋ_with_v(eq, ẋ, v), x, v)
     for eq in equs))
 end
 
