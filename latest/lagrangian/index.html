@@ -16,50 +16,50 @@ p₀ = [0.5, 2.0]
 lprob = LODEProblem(lag_sys, tspan, tstep, q₀, p₀)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Geometric Equation Problem for Lagrangian Ordinary Differential Equation (LODE)
 
  with vector fields
-   ϑ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x4889eaba, 0x3711d03f, 0x67dd90d3, 0x9ce688d2, 0x5021471b), Expr}(:(<span class="sgr90">#= /home/runner/.julia/packages/Symbolics/mLvup/src/build_function.jl:410 =#</span> @inbounds begin
-          <span class="sgr90">#= /home/runner/.julia/packages/Symbolics/mLvup/src/build_function.jl:410 =#</span>
+   ϑ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x4889eaba, 0x3711d03f, 0x67dd90d3, 0x9ce688d2, 0x5021471b), Expr}(:(<span class="sgr90">#= /home/runner/.julia/packages/Symbolics/Udj0F/src/build_function.jl:433 =#</span> @inbounds begin
+          <span class="sgr90">#= /home/runner/.julia/packages/Symbolics/Udj0F/src/build_function.jl:433 =#</span>
           begin
-              <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/c9cTZ/src/code.jl:1264 =#</span> @inbounds begin
-                      <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/c9cTZ/src/code.jl:1260 =#</span>
+              <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/Ty448/src/code.jl:1264 =#</span> @inbounds begin
+                      <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/Ty448/src/code.jl:1260 =#</span>
                       ˍ₋out[1] = (getindex)(V, 1)
                       ˍ₋out[2] = (getindex)(V, 2)
-                      <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/c9cTZ/src/code.jl:1262 =#</span>
+                      <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/Ty448/src/code.jl:1262 =#</span>
                       ˍ₋out
                   end
           end
       end))
-   f = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x698b640d, 0x25197a89, 0xe965cee8, 0x7fe417c1, 0xbf67a0c5), Expr}(:(<span class="sgr90">#= /home/runner/.julia/packages/Symbolics/mLvup/src/build_function.jl:410 =#</span> @inbounds begin
-          <span class="sgr90">#= /home/runner/.julia/packages/Symbolics/mLvup/src/build_function.jl:410 =#</span>
+   f = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x698b640d, 0x25197a89, 0xe965cee8, 0x7fe417c1, 0xbf67a0c5), Expr}(:(<span class="sgr90">#= /home/runner/.julia/packages/Symbolics/Udj0F/src/build_function.jl:433 =#</span> @inbounds begin
+          <span class="sgr90">#= /home/runner/.julia/packages/Symbolics/Udj0F/src/build_function.jl:433 =#</span>
           begin
               begin
                   var&quot;##cse#1&quot; = -1//1
                   var&quot;##cse#2&quot; = (*)(var&quot;##cse#1&quot;, (getindex)(X, 1))
                   var&quot;##cse#3&quot; = (*)(var&quot;##cse#1&quot;, (getindex)(X, 2))
-                  <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/c9cTZ/src/code.jl:1264 =#</span> @inbounds begin
-                          <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/c9cTZ/src/code.jl:1260 =#</span>
+                  <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/Ty448/src/code.jl:1264 =#</span> @inbounds begin
+                          <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/Ty448/src/code.jl:1260 =#</span>
                           ˍ₋out[1] = var&quot;##cse#2&quot;
                           ˍ₋out[2] = var&quot;##cse#3&quot;
-                          <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/c9cTZ/src/code.jl:1262 =#</span>
+                          <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/Ty448/src/code.jl:1262 =#</span>
                           ˍ₋out
                       end
               end
           end
       end))
-   g = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :Λ, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xd78db5e6, 0x97238c19, 0xadd210ce, 0xe0bfc6f5, 0x926922e1), Expr}(:(<span class="sgr90">#= /home/runner/.julia/packages/Symbolics/mLvup/src/build_function.jl:410 =#</span> @inbounds begin
-          <span class="sgr90">#= /home/runner/.julia/packages/Symbolics/mLvup/src/build_function.jl:410 =#</span>
+   g = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :Λ, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xd78db5e6, 0x97238c19, 0xadd210ce, 0xe0bfc6f5, 0x926922e1), Expr}(:(<span class="sgr90">#= /home/runner/.julia/packages/Symbolics/Udj0F/src/build_function.jl:433 =#</span> @inbounds begin
+          <span class="sgr90">#= /home/runner/.julia/packages/Symbolics/Udj0F/src/build_function.jl:433 =#</span>
           begin
-              <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/c9cTZ/src/code.jl:1264 =#</span> @inbounds begin
-                      <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/c9cTZ/src/code.jl:1260 =#</span>
+              <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/Ty448/src/code.jl:1264 =#</span> @inbounds begin
+                      <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/Ty448/src/code.jl:1260 =#</span>
                       ˍ₋out[1] = (getindex)(Λ, 1)
                       ˍ₋out[2] = (getindex)(Λ, 2)
-                      <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/c9cTZ/src/code.jl:1262 =#</span>
+                      <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/Ty448/src/code.jl:1262 =#</span>
                       ˍ₋out
                   end
           end
       end))
 
- Lagrangian: L = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x18252304, 0x496880e4, 0x684e2df9, 0x69ba24a6, 0x7b6b6ee1), Expr}(:(<span class="sgr90">#= /home/runner/.julia/packages/Symbolics/mLvup/src/build_function.jl:170 =#</span> @inbounds begin
-          <span class="sgr90">#= /home/runner/.julia/packages/Symbolics/mLvup/src/build_function.jl:170 =#</span>
+ Lagrangian: L = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x18252304, 0x496880e4, 0x684e2df9, 0x69ba24a6, 0x7b6b6ee1), Expr}(:(<span class="sgr90">#= /home/runner/.julia/packages/Symbolics/Udj0F/src/build_function.jl:193 =#</span> @inbounds begin
+          <span class="sgr90">#= /home/runner/.julia/packages/Symbolics/Udj0F/src/build_function.jl:193 =#</span>
           begin
               begin
                   var&quot;##cse#1&quot; = -1//2
@@ -95,56 +95,56 @@ using CairoMakie
 fig = lines(parent(sol.q[:,1]), parent(sol.q[:,2]);
     axis = (; xlabel = &quot;x₁&quot;, ylabel = &quot;x₂&quot;, title = &quot;Particle moving in a square potential&quot;),
     figure = (; size = (800,600), fontsize = 22))</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi"><span class="sgr33"><span class="sgr1">┌ Warning: </span></span>Hermite Extrapolation: q&#39;s history[1] and history[2] are identical!
-<span class="sgr33"><span class="sgr1">└ </span></span><span class="sgr90">@ GeometricIntegratorsBase ~/.julia/packages/GeometricIntegratorsBase/Xm0Y1/src/extrapolation/hermite.jl:206</span></code></pre><p><img src="../particle_vi.svg" alt/></p><h2 id="Parameters"><a class="docs-heading-anchor" href="#Parameters">Parameters</a><a id="Parameters-1"></a><a class="docs-heading-anchor-permalink" href="#Parameters" title="Permalink"></a></h2><p>We can also include parametric dependencies in the Lagrangian. Consider, for example, a parameter <code>α</code> that determines the strength of the potential.</p><p>The easiest way, to account for parameters, is to create a named tuple with typical values for each parameter, e.g.,</p><pre><code class="language-julia hljs">params = (α = 5.0,)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">(α = 5.0,)</code></pre><p>In the next step, we use the function <code>symbolize</code> to generate a symbolic version of the parameters:</p><pre><code class="language-julia hljs">sparams = symbolize(params)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">(α = αₚ,)</code></pre><p>Now we modify the Lagrangian to account for the parameter:</p><pre><code class="language-julia hljs">L = v ⋅ v / 2 - sparams.α * (x ⋅ x) / 2</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">LinearAlgebra.dot(v(t), v(t)) / <span class="sgr34">2</span> - <span class="sgr34">(1//2)</span>*LinearAlgebra.dot(x(t), x(t))*αₚ</code></pre><p>From here on, everything follows along the same lines as before, the only difference being that we also need to pass the symbolic parameters <code>sparams</code> to the <code>LagrangianSystem</code> constructor:</p><pre><code class="language-julia hljs">lag_sys = LagrangianSystem(L, t, x, v, sparams)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">
+<span class="sgr33"><span class="sgr1">└ </span></span><span class="sgr90">@ GeometricIntegratorsBase ~/.julia/packages/GeometricIntegratorsBase/9F7SA/src/extrapolation/hermite.jl:206</span></code></pre><p><img src="../particle_vi.svg" alt/></p><h2 id="Parameters"><a class="docs-heading-anchor" href="#Parameters">Parameters</a><a id="Parameters-1"></a><a class="docs-heading-anchor-permalink" href="#Parameters" title="Permalink"></a></h2><p>We can also include parametric dependencies in the Lagrangian. Consider, for example, a parameter <code>α</code> that determines the strength of the potential.</p><p>The easiest way, to account for parameters, is to create a named tuple with typical values for each parameter, e.g.,</p><pre><code class="language-julia hljs">params = (α = 5.0,)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">(α = 5.0,)</code></pre><p>In the next step, we use the function <code>symbolize</code> to generate a symbolic version of the parameters:</p><pre><code class="language-julia hljs">sparams = symbolize(params)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">(α = αₚ,)</code></pre><p>Now we modify the Lagrangian to account for the parameter:</p><pre><code class="language-julia hljs">L = v ⋅ v / 2 - sparams.α * (x ⋅ x) / 2</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">LinearAlgebra.dot(v(t), v(t)) / <span class="sgr34">2</span> - <span class="sgr34">(1//2)</span>*LinearAlgebra.dot(x(t), x(t))*αₚ</code></pre><p>From here on, everything follows along the same lines as before, the only difference being that we also need to pass the symbolic parameters <code>sparams</code> to the <code>LagrangianSystem</code> constructor:</p><pre><code class="language-julia hljs">lag_sys = LagrangianSystem(L, t, x, v, sparams)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">
 Lagrangian system with
 
 L = ((v(t))[<span class="sgr34">1</span>]^<span class="sgr34">2</span> + (v(t))[<span class="sgr34">2</span>]^<span class="sgr34">2</span>) / <span class="sgr34">2</span> - <span class="sgr34">(1//2)</span>*((x(t))[<span class="sgr34">1</span>]^<span class="sgr34">2</span> + (x(t))[<span class="sgr34">2</span>]^<span class="sgr34">2</span>)*αₚ</code></pre><p>Analogously, we need to pass actual parameter values <code>params</code> to the <code>LODEProblem</code> constructor via the <code>parameters</code> keyword argument:</p><pre><code class="language-julia hljs">lprob = LODEProblem(lag_sys, tspan, tstep, q₀, p₀; parameters = params)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Geometric Equation Problem for Lagrangian Ordinary Differential Equation (LODE)
 
  with vector fields
-   ϑ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x4889eaba, 0x3711d03f, 0x67dd90d3, 0x9ce688d2, 0x5021471b), Expr}(:(<span class="sgr90">#= /home/runner/.julia/packages/Symbolics/mLvup/src/build_function.jl:410 =#</span> @inbounds begin
-          <span class="sgr90">#= /home/runner/.julia/packages/Symbolics/mLvup/src/build_function.jl:410 =#</span>
+   ϑ = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x4889eaba, 0x3711d03f, 0x67dd90d3, 0x9ce688d2, 0x5021471b), Expr}(:(<span class="sgr90">#= /home/runner/.julia/packages/Symbolics/Udj0F/src/build_function.jl:433 =#</span> @inbounds begin
+          <span class="sgr90">#= /home/runner/.julia/packages/Symbolics/Udj0F/src/build_function.jl:433 =#</span>
           begin
-              <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/c9cTZ/src/code.jl:1264 =#</span> @inbounds begin
-                      <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/c9cTZ/src/code.jl:1260 =#</span>
+              <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/Ty448/src/code.jl:1264 =#</span> @inbounds begin
+                      <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/Ty448/src/code.jl:1260 =#</span>
                       ˍ₋out[1] = (getindex)(V, 1)
                       ˍ₋out[2] = (getindex)(V, 2)
-                      <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/c9cTZ/src/code.jl:1262 =#</span>
+                      <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/Ty448/src/code.jl:1262 =#</span>
                       ˍ₋out
                   end
           end
       end))
-   f = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xf406ee87, 0x30cb2f9c, 0xc9577bd0, 0x5bda2b34, 0xc5655ab9), Expr}(:(<span class="sgr90">#= /home/runner/.julia/packages/Symbolics/mLvup/src/build_function.jl:410 =#</span> @inbounds begin
-          <span class="sgr90">#= /home/runner/.julia/packages/Symbolics/mLvup/src/build_function.jl:410 =#</span>
+   f = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xa8b2b69b, 0x729009ae, 0x2983727b, 0xff2e56ed, 0xd6fddfcb), Expr}(:(<span class="sgr90">#= /home/runner/.julia/packages/Symbolics/Udj0F/src/build_function.jl:433 =#</span> @inbounds begin
+          <span class="sgr90">#= /home/runner/.julia/packages/Symbolics/Udj0F/src/build_function.jl:433 =#</span>
           begin
               begin
                   var&quot;##cse#1&quot; = -1//1
                   var&quot;##cse#2&quot; = (*)((*)(var&quot;##cse#1&quot;, (getindex)(X, 1)), params.α)
-                  var&quot;##cse#3&quot; = (*)((*)(var&quot;##cse#1&quot;, params.α), (getindex)(X, 2))
-                  <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/c9cTZ/src/code.jl:1264 =#</span> @inbounds begin
-                          <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/c9cTZ/src/code.jl:1260 =#</span>
+                  var&quot;##cse#3&quot; = (*)((*)(var&quot;##cse#1&quot;, (getindex)(X, 2)), params.α)
+                  <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/Ty448/src/code.jl:1264 =#</span> @inbounds begin
+                          <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/Ty448/src/code.jl:1260 =#</span>
                           ˍ₋out[1] = var&quot;##cse#2&quot;
                           ˍ₋out[2] = var&quot;##cse#3&quot;
-                          <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/c9cTZ/src/code.jl:1262 =#</span>
+                          <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/Ty448/src/code.jl:1262 =#</span>
                           ˍ₋out
                       end
               end
           end
       end))
-   g = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :Λ, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xd78db5e6, 0x97238c19, 0xadd210ce, 0xe0bfc6f5, 0x926922e1), Expr}(:(<span class="sgr90">#= /home/runner/.julia/packages/Symbolics/mLvup/src/build_function.jl:410 =#</span> @inbounds begin
-          <span class="sgr90">#= /home/runner/.julia/packages/Symbolics/mLvup/src/build_function.jl:410 =#</span>
+   g = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :X, :V, :Λ, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xd78db5e6, 0x97238c19, 0xadd210ce, 0xe0bfc6f5, 0x926922e1), Expr}(:(<span class="sgr90">#= /home/runner/.julia/packages/Symbolics/Udj0F/src/build_function.jl:433 =#</span> @inbounds begin
+          <span class="sgr90">#= /home/runner/.julia/packages/Symbolics/Udj0F/src/build_function.jl:433 =#</span>
           begin
-              <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/c9cTZ/src/code.jl:1264 =#</span> @inbounds begin
-                      <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/c9cTZ/src/code.jl:1260 =#</span>
+              <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/Ty448/src/code.jl:1264 =#</span> @inbounds begin
+                      <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/Ty448/src/code.jl:1260 =#</span>
                       ˍ₋out[1] = (getindex)(Λ, 1)
                       ˍ₋out[2] = (getindex)(Λ, 2)
-                      <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/c9cTZ/src/code.jl:1262 =#</span>
+                      <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/Ty448/src/code.jl:1262 =#</span>
                       ˍ₋out
                   end
           end
       end))
 
- Lagrangian: L = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xf0153768, 0x17899099, 0x1469d03e, 0x352f3e28, 0x2b5e1d92), Expr}(:(<span class="sgr90">#= /home/runner/.julia/packages/Symbolics/mLvup/src/build_function.jl:170 =#</span> @inbounds begin
-          <span class="sgr90">#= /home/runner/.julia/packages/Symbolics/mLvup/src/build_function.jl:170 =#</span>
+ Lagrangian: L = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xf0153768, 0x17899099, 0x1469d03e, 0x352f3e28, 0x2b5e1d92), Expr}(:(<span class="sgr90">#= /home/runner/.julia/packages/Symbolics/Udj0F/src/build_function.jl:193 =#</span> @inbounds begin
+          <span class="sgr90">#= /home/runner/.julia/packages/Symbolics/Udj0F/src/build_function.jl:193 =#</span>
           begin
               begin
                   var&quot;##cse#1&quot; = -1//2
@@ -178,4 +178,4 @@ L = ((v(t))[<span class="sgr34">1</span>]^<span class="sgr34">2</span> + (v(t))[
 fig = lines(parent(sol.q[:,1]), parent(sol.q[:,2]);
     axis = (; xlabel = &quot;x₁&quot;, ylabel = &quot;x₂&quot;, title = &quot;Particle moving in a square potential&quot;),
     figure = (; size = (800,600), fontsize = 22))</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi"><span class="sgr33"><span class="sgr1">┌ Warning: </span></span>Hermite Extrapolation: q&#39;s history[1] and history[2] are identical!
-<span class="sgr33"><span class="sgr1">└ </span></span><span class="sgr90">@ GeometricIntegratorsBase ~/.julia/packages/GeometricIntegratorsBase/Xm0Y1/src/extrapolation/hermite.jl:206</span></code></pre><p><img src="../particle_vi_param.svg" alt/></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../hamiltonian/">« Hamiltonian Systems</a><a class="docs-footer-nextpage" href="../degenerate_lagrangian/">Degenerate Lagrangian Systems »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.19.0 on <span class="colophon-date" title="Tuesday 8 September 2026 08:55">Tuesday 8 September 2026</span>. Using Julia version 1.12.7.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+<span class="sgr33"><span class="sgr1">└ </span></span><span class="sgr90">@ GeometricIntegratorsBase ~/.julia/packages/GeometricIntegratorsBase/9F7SA/src/extrapolation/hermite.jl:206</span></code></pre><p><img src="../particle_vi_param.svg" alt/></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../hamiltonian/">« Hamiltonian Systems</a><a class="docs-footer-nextpage" href="../degenerate_lagrangian/">Degenerate Lagrangian Systems »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.19.0 on <span class="colophon-date" title="Saturday 19 September 2026 14:14">Saturday 19 September 2026</span>. Using Julia version 1.13.0.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
