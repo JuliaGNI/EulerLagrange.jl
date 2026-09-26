@@ -1,0 +1,16 @@
+[deps]
+Aqua = "4c88cf16-eb10-579e-8560-4a9242c79595"
+EulerLagrange = "e4b6a126-98cc-486b-a68d-c3e5d57f8cc9"
+GeometricEquations = "c85262ba-a08a-430a-b926-d29770767bf2"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+Parameters = "d96e819e-fc66-5662-9728-84c9c7592b0a"
+SafeTestsets = "1bc83da4-3b8d-516f-aca4-4fe02f6d838f"
+Symbolics = "0c5d862f-8b57-4792-8d23-62f2024744c7"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[sources]
+EulerLagrange = {path = ".."}
+
+[compat]
+Aqua = "0.8"
+SafeTestsets = "0.1"
