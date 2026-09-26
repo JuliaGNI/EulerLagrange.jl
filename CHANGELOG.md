@@ -45,5 +45,3 @@ first entry is written.
   (unbound type parameter). `Project.toml` gains `LinearAlgebra = "1"` compat entry, enforced by
   Aqua's deps_compat check (issue #28). `test/symbolize_tests.jl` renamed to `test/symbolics.jl`.
   No source changes.
-
-## Open Issues
