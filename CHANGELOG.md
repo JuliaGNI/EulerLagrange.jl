@@ -38,11 +38,12 @@ first entry is written.
   the tilde, there being no fully precomposed form, so a grep for `ż` in the old files found 17
   where 15 are counted above.
 
-- Test suite reorganised to follow the shared test convention. Test dependencies moved from
-  `[extras]`/`[targets]` in `Project.toml` to `test/Project.toml`. The flat list `test/runtests.jl`
-  now uses `@safetestset` with a "core" group; wrapper files removed and seven test files listed
-  directly; `test/symbolize_tests.jl` renamed to `test/symbolics.jl`. New `test/quality/aqua.jl`
-  runs Aqua code-quality checks; three checks marked broken pending issues #26, #27, #28.
-  No source changes; test totals unchanged.
+- Test suite reorganised. Dependencies moved from `[extras]`/`[targets]` to `test/Project.toml`
+  (with `[sources]` for the package). Two wrapper files removed; seven test files now listed directly
+  in `test/runtests.jl` with `@safetestset`. Total: ten existing test files (unchanged) plus new
+  `test/quality/aqua.jl`. Aqua code-quality checks marked broken: issue #26 (ambiguities), #27
+  (unbound type parameter). `Project.toml` gains `LinearAlgebra = "1"` compat entry, enforced by
+  Aqua's deps_compat check (issue #28). `test/symbolize_tests.jl` renamed to `test/symbolics.jl`.
+  No source changes.
 
 ## Open Issues
