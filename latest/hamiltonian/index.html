@@ -40,17 +40,17 @@ hprob = HODEProblem(ham_sys, tspan, tstep, q₀, p₀; parameters = params)</cod
           end
       end))
 
- Hamiltonian: H = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :Q, :P, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xac764345, 0xf1be14bb, 0x7b8f50b1, 0x48d5f09a, 0xd27c17c7), Expr}(:(<span class="sgr90">#= /home/runner/.julia/packages/Symbolics/74GkI/src/build_function.jl:193 =#</span> @inbounds begin
+ Hamiltonian: H = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :Q, :P, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x202247eb, 0x2ca2b608, 0xbac538b0, 0xc85941d1, 0x1a9b6ee4), Expr}(:(<span class="sgr90">#= /home/runner/.julia/packages/Symbolics/74GkI/src/build_function.jl:193 =#</span> @inbounds begin
           <span class="sgr90">#= /home/runner/.julia/packages/Symbolics/74GkI/src/build_function.jl:193 =#</span>
           begin
               begin
-                  var&quot;##cse#1&quot; = 2
-                  var&quot;##cse#2&quot; = (^)((getindex)(P, 1), var&quot;##cse#1&quot;)
-                  var&quot;##cse#3&quot; = (/)(var&quot;##cse#2&quot;, var&quot;##cse#1&quot;)
-                  var&quot;##cse#4&quot; = 1//2
-                  var&quot;##cse#5&quot; = (^)((getindex)(Q, 1), var&quot;##cse#1&quot;)
-                  var&quot;##cse#6&quot; = (*)((*)(var&quot;##cse#4&quot;, var&quot;##cse#5&quot;), params.k)
-                  var&quot;##cse#7&quot; = (+)(var&quot;##cse#3&quot;, var&quot;##cse#6&quot;)
+                  var&quot;##cse#1&quot; = 1//2
+                  var&quot;##cse#2&quot; = 2
+                  var&quot;##cse#3&quot; = (^)((getindex)(Q, 1), var&quot;##cse#2&quot;)
+                  var&quot;##cse#4&quot; = (*)((*)(var&quot;##cse#1&quot;, var&quot;##cse#3&quot;), params.k)
+                  var&quot;##cse#5&quot; = (^)((getindex)(P, 1), var&quot;##cse#2&quot;)
+                  var&quot;##cse#6&quot; = (/)(var&quot;##cse#5&quot;, var&quot;##cse#2&quot;)
+                  var&quot;##cse#7&quot; = (+)(var&quot;##cse#4&quot;, var&quot;##cse#6&quot;)
                   var&quot;##cse#7&quot;
               end
           end
@@ -72,4 +72,4 @@ sol = integrate(hprob, Gauss(1))
 using CairoMakie
 fig = lines(parent(sol.q[:,1]), parent(sol.p[:,1]);
     axis = (; xlabel = &quot;q₁&quot;, ylabel = &quot;p₁&quot;, title = &quot;Harmonic Oscillator&quot;),
-    figure = (; size = (800,600), fontsize = 22))</code></pre><p><img src="../harmonic-oscillator-hamiltonian.svg" alt/></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../">« Home</a><a class="docs-footer-nextpage" href="../lagrangian/">Lagrangian Systems »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.19.0 on <span class="colophon-date" title="Saturday 26 September 2026 17:02">Saturday 26 September 2026</span>. Using Julia version 1.13.0.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+    figure = (; size = (800,600), fontsize = 22))</code></pre><p><img src="../harmonic-oscillator-hamiltonian.svg" alt/></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../">« Home</a><a class="docs-footer-nextpage" href="../lagrangian/">Lagrangian Systems »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.19.0 on <span class="colophon-date" title="Sunday 27 September 2026 11:35">Sunday 27 September 2026</span>. Using Julia version 1.13.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>

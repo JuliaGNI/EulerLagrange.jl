@@ -58,21 +58,21 @@ lprob = LODEProblem(lag_sys, tspan, tstep, q₀, p₀)</code></pre><pre class="d
           end
       end))
 
- Lagrangian: L = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x7aca55e8, 0xd7ab62da, 0x54cf5451, 0x09cbc704, 0x4a25bb77), Expr}(:(<span class="sgr90">#= /home/runner/.julia/packages/Symbolics/74GkI/src/build_function.jl:193 =#</span> @inbounds begin
+ Lagrangian: L = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xead26f8c, 0xcf721d18, 0x80fe065d, 0xbec9ff78, 0x62d6d7d9), Expr}(:(<span class="sgr90">#= /home/runner/.julia/packages/Symbolics/74GkI/src/build_function.jl:193 =#</span> @inbounds begin
           <span class="sgr90">#= /home/runner/.julia/packages/Symbolics/74GkI/src/build_function.jl:193 =#</span>
           begin
               begin
-                  var&quot;##cse#1&quot; = -1//2
-                  var&quot;##cse#2&quot; = 2
-                  var&quot;##cse#3&quot; = (^)((getindex)(X, 1), var&quot;##cse#2&quot;)
-                  var&quot;##cse#4&quot; = (^)((getindex)(X, 2), var&quot;##cse#2&quot;)
-                  var&quot;##cse#5&quot; = (+)(var&quot;##cse#3&quot;, var&quot;##cse#4&quot;)
-                  var&quot;##cse#6&quot; = (*)(var&quot;##cse#1&quot;, var&quot;##cse#5&quot;)
-                  var&quot;##cse#7&quot; = (^)((getindex)(V, 1), var&quot;##cse#2&quot;)
-                  var&quot;##cse#8&quot; = (^)((getindex)(V, 2), var&quot;##cse#2&quot;)
+                  var&quot;##cse#1&quot; = 2
+                  var&quot;##cse#2&quot; = (^)((getindex)(V, 1), var&quot;##cse#1&quot;)
+                  var&quot;##cse#3&quot; = (^)((getindex)(V, 2), var&quot;##cse#1&quot;)
+                  var&quot;##cse#4&quot; = (+)(var&quot;##cse#2&quot;, var&quot;##cse#3&quot;)
+                  var&quot;##cse#5&quot; = (/)(var&quot;##cse#4&quot;, var&quot;##cse#1&quot;)
+                  var&quot;##cse#6&quot; = -1//2
+                  var&quot;##cse#7&quot; = (^)((getindex)(X, 1), var&quot;##cse#1&quot;)
+                  var&quot;##cse#8&quot; = (^)((getindex)(X, 2), var&quot;##cse#1&quot;)
                   var&quot;##cse#9&quot; = (+)(var&quot;##cse#7&quot;, var&quot;##cse#8&quot;)
-                  var&quot;##cse#10&quot; = (/)(var&quot;##cse#9&quot;, var&quot;##cse#2&quot;)
-                  var&quot;##cse#11&quot; = (+)(var&quot;##cse#6&quot;, var&quot;##cse#10&quot;)
+                  var&quot;##cse#10&quot; = (*)(var&quot;##cse#6&quot;, var&quot;##cse#9&quot;)
+                  var&quot;##cse#11&quot; = (+)(var&quot;##cse#5&quot;, var&quot;##cse#10&quot;)
                   var&quot;##cse#11&quot;
               end
           end
@@ -143,21 +143,21 @@ L = ((v(t))[<span class="sgr34">1</span>]^<span class="sgr34">2</span> + (v(t))[
           end
       end))
 
- Lagrangian: L = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0xa18ed549, 0x431ea4a1, 0x243771ae, 0x18e23afe, 0x98669bcf), Expr}(:(<span class="sgr90">#= /home/runner/.julia/packages/Symbolics/74GkI/src/build_function.jl:193 =#</span> @inbounds begin
+ Lagrangian: L = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :X, :V, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x772727aa, 0xc0f3f4e4, 0x18c36e53, 0x6dee8ca9, 0xddcea846), Expr}(:(<span class="sgr90">#= /home/runner/.julia/packages/Symbolics/74GkI/src/build_function.jl:193 =#</span> @inbounds begin
           <span class="sgr90">#= /home/runner/.julia/packages/Symbolics/74GkI/src/build_function.jl:193 =#</span>
           begin
               begin
-                  var&quot;##cse#1&quot; = -1//2
-                  var&quot;##cse#2&quot; = 2
-                  var&quot;##cse#3&quot; = (^)((getindex)(X, 1), var&quot;##cse#2&quot;)
-                  var&quot;##cse#4&quot; = (^)((getindex)(X, 2), var&quot;##cse#2&quot;)
-                  var&quot;##cse#5&quot; = (+)(var&quot;##cse#3&quot;, var&quot;##cse#4&quot;)
-                  var&quot;##cse#6&quot; = (*)((*)(var&quot;##cse#1&quot;, var&quot;##cse#5&quot;), params.α)
-                  var&quot;##cse#7&quot; = (^)((getindex)(V, 1), var&quot;##cse#2&quot;)
-                  var&quot;##cse#8&quot; = (^)((getindex)(V, 2), var&quot;##cse#2&quot;)
+                  var&quot;##cse#1&quot; = 2
+                  var&quot;##cse#2&quot; = (^)((getindex)(V, 1), var&quot;##cse#1&quot;)
+                  var&quot;##cse#3&quot; = (^)((getindex)(V, 2), var&quot;##cse#1&quot;)
+                  var&quot;##cse#4&quot; = (+)(var&quot;##cse#2&quot;, var&quot;##cse#3&quot;)
+                  var&quot;##cse#5&quot; = (/)(var&quot;##cse#4&quot;, var&quot;##cse#1&quot;)
+                  var&quot;##cse#6&quot; = -1//2
+                  var&quot;##cse#7&quot; = (^)((getindex)(X, 1), var&quot;##cse#1&quot;)
+                  var&quot;##cse#8&quot; = (^)((getindex)(X, 2), var&quot;##cse#1&quot;)
                   var&quot;##cse#9&quot; = (+)(var&quot;##cse#7&quot;, var&quot;##cse#8&quot;)
-                  var&quot;##cse#10&quot; = (/)(var&quot;##cse#9&quot;, var&quot;##cse#2&quot;)
-                  var&quot;##cse#11&quot; = (+)(var&quot;##cse#6&quot;, var&quot;##cse#10&quot;)
+                  var&quot;##cse#10&quot; = (*)((*)(var&quot;##cse#6&quot;, params.α), var&quot;##cse#9&quot;)
+                  var&quot;##cse#11&quot; = (+)(var&quot;##cse#5&quot;, var&quot;##cse#10&quot;)
                   var&quot;##cse#11&quot;
               end
           end
@@ -178,4 +178,4 @@ L = ((v(t))[<span class="sgr34">1</span>]^<span class="sgr34">2</span> + (v(t))[
 fig = lines(parent(sol.q[:,1]), parent(sol.q[:,2]);
     axis = (; xlabel = &quot;x₁&quot;, ylabel = &quot;x₂&quot;, title = &quot;Particle moving in a square potential&quot;),
     figure = (; size = (800,600), fontsize = 22))</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi"><span class="sgr33"><span class="sgr1">┌ Warning: </span></span>Hermite Extrapolation: q&#39;s history[1] and history[2] are identical!
-<span class="sgr33"><span class="sgr1">└ </span></span><span class="sgr90">@ GeometricIntegratorsBase ~/.julia/packages/GeometricIntegratorsBase/9F7SA/src/extrapolation/hermite.jl:206</span></code></pre><p><img src="../particle_vi_param.svg" alt/></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../hamiltonian/">« Hamiltonian Systems</a><a class="docs-footer-nextpage" href="../degenerate_lagrangian/">Degenerate Lagrangian Systems »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.19.0 on <span class="colophon-date" title="Saturday 26 September 2026 17:02">Saturday 26 September 2026</span>. Using Julia version 1.13.0.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+<span class="sgr33"><span class="sgr1">└ </span></span><span class="sgr90">@ GeometricIntegratorsBase ~/.julia/packages/GeometricIntegratorsBase/9F7SA/src/extrapolation/hermite.jl:206</span></code></pre><p><img src="../particle_vi_param.svg" alt/></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../hamiltonian/">« Hamiltonian Systems</a><a class="docs-footer-nextpage" href="../degenerate_lagrangian/">Degenerate Lagrangian Systems »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.19.0 on <span class="colophon-date" title="Sunday 27 September 2026 11:35">Sunday 27 September 2026</span>. Using Julia version 1.13.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
