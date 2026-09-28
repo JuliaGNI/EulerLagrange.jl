@@ -13,5 +13,6 @@ EulerLagrange = {path = ".."}
 
 [compat]
 Aqua = "0.8"
+GeometricEquations = "0.21.4"
 Parameters = "0.13.1"
 SafeTestsets = "0.1"
