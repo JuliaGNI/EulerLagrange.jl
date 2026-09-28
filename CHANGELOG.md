@@ -26,8 +26,8 @@ first entry is written.
 - `test/Project.toml` now carries the root's `[compat]` bounds for the three dependencies it shares
   with `Project.toml`: `GeometricEquations = "0.21"`, `LinearAlgebra = "1"` and `Symbolics = "7"`.
   Aqua's compat check reads only the root `Project.toml`, so it sees no bound in
-  `test/Project.toml`; the test-layout check requires the same entry in both files. No test-only
-  bound changes.
+  `test/Project.toml`; the test environment now carries the package's own bound for each
+  dependency it shares. No test-only bound changes.
 
 - Every tracked file is now Unicode NFC-normalised. Nine stored `ẋ` (43 times), `ṗ` (21), `ż` (15),
   `ḡ` (12), `ū` (7) and `ṽ` (6) as a base letter plus a combining mark, inherited from macOS rather
