@@ -8,5 +8,6 @@ GeometricIntegrators = "dcce2d33-59f6-5b8d-9047-0defad88ae06"
 EulerLagrange = {path = ".."}
 
 [compat]
+CairoMakie = "0.15.15"
 Documenter = "1.19.0"
 GeometricIntegrators = "0.18.5"
