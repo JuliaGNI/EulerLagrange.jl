@@ -45,3 +45,10 @@ first entry is written.
   (unbound type parameter). `Project.toml` gains `LinearAlgebra = "1"` compat entry, enforced by
   Aqua's deps_compat check (issue #28). `test/symbolize_tests.jl` renamed to `test/symbolics.jl`.
   No source changes.
+
+- `test/Project.toml` no longer carries a `[compat]` entry for `GeometricEquations`, which the
+  root `Project.toml` also depends on. The test environment contains the package, so the root's
+  bound (`GeometricEquations = "0.21"`) already applies there; the removed `"0.21.4"` could only
+  narrow it, and the tests then ran on narrower bounds than the package claims. The rule: the test
+  and docs environments carry no `[compat]` entry for a dependency of the root. Test-only bounds
+  are unchanged.
