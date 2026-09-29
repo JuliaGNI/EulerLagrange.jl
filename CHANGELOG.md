@@ -23,8 +23,8 @@ first entry is written.
 
 ### Changed
 
-- `test/lagrangian_solar_system.jl` binds the unread second momentum buffer to `_`, which clears
-  fatou's one `unused-binding` finding in `test/`. The test checks the same values.
+- `test/lagrangian_solar_system.jl` no longer allocates the unread second momentum buffer `ṗ₂`,
+  which clears fatou's one `unused-binding` finding in `test/`. The test checks the same values.
 
 - Every tracked file is now Unicode NFC-normalised. Nine stored `ẋ` (43 times), `ṗ` (21), `ż` (15),
   `ḡ` (12), `ū` (7) and `ṽ` (6) as a base letter plus a combining mark, inherited from macOS rather

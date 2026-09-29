@@ -138,7 +138,7 @@ function test_solar_system(ss)
         lagrangian(t, x, v, sparams, d, n), t, x, v, sparams; simplify = false)
 
     p₁, p₂ = zero(p₀), zero(p₀)
-    ṗ₁, _ = zero(p₀), zero(p₀)
+    ṗ₁ = zero(p₀)
 
     eqs = functions(lag_sys)
 
