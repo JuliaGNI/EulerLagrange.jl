@@ -23,10 +23,8 @@ first entry is written.
 
 ### Changed
 
-- **The package requires GeometricBase 0.15.0, GeometricEquations 0.21.5 and Julia 1.11.** The
-  `[compat]` floors rise from `GeometricBase = "0.14"`, `GeometricEquations = "0.21"` and
-  `julia = "1.10"`, because GeometricBase 0.15 declares its stubs public and requires Julia 1.11.
-  Julia 1.10 users keep 0.5.1.
+- The `[compat]` floors are raised to `GeometricBase = "0.15.0"`, `GeometricEquations = "0.21.5"`
+  and `julia = "1.11"`, because GeometricBase 0.15 declares its stubs public and requires Julia 1.11.
 
 - `test/lagrangian_solar_system.jl` no longer allocates the unread second momentum buffer `ṗ₂`,
   which clears fatou's one `unused-binding` finding in `test/`. The test checks the same values.
