@@ -13,7 +13,7 @@ reconstructed, because a changelog assembled after the fact loses exactly the re
 makes it worth keeping. The `[Unreleased]` target below is provisional — confirm it when the
 first entry is written.
 
-## [Unreleased] — targeting 0.6.0
+## [Unreleased] — targeting 0.5.2
 
 ### New Features
 
@@ -22,6 +22,9 @@ first entry is written.
 ### Breaking Changes
 
 ### Changed
+
+- The `[compat]` floors are raised to `GeometricBase = "0.15.0"`, `GeometricEquations = "0.21.5"`
+  and `julia = "1.11"`, because GeometricBase 0.15 declares its stubs public and requires Julia 1.11.
 
 - `test/lagrangian_solar_system.jl` no longer allocates the unread second momentum buffer `ṗ₂`,
   which clears fatou's one `unused-binding` finding in `test/`. The test checks the same values.
