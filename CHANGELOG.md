@@ -20,6 +20,12 @@ fact loses exactly the reasoning that makes it worth keeping.
   could never install beside `Symbolics = "7"`, and the declared floor was false. The resolved
   environments do not change.
 
+- The `symbolize(p, name)` method that returns a symbolic `p` unchanged has no type parameter
+  any more. Its `where T` was unbound for a `Symbolics.Arr` argument, which Aqua reported (issue
+  #27). The method accepts the same arguments and dispatch is unchanged. Aqua's unbound-argument
+  check is no longer marked broken: Julia 1.14 does not report this method, so the broken mark
+  failed the nightly job as an unexpected pass.
+
 ## [0.5.2]
 
 ### Changed
