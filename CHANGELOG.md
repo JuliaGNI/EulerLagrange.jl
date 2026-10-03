@@ -15,6 +15,11 @@ fact loses exactly the reasoning that makes it worth keeping.
 
 ### Changed
 
+- K1 is fixed and leaves `KNOWN_ISSUES.md`, which has no other entry and is deleted. The docs
+  environment resolves again, because GeometricIntegrators 0.18.6 accepts `GeometricBase = "0.15"`,
+  so the `Documentation` job and the `Doctests - ubuntu-latest` check pass on `main`. Nothing in
+  this repository changes for it.
+
 - The `[compat]` floor of RuntimeGeneratedFunctions is raised from `0.5` to `0.5.9`. Compat only:
   every Symbolics 7 release requires RuntimeGeneratedFunctions 0.5.9 or later, so 0.5.0 to 0.5.8
   could never install beside `Symbolics = "7"`, and the declared floor was false. The resolved
