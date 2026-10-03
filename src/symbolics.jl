@@ -46,8 +46,10 @@ function symbolize(x::T, name) where {T <: Number}
     first(vars)
 end
 
-function symbolize(p::Union{T, AbstractArray{T}, Symbolics.Arr{<:Num}},
-        name) where {T <: SymbolicUtils.BasicSymbolicImpl.Type}
+function symbolize(
+        p::Union{SymbolicUtils.BasicSymbolicImpl.Type,
+            AbstractArray{<:SymbolicUtils.BasicSymbolicImpl.Type}, Symbolics.Arr{<:Num}},
+        name)
     p
 end
 

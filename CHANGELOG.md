@@ -11,6 +11,16 @@ This file was started on 2026-08-31. 28 versions were released before it, the mo
 tags. It is named as a gap rather than reconstructed, because a changelog assembled after the
 fact loses exactly the reasoning that makes it worth keeping.
 
+## [Unreleased] — targeting 0.5.3
+
+### Changed
+
+- The `symbolize(p, name)` method that returns a symbolic `p` unchanged has no type parameter
+  any more. Its `where T` was unbound for a `Symbolics.Arr` argument, which Aqua reported (issue
+  #27). The method accepts the same arguments and dispatch is unchanged. Aqua's unbound-argument
+  check is no longer marked broken: Julia 1.14 does not report this method, so the broken mark
+  failed the nightly job as an unexpected pass.
+
 ## [0.5.2]
 
 ### Changed
