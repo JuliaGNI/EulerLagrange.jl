@@ -15,6 +15,11 @@ fact loses exactly the reasoning that makes it worth keeping.
 
 ### Changed
 
+- The `[compat]` floor of RuntimeGeneratedFunctions is raised from `0.5` to `0.5.9`. Compat only:
+  every Symbolics 7 release requires RuntimeGeneratedFunctions 0.5.9 or later, so 0.5.0 to 0.5.8
+  could never install beside `Symbolics = "7"`, and the declared floor was false. The resolved
+  environments do not change.
+
 - The `symbolize(p, name)` method that returns a symbolic `p` unchanged has no type parameter
   any more. Its `where T` was unbound for a `Symbolics.Arr` argument, which Aqua reported (issue
   #27). The method accepts the same arguments and dispatch is unchanged. Aqua's unbound-argument
