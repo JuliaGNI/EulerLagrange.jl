@@ -11,6 +11,15 @@ This file was started on 2026-08-31. 28 versions were released before it, the mo
 tags. It is named as a gap rather than reconstructed, because a changelog assembled after the
 fact loses exactly the reasoning that makes it worth keeping.
 
+## [Unreleased] — targeting 0.5.3
+
+### Changed
+
+- K1 is fixed and leaves `KNOWN_ISSUES.md`, which has no other entry and is deleted. The docs
+  environment resolves again, because GeometricIntegrators 0.18.6 accepts `GeometricBase = "0.15"`,
+  so the `Documentation` job and the `Doctests - ubuntu-latest` check pass on `main`. Nothing in
+  this repository changes for it.
+
 ## [0.5.2]
 
 ### Changed
