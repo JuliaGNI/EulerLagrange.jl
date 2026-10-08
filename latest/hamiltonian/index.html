@@ -13,8 +13,8 @@ q₀, p₀ = [0.5], [0.0]
 hprob = HODEProblem(ham_sys, tspan, tstep, q₀, p₀; parameters = params)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Geometric Equation Problem for Hamiltonian Ordinary Differential Equation (HODE)
 
  with vector fields
-   v = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :Q, :P, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x273fc906, 0xc1874cc9, 0xd979d429, 0xbe19e103, 0x76983d44), Expr}(:(<span class="sgr90">#= /home/runner/.julia/packages/Symbolics/HfMcG/src/build_function.jl:456 =#</span> @inbounds begin
-          <span class="sgr90">#= /home/runner/.julia/packages/Symbolics/HfMcG/src/build_function.jl:456 =#</span>
+   v = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :Q, :P, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x273fc906, 0xc1874cc9, 0xd979d429, 0xbe19e103, 0x76983d44), Expr}(:(<span class="sgr90">#= /home/runner/.julia/packages/Symbolics/N7w3y/src/build_function.jl:456 =#</span> @inbounds begin
+          <span class="sgr90">#= /home/runner/.julia/packages/Symbolics/N7w3y/src/build_function.jl:456 =#</span>
           begin
               <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/fK7cM/src/code.jl:1272 =#</span> @inbounds begin
                       <span class="sgr90">#= /home/runner/.julia/packages/SymbolicUtils/fK7cM/src/code.jl:1268 =#</span>
@@ -24,8 +24,8 @@ hprob = HODEProblem(ham_sys, tspan, tstep, q₀, p₀; parameters = params)</cod
                   end
           end
       end))
-   f = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :Q, :P, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x5c9c091d, 0xcf645a9c, 0x8090a242, 0x1c03c6bc, 0x8069a395), Expr}(:(<span class="sgr90">#= /home/runner/.julia/packages/Symbolics/HfMcG/src/build_function.jl:456 =#</span> @inbounds begin
-          <span class="sgr90">#= /home/runner/.julia/packages/Symbolics/HfMcG/src/build_function.jl:456 =#</span>
+   f = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:ˍ₋out, :t, :Q, :P, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x5c9c091d, 0xcf645a9c, 0x8090a242, 0x1c03c6bc, 0x8069a395), Expr}(:(<span class="sgr90">#= /home/runner/.julia/packages/Symbolics/N7w3y/src/build_function.jl:456 =#</span> @inbounds begin
+          <span class="sgr90">#= /home/runner/.julia/packages/Symbolics/N7w3y/src/build_function.jl:456 =#</span>
           begin
               begin
                   var&quot;##cse#1&quot; = -1//1
@@ -40,8 +40,8 @@ hprob = HODEProblem(ham_sys, tspan, tstep, q₀, p₀; parameters = params)</cod
           end
       end))
 
- Hamiltonian: H = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :Q, :P, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x202247eb, 0x2ca2b608, 0xbac538b0, 0xc85941d1, 0x1a9b6ee4), Expr}(:(<span class="sgr90">#= /home/runner/.julia/packages/Symbolics/HfMcG/src/build_function.jl:198 =#</span> @inbounds begin
-          <span class="sgr90">#= /home/runner/.julia/packages/Symbolics/HfMcG/src/build_function.jl:198 =#</span>
+ Hamiltonian: H = RuntimeGeneratedFunctions.RuntimeGeneratedFunction{(:t, :Q, :P, :params), EulerLagrange.var&quot;#_RGF_ModTag&quot;, EulerLagrange.var&quot;#_RGF_ModTag&quot;, (0x202247eb, 0x2ca2b608, 0xbac538b0, 0xc85941d1, 0x1a9b6ee4), Expr}(:(<span class="sgr90">#= /home/runner/.julia/packages/Symbolics/N7w3y/src/build_function.jl:198 =#</span> @inbounds begin
+          <span class="sgr90">#= /home/runner/.julia/packages/Symbolics/N7w3y/src/build_function.jl:198 =#</span>
           begin
               begin
                   var&quot;##cse#1&quot; = 1//2
@@ -72,4 +72,4 @@ sol = integrate(hprob, Gauss(1))
 using CairoMakie
 fig = lines(parent(sol.q[:,1]), parent(sol.p[:,1]);
     axis = (; xlabel = &quot;q₁&quot;, ylabel = &quot;p₁&quot;, title = &quot;Harmonic Oscillator&quot;),
-    figure = (; size = (800,600), fontsize = 22))</code></pre><p><img src="../harmonic-oscillator-hamiltonian.svg" alt/></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../">« Home</a><a class="docs-footer-nextpage" href="../lagrangian/">Lagrangian Systems »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.19.0 on <span class="colophon-date" title="Thursday 8 October 2026 11:28">Thursday 8 October 2026</span>. Using Julia version 1.13.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+    figure = (; size = (800,600), fontsize = 22))</code></pre><p><img src="../harmonic-oscillator-hamiltonian.svg" alt/></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../">« Home</a><a class="docs-footer-nextpage" href="../lagrangian/">Lagrangian Systems »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.19.0 on <span class="colophon-date" title="Thursday 8 October 2026 20:18">Thursday 8 October 2026</span>. Using Julia version 1.13.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
