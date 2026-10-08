@@ -15,6 +15,9 @@ fact loses exactly the reasoning that makes it worth keeping.
 
 ### Changed
 
+- CI uploads coverage from the `Julia 1 - ubuntu-latest` job instead of `Julia min`, and a test
+  job saves the Julia cache only when it succeeds.
+
 - K1 is fixed and leaves `KNOWN_ISSUES.md`, which has no other entry and is deleted. The docs
   environment resolves again, because GeometricIntegrators 0.18.6 accepts `GeometricBase = "0.15"`,
   so the `Documentation` job and the `Doctests - ubuntu-latest` check pass on `main`. Nothing in
