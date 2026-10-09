@@ -34,6 +34,17 @@ fact loses exactly the reasoning that makes it worth keeping.
   check is no longer marked broken: Julia 1.14 does not report this method, so the broken mark
   failed the nightly job as an unexpected pass.
 
+- Nine test files leave the top level of `test/`, because the test convention keeps a file there
+  only where it mirrors `src/<name>.jl`. The two that test one source file now carry its name:
+  `test/hamiltonian_general.jl` is `test/hamiltonian.jl` and `test/lagrangian_general.jl` is
+  `test/lagrangian_common.jl`. The seven that test several source files, all directly in `src/`,
+  move to `test/integration/`: `test/hamiltonian_particle.jl`, `test/hamiltonian_oscillator.jl`,
+  `test/lagrangian_particle.jl`, `test/lagrangian_lotka_volterra.jl`,
+  `test/lagrangian_solar_system.jl`, `test/cse_tests.jl` and `test/signature_tests.jl` are now
+  `test/integration/<name>.jl`. `test/hamiltonian_particle.jl` tests only `src/hamiltonian.jl`
+  too, but that path is taken. The tests, their labels and their order in `runtests.jl` are
+  unchanged.
+
 ## [0.5.2]
 
 ### Changed
