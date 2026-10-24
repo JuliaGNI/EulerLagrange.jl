@@ -11,12 +11,12 @@ This file was started on 2026-08-31. 28 versions were released before it, the mo
 tags. It is named as a gap rather than reconstructed, because a changelog assembled after the
 fact loses exactly the reasoning that makes it worth keeping.
 
-## [Unreleased] — targeting 0.6.0
+## [0.5.3] — 2026-10-24
 
 ### Changed
 
-- **Julia 1.12 is the floor** (`[compat] julia = "1.12"`, from 1.11). A breaking change under
-  this package's pre-1.0 convention: a caller on Julia 1.11 can no longer install this version.
+- **Julia 1.12 is the floor** (`[compat] julia = "1.12"`, from 1.11). A patch release, because no
+  API changes: a caller on Julia 1.11 can no longer install this version.
   Nothing in the package's code or tests changes: no workaround for the older floor existed, and
   the test suite is unchanged.
 
