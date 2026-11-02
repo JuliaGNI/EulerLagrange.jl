@@ -11,6 +11,16 @@ This file was started on 2026-08-31. 28 versions were released before it, the mo
 tags. It is named as a gap rather than reconstructed, because a changelog assembled after the
 fact loses exactly the reasoning that makes it worth keeping.
 
+## [Unreleased]
+
+### Changed
+
+- The `[compat]` floor of Aqua in `test/Project.toml` is raised from `0.8` to `0.8.14`. Test
+  environment only: the CI Downgrade job resolves the root and test projects together at their
+  lower bounds, and Aqua 0.8.0 to 0.8.13 read `TypeName.mt`, which Julia 1.12 does not have, so
+  the piracy check errors with a `FieldError`. Aqua 0.8.14 is the first release that reads
+  `Core.methodtable` on Julia 1.12. The test suite passes at all floors.
+
 ## [0.5.3] — 2026-10-24
 
 ### Changed
