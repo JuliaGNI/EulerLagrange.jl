@@ -21,6 +21,13 @@ fact loses exactly the reasoning that makes it worth keeping.
   the piracy check errors with a `FieldError`. Aqua 0.8.14 is the first release that reads
   `Core.methodtable` on Julia 1.12. The test suite passes at all floors.
 
+- The docs accept `GeometricIntegrators` 0.19: in `docs/Project.toml` its bound goes from
+  `"0.18.5"` to `"0.18.6, 0.19"`. The new floor 0.18.6 is the first release that accepts
+  `GeometricBase` 0.15, which the package requires; 0.18.0–0.18.5 require `GeometricBase` 0.14,
+  so the old floor could not resolve. `GeometricIntegrators` 0.19 exchanges the meaning of
+  `SymplecticEulerA` and `SymplecticEulerB`; the docs call only `Gauss(1)`, so no page changes.
+  Docs environment only.
+
 ## [0.5.3] — 2026-10-24
 
 ### Changed

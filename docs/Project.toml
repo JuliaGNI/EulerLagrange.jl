@@ -9,4 +9,4 @@ EulerLagrange = {path = ".."}
 
 [compat]
 Documenter = "1.19.0"
-GeometricIntegrators = "0.18.5"
+GeometricIntegrators = "0.18.6, 0.19"
